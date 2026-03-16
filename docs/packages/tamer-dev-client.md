@@ -130,6 +130,17 @@ The dev client ships with Connect, Recent, and Discover pages. The layout uses `
 - `devclient:scanResult` — QR scan result (payload: `{ url }`)
 - `devclient:discoveredServers` — mDNS servers (payload: `{ servers }`)
 
+## Standard module pattern
+
+`tamer-dev-client` is a standard tamer module. When installed, `t4l android sync` and `t4l ios sync` read host templates from the package (`android/templates/`, `ios/templates/`) and apply them to wire the dev client into your host app. The templates use `{{PACKAGE_NAME}}` and `{{APP_NAME}}` placeholders.
+
 ## tamer-dev-app
 
-**tamer-dev-app** is a wrapper that embeds tamer-dev-client. Build it with `t4l build-dev-app`. No standalone doc.
+**tamer-dev-app** is a wrapper that embeds tamer-dev-client. Build it with:
+
+```bash
+t4l build-dev-app --platform android --install
+t4l build-dev-app --platform ios --install
+```
+
+In a monorepo, `tamer-dev-client` can live as a sibling package (e.g. `packages/tamer-dev-client` when the app is at `packages/tamer-dev-app`). The CLI resolves it automatically.
