@@ -1,8 +1,7 @@
 [
   {
-    "text": "Guide",
-    "link": "/guide/",
-    "activeMatch": "/guide/"
+    "text": "Commands",
+    "link": "/docs/"
   },
   {
     "text": "Hello world",

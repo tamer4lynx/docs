@@ -8,7 +8,10 @@ hero:
   actions:
     - theme: brand
       text: Getting Started
-      link: /guide/getting-started/
+      link: /docs/getting-started/
+    - theme: alt
+      text: Commands
+      link: /commands
     - theme: alt
       text: GitHub
       link: https://github.com/tamer4lynx/tamer4lynx

@@ -15,7 +15,7 @@ AppBar, TabBar, Content, SafeArea, and Screen components for Lynx. Used by tamer
 ## Installation
 
 ```bash
-npm install tamer-app-shell tamer-icons tamer-insets tamer-screen
+npm install @tamer4lynx/tamer-app-shell @tamer4lynx/tamer-icons @tamer4lynx/tamer-insets @tamer4lynx/tamer-screen
 ```
 
 ## API

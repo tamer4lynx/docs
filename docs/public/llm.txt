@@ -1,0 +1,39 @@
+# Tamer4Lynx
+
+Lynx ecosystem of native extensions and tooling. Tamer packages add routing, UI, and platform APIs on top of Lynx for iOS, Android, and web.
+
+## Documentation
+
+- [Getting Started](https://tamer4lynx.github.io/docs/getting-started)
+- [Commands](https://tamer4lynx.github.io/commands) — CLI reference (t4l, android, ios, build)
+- [Packages](https://tamer4lynx.github.io/packages/) — Package index
+
+## Packages
+
+| Package | Description |
+|---------|-------------|
+| tamer-dev-client | Dev launcher — QR scan, discovery, URL persistence, reload |
+| tamer-host | Production Lynx host templates for injecting into existing apps |
+| tamer-router | File-based routing, Stack and Tabs layouts |
+| tamer-plugin | Rsbuild plugin for tamer config |
+| tamer-app-shell | AppBar, TabBar, Content components |
+| tamer-screen | Screen, SafeArea, AvoidKeyboard |
+| tamer-insets | Safe area and keyboard insets |
+| tamer-system-ui | Status bar, nav bar, theme colors |
+| tamer-icons | Icon component, Material/FontAwesome |
+| tamer-text-input | Custom tamer-input element |
+| tamer-transports | Fetch, WebSocket, EventSource polyfills |
+| lynxwebsockets | Native WebSocket module and polyfill |
+| jiggle | Vibration/haptic native module |
+| tamer-auth | OAuth 2.0 / PKCE |
+| tamer-secure-store | Secure key-value storage |
+| tamer-biometric | Biometric authentication |
+| tamer-linking | Deep linking |
+| tamer-display-browser | In-app browser for OAuth |
+
+## Links
+
+- [Lynx](https://lynxjs.org/)
+- [Rspeedy](https://lynxjs.org/rspeedy/)
+- [ReactLynx](https://lynxjs.org/react/)
+- [GitHub](https://github.com/tamer4lynx/tamer4lynx)

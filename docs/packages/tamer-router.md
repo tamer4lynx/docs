@@ -13,7 +13,7 @@ File-based routing for Lynx with React 17 and react-router 6.
 ## Installation
 
 ```bash
-npm install tamer-router react-router@6 tamer-app-shell
+npm install @tamer4lynx/tamer-router react-router@6 @tamer4lynx/tamer-app-shell
 ```
 
 Stack and Tabs layouts require **tamer-app-shell**. Add to your app and run `t4l link`.
@@ -27,7 +27,7 @@ Use **tamer-plugin** so the default tamer.config from tamer-router is applied:
 ```ts
 import { defineConfig } from '@lynx-js/rspeedy'
 import { pluginReactLynx } from '@lynx-js/react-rsbuild-plugin'
-import { pluginTamer } from 'tamer-plugin'
+import { pluginTamer } from '@tamer4lynx/tamer-plugin'
 
 export default defineConfig({
   plugins: [
@@ -40,7 +40,7 @@ export default defineConfig({
 Or add **tamerRouterPlugin** directly:
 
 ```ts
-import { tamerRouterPlugin } from 'tamer-router'
+import { tamerRouterPlugin } from '@tamer4lynx/tamer-router'
 
 tamerRouterPlugin({
   root: './src/pages',
@@ -56,8 +56,8 @@ tamerRouterPlugin({
 
 ```tsx
 import { root } from '@lynx-js/react'
-import { FileRouter } from 'tamer-router'
-import routes from 'tamer-router/generated-routes'
+import { FileRouter } from '@tamer4lynx/tamer-router'
+import routes from '@tamer4lynx/tamer-router/generated-routes'
 
 root.render(<FileRouter routes={routes} />)
 ```
@@ -67,8 +67,8 @@ root.render(<FileRouter routes={routes} />)
 Use `Tabs` in `_layout.tsx` for AppBar + TabBar:
 
 ```tsx
-import { Tabs } from 'tamer-router'
-import { useSystemUI } from 'tamer-system-ui'
+import { Tabs } from '@tamer4lynx/tamer-router'
+import { useSystemUI } from '@tamer4lynx/tamer-system-ui'
 
 export default function Layout() {
   const { setStatusBar, setNavigationBar } = useSystemUI()

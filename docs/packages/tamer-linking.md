@@ -11,7 +11,7 @@ Deep linking and URL handling for Lynx. Requires `LinkingModule`.
 ## Installation
 
 ```bash
-npm install tamer-linking
+npm install @tamer4lynx/tamer-linking
 ```
 
 ## API

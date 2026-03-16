@@ -13,7 +13,7 @@ Uses Material Icons and Font Awesome codepoints. Fonts must be loaded via `lynx.
 ## Installation
 
 ```bash
-npm install tamer-icons
+npm install @tamer4lynx/tamer-icons
 ```
 
 ## API

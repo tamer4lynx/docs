@@ -12,7 +12,7 @@ Production Lynx host templates for injecting LynxView into existing Android and 
 ## Installation
 
 ```bash
-npm install tamer-host
+npm install @tamer4lynx/tamer-host
 ```
 
 ## Usage
@@ -31,6 +31,16 @@ Use `--force` to overwrite existing files:
 ```bash
 t4l android inject --force
 ```
+
+### Embeddable output (no inject required)
+
+Build a production Lynx bundle plus code snippets you can add to any existing app:
+
+```bash
+t4l build --embeddable --release
+```
+
+Outputs to `embeddable/`: the bundle, Android (Kotlin) and iOS (Swift) snippets, and a README.
 
 ### Prerequisites
 

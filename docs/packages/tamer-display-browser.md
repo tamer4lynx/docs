@@ -13,7 +13,7 @@ When `openAuthSessionAsync` is not implemented natively, falls back to `openBrow
 ## Installation
 
 ```bash
-npm install tamer-display-browser tamer-linking
+npm install @tamer4lynx/tamer-display-browser @tamer4lynx/tamer-linking
 ```
 
 ## API

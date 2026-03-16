@@ -12,7 +12,8 @@ export default defineConfig({
   },
   themeConfig: {
     nav: [
-      { text: 'Guide', link: '/guide/' },
+      { text: 'Docs', link: '/docs/' },
+      { text: 'Commands', link: '/commands' },
       { text: 'Packages', link: '/packages/' },
     ],
     socialLinks: [

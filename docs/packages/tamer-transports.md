@@ -15,13 +15,13 @@ Exports `fetch`, `WebSocket`, `EventSource` (native or polyfilled).
 ## Installation
 
 ```bash
-npm install tamer-transports
+npm install @tamer4lynx/tamer-transports
 ```
 
 Import early in your app entry (e.g. before any fetch/WebSocket usage):
 
 ```ts
-import 'tamer-transports'
+import '@tamer4lynx/tamer-transports'
 ```
 
 ## API

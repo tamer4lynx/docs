@@ -13,7 +13,7 @@ Secure key-value storage for Lynx. Uses native keychain/Keystore. Requires `Secu
 ## Installation
 
 ```bash
-npm install tamer-secure-store
+npm install @tamer4lynx/tamer-secure-store
 ```
 
 ## API

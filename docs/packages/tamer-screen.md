@@ -12,7 +12,7 @@ Screen, SafeArea, and AvoidKeyboard components. Re-exports `useInsets` and `useK
 ## Installation
 
 ```bash
-npm install tamer-screen tamer-insets
+npm install @tamer4lynx/tamer-screen @tamer4lynx/tamer-insets
 ```
 
 ## API

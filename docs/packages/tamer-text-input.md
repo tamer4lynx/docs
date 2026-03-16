@@ -9,7 +9,7 @@ Single-line and multiline text input. Props mirror common input attributes. Even
 ## Installation
 
 ```bash
-npm install tamer-text-input
+npm install @tamer4lynx/tamer-text-input
 ```
 
 ## API

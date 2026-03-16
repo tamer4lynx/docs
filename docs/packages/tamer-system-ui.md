@@ -13,7 +13,7 @@ Status bar, navigation bar, and theme colors for Lynx. Requires `SystemUIModule`
 ## Installation
 
 ```bash
-npm install tamer-system-ui
+npm install @tamer4lynx/tamer-system-ui
 ```
 
 ## API

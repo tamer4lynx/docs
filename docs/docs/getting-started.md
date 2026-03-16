@@ -59,11 +59,18 @@ The terminal prints a QR code. Scan it with the Lynx dev app to connect and load
 The dev app embeds **tamer-dev-client** and loads your Lynx bundle from the connected dev server. Build it with:
 
 ```bash
-t4l build-dev-app
-t4l build-dev-app --install
+t4l build
+t4l build --platform android --install
+t4l build --platform ios --install
 ```
 
 Use the dev app to connect to your local dev server (via URL or QR), then develop with HMR.
+
+For embedding Lynx into an existing app (outputs bundle + code snippets to `embeddable/`):
+
+```bash
+t4l build --embeddable --release
+```
 
 ## Next steps
 

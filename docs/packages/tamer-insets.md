@@ -12,7 +12,7 @@ Listens to `tamer-insets:change` and `tamer-insets:keyboard` (Android) and `keyb
 ## Installation
 
 ```bash
-npm install tamer-insets
+npm install @tamer4lynx/tamer-insets
 ```
 
 ## API

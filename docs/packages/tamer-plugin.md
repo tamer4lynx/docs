@@ -12,7 +12,7 @@ Rsbuild plugin that loads `tamer.config` from the project and workspace packages
 ## Installation
 
 ```bash
-npm install tamer-plugin
+npm install @tamer4lynx/tamer-plugin
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ npm install tamer-plugin
 ```ts
 import { defineConfig } from '@lynx-js/rspeedy'
 import { pluginReactLynx } from '@lynx-js/react-rsbuild-plugin'
-import { pluginTamer } from 'tamer-plugin'
+import { pluginTamer } from '@tamer4lynx/tamer-plugin'
 
 export default defineConfig({
   plugins: [
@@ -54,7 +54,7 @@ Export an object (default or `tamerDefaults`) with keys such as:
 Example `tamer.config.ts`:
 
 ```ts
-import { tamerRouterPlugin } from 'tamer-router'
+import { tamerRouterPlugin } from '@tamer4lynx/tamer-router'
 
 export default {
   tamerRouter: tamerRouterPlugin({

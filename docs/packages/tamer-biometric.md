@@ -12,7 +12,7 @@ Biometric authentication for Lynx. Requires `BiometricModule`.
 ## Installation
 
 ```bash
-npm install tamer-biometric
+npm install @tamer4lynx/tamer-biometric
 ```
 
 ## API

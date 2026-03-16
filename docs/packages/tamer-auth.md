@@ -14,7 +14,7 @@ Uses PKCE by default. Opens auth URL via `openAuthSessionAsync` (tamer-display-b
 ## Installation
 
 ```bash
-npm install tamer-auth tamer-linking tamer-display-browser
+npm install @tamer4lynx/tamer-auth @tamer4lynx/tamer-linking @tamer4lynx/tamer-display-browser
 ```
 
 ## API

@@ -12,12 +12,12 @@ The dev client provides:
 - **Reload** — Reload the Lynx bundle from the dev server
 - **Compatibility check** — Validates native modules between app and project; shows modal if incompatible
 
-When building the dev app (`t4l build-dev-app`), the dev client UI is embedded and the Lynx bundle is loaded from the connected dev server.
+When building the dev app (`t4l build`), the dev client UI is embedded and the Lynx bundle is loaded from the connected dev server.
 
 ## Installation
 
 ```bash
-npm install tamer-dev-client
+npm install @tamer4lynx/tamer-dev-client
 ```
 
 Add to your app's dependencies. Linking runs automatically on install when your project has a postinstall script; otherwise run `t4l link`.
@@ -32,9 +32,9 @@ Wrap your app with `DevLauncherProvider`:
 
 ```tsx
 import { root } from '@lynx-js/react'
-import { FileRouter } from 'tamer-router'
-import { DevLauncherProvider } from 'tamer-dev-client'
-import routes from 'tamer-router/generated-routes'
+import { FileRouter } from '@tamer4lynx/tamer-router'
+import { DevLauncherProvider } from '@tamer4lynx/tamer-dev-client'
+import routes from '@tamer4lynx/tamer-router/generated-routes'
 
 root.render(
   <DevLauncherProvider>
@@ -139,8 +139,8 @@ The dev client ships with Connect, Recent, and Discover pages. The layout uses `
 **tamer-dev-app** is a wrapper that embeds tamer-dev-client. Build it with:
 
 ```bash
-t4l build-dev-app --platform android --install
-t4l build-dev-app --platform ios --install
+t4l build --platform android --install
+t4l build --platform ios --install
 ```
 
 In a monorepo, `tamer-dev-client` can live as a sibling package (e.g. `packages/tamer-dev-client` when the app is at `packages/tamer-dev-app`). The CLI resolves it automatically.

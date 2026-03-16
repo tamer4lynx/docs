@@ -7,6 +7,7 @@ Tamer4Lynx packages provide routing, UI, platform APIs, and tooling for Lynx app
 | Package | Description |
 |---------|-------------|
 | [tamer-dev-client](/packages/tamer-dev-client) | Dev launcher — QR scan, discovery, URL persistence, reload |
+| [tamer-host](/packages/tamer-host) | Production Lynx host templates for injecting into existing apps |
 | [tamer-router](/packages/tamer-router) | File-based routing, Stack and Tabs layouts |
 | [tamer-plugin](/packages/tamer-plugin) | Rsbuild plugin for tamer config |
 | [tamer-app-shell](/packages/tamer-app-shell) | AppBar, TabBar, Content components |
@@ -26,6 +27,8 @@ Tamer4Lynx packages provide routing, UI, platform APIs, and tooling for Lynx app
 | Package | Description |
 |---------|-------------|
 | [tamer-transports](/packages/tamer-transports) | Fetch, WebSocket, EventSource polyfills |
+| [lynxwebsockets](/packages/lynxwebsockets) | Native WebSocket module and polyfill |
+| [jiggle](/packages/jiggle) | Vibration/haptic native module |
 | [tamer-auth](/packages/tamer-auth) | OAuth 2.0 / PKCE |
 | [tamer-secure-store](/packages/tamer-secure-store) | Secure key-value storage |
 | [tamer-biometric](/packages/tamer-biometric) | Biometric authentication |
