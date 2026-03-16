@@ -1,0 +1,44 @@
+# tamer-insets
+
+Safe area insets and keyboard state for Lynx. Requires `TamerInsetsModule` native module.
+
+## Overview
+
+- **useInsets()** — Returns `{ top, right, bottom, left, raw }` (safe area insets in px)
+- **useKeyboard()** — Returns `{ visible, height, raw }` (keyboard state)
+
+Listens to `tamer-insets:change` and `tamer-insets:keyboard` events. Falls back to `TamerInsetsModule.getInsets` / `getKeyboard` on mount.
+
+## Installation
+
+```bash
+npm install tamer-insets
+```
+
+## API
+
+### useInsets()
+
+Returns `InsetsWithRaw`:
+
+```ts
+interface InsetsWithRaw extends Insets {
+  top: number
+  right: number
+  bottom: number
+  left: number
+  raw: Insets
+}
+```
+
+### useKeyboard()
+
+Returns `KeyboardStateWithRaw`:
+
+```ts
+interface KeyboardStateWithRaw extends KeyboardState {
+  visible: boolean
+  height: number
+  raw: KeyboardState
+}
+```
