@@ -22,13 +22,15 @@ Or from GitHub:
 npm i -g tamer4lynx/tamer4lynx
 ```
 
-## 2. Clone the repo
+## 2. Create a project
+
+Create a new Lynx project with Rspeedy:
 
 ```bash
-git clone https://github.com/tamer4lynx/tamer4lynx.git
+pnpm create rspeedy
 ```
 
-Native modules are package dependencies and will be installed with `npm install`.
+Or use an existing Lynx project.
 
 ## 3. Initialize config
 
