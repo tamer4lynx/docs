@@ -5,9 +5,9 @@ Safe area insets and keyboard state for Lynx. Requires `TamerInsetsModule` nativ
 ## Overview
 
 - **useInsets()** — Returns `{ top, right, bottom, left, raw }` (safe area insets in px)
-- **useKeyboard()** — Returns `{ visible, height, raw }` (keyboard state)
+- **useKeyboard()** — Returns `{ visible, height, duration, raw }` (keyboard state; `duration` is animation ms for transitions)
 
-Listens to `tamer-insets:change` and `tamer-insets:keyboard` events. Falls back to `TamerInsetsModule.getInsets` / `getKeyboard` on mount.
+Listens to `tamer-insets:change` and `tamer-insets:keyboard` (Android) and `keyboardstatuschanged` (iOS). Falls back to `TamerInsetsModule.getInsets` / `getKeyboard` on mount.
 
 ## Installation
 
@@ -39,6 +39,7 @@ Returns `KeyboardStateWithRaw`:
 interface KeyboardStateWithRaw extends KeyboardState {
   visible: boolean
   height: number
+  duration: number
   raw: KeyboardState
 }
 ```

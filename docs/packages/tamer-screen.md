@@ -36,10 +36,10 @@ Applies `useInsets()` as padding on specified edges. Default `edges` is all four
 ### AvoidKeyboard
 
 ```tsx
-<AvoidKeyboard behavior?: 'padding'|'position' style?>{children}</AvoidKeyboard>
+<AvoidKeyboard behavior?: 'padding'|'position' animate?: boolean style?>{children}</AvoidKeyboard>
 ```
 
-When keyboard is visible, adds bottom padding (`padding`) or `bottom` offset (`position`). Cancels bottom safe area inset when using padding.
+When keyboard is visible, adds bottom padding (`padding`) or `bottom` offset (`position`). Cancels bottom safe area inset when using padding. `animate={false}` snaps into place instead of animating.
 
 ### useSafeAreaContext()
 
