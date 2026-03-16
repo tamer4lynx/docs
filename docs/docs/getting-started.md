@@ -24,17 +24,11 @@ npm i -g tamer4lynx/tamer4lynx
 
 ## 2. Clone the repo
 
-This repo includes native modules as git submodules. Clone with:
-
 ```bash
-git clone --recurse-submodules https://github.com/tamer4lynx/tamer4lynx.git
+git clone https://github.com/tamer4lynx/tamer4lynx.git
 ```
 
-If you already have a clone:
-
-```bash
-git submodule update --init --recursive
-```
+Native modules are package dependencies and will be installed with `npm install`.
 
 ## 3. Initialize config
 

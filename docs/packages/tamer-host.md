@@ -52,10 +52,6 @@ Outputs to `embeddable/`: the bundle, Android (Kotlin) and iOS (Swift) snippets,
 
 `t4l android create` and `t4l ios create` use `tamer-host` templates when the package is installed. If `tamer-host` is not installed, the CLI falls back to inline templates.
 
-### Submodule
-
-`tamer-host` is included as a git submodule. Clone with `--recurse-submodules` or run `git submodule update --init --recursive` after cloning.
-
 ## Related
 
 - [tamer-dev-client](/packages/tamer-dev-client) — Adds dev launcher (QR scan, HMR) on top of the host
