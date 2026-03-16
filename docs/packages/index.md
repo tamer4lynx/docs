@@ -29,6 +29,5 @@ Tamer4Lynx packages provide routing, UI, platform APIs, and tooling for Lynx app
 | [tamer-auth](/packages/tamer-auth) | OAuth 2.0 / PKCE |
 | [tamer-secure-store](/packages/tamer-secure-store) | Secure key-value storage |
 | [tamer-biometric](/packages/tamer-biometric) | Biometric authentication |
-| [tamer-relog](/packages/tamer-relog) | Console log capture |
 | [tamer-linking](/packages/tamer-linking) | Deep linking |
 | [tamer-display-browser](/packages/tamer-display-browser) | In-app browser for OAuth |

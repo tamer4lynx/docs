@@ -13,7 +13,6 @@
   "tamer-auth": "tamer-auth",
   "tamer-secure-store": "tamer-secure-store",
   "tamer-biometric": "tamer-biometric",
-  "tamer-relog": "tamer-relog",
   "tamer-linking": "tamer-linking",
   "tamer-display-browser": "tamer-display-browser"
 }
