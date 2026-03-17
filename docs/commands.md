@@ -63,15 +63,14 @@ Start the dev server with HMR and WebSocket support (Expo-like). Prints a QR cod
 
 ## `t4l build`
 
-Unified build command. Delegates to `android build` or `ios build` based on `--platform`. Default target is `dev-app` (dev launcher with QR scan, HMR).
+Unified build command. Builds your app. Delegates to `android build` or `ios build` based on `--platform`. With **debug** (`-d`), the dev client (QR scan, HMR) is embedded when `@tamer4lynx/tamer-dev-client` is installed; with **release** (`-r`), the build has no dev client.
 
 | Flag | Short | Default | Description |
 |------|-------|---------|-------------|
 | `--platform <platform>` | `-p` | `all` | Which platform to build: `android`, `ios`, or `all` |
-| `--target <target>` | `-t` | `dev-app` | Build target: `host` (production app) or `dev-app` (dev launcher with QR scan, HMR) |
 | `--embeddable` | `-e` | — | Output to `embeddable/` for adding LynxView to an existing app. Produces: **Android** — pre-built AAR (`tamer-embeddable.aar`) + Gradle source; **iOS** — CocoaPod (podspec + Swift init + bundle). Use with `--release`. |
-| `--debug` | `-d` | default | Build debug (development) configuration. |
-| `--release` | `-r` | — | Build release (production) configuration. Smaller, optimized. |
+| `--debug` | `-d` | default | Debug build with dev client embedded (if tamer-dev-client is installed). |
+| `--release` | `-r` | — | Release build without dev client. Smaller, optimized. |
 | `--install` | `-i` | — | Install APK to connected device and launch app after building (Android only). |
 
 **`--embeddable` output:** Writes to `embeddable/`:
@@ -81,12 +80,12 @@ Unified build command. Delegates to `android build` or `ios build` based on `--p
 **Examples:**
 
 ```bash
-t4l build                                    # dev-app, all platforms, debug
-t4l build --platform android --install       # dev-app, Android, install to device
-t4l build --platform ios --install           # dev-app, iOS, install to simulator
-t4l build --platform android --target host   # production host app, Android
-t4l build --platform android --target host --release --install
-t4l build --embeddable --release             # AAR + CocoaPod for existing apps
+t4l build                          # debug, all platforms (with dev client if tamer-dev-client installed)
+t4l build -p android -d --install   # debug Android, install to device
+t4l build -p ios -d --install      # debug iOS, install to simulator
+t4l build -p android -r            # release Android, no dev client
+t4l build -p android -r --install
+t4l build --embeddable --release   # AAR + CocoaPod for existing apps
 ```
 
 ---
@@ -111,33 +110,31 @@ No flags.
 
 ## `t4l android bundle`
 
-Build the Lynx bundle and copy it to Android assets. Runs autolink before bundling.
+Build the Lynx bundle and copy it to Android assets. Runs autolink before bundling. Debug (`-d`) embeds the dev client when `@tamer4lynx/tamer-dev-client` is installed; release (`-r`) omits it.
 
 | Flag | Short | Default | Description |
 |------|-------|---------|-------------|
-| `--target <target>` | `-t` | `host` | Bundle target: `host` or `dev-app` |
-| `--debug` | `-d` | default | Build debug (development) bundle |
-| `--release` | `-r` | — | Build release (production) bundle |
+| `--debug` | `-d` | default | Debug bundle with dev client embedded (if present) |
+| `--release` | `-r` | — | Release bundle without dev client |
 
 ---
 
 ## `t4l android build`
 
-Build APK. Runs autolink, then bundle, then Gradle. Does not depend on `autolink` in `tamer.config.json`; link always runs.
+Build APK. Runs autolink, then bundle, then Gradle. Does not depend on `autolink` in `tamer.config.json`; link always runs. Debug (`-d`) includes the dev client when `@tamer4lynx/tamer-dev-client` is installed; release (`-r`) builds without it.
 
 | Flag | Short | Default | Description |
 |------|-------|---------|-------------|
 | `--install` | `-i` | — | Install APK to connected device and launch app after building |
-| `--target <target>` | `-t` | `host` | Build target: `host` or `dev-app` |
-| `--embeddable` | `-e` | — | Build for embedding in existing app (host only). Outputs: **AAR** (`tamer-embeddable.aar`) for Android; **CocoaPod** (TamerEmbeddable.podspec) for iOS. Use with `--release`. |
-| `--debug` | `-d` | default | Build debug (development) APK |
-| `--release` | `-r` | — | Build release (production) APK |
+| `--embeddable` | `-e` | — | Build for embedding in existing app. Outputs: **AAR** (`tamer-embeddable.aar`). Use with `--release`. |
+| `--debug` | `-d` | default | Debug APK with dev client embedded (if tamer-dev-client installed) |
+| `--release` | `-r` | — | Release APK without dev client |
 
 ---
 
 ## `t4l android sync`
 
-Sync dev client files (TemplateProvider, MainActivity, DevClientManager) from `tamer.config.json` into the Android project.
+Sync dev client files (TemplateProvider, MainActivity, DevClientManager) into the Android project. When `@tamer4lynx/tamer-dev-client` is installed, sync adds the dev client; otherwise it removes or leaves them out.
 
 No flags.
 
@@ -171,27 +168,25 @@ No flags.
 
 ## `t4l ios bundle`
 
-Build the Lynx bundle and copy it to the iOS project. Runs autolink before bundling.
+Build the Lynx bundle and copy it to the iOS project. Runs autolink before bundling. Debug (`-d`) embeds the dev client when `@tamer4lynx/tamer-dev-client` is installed; release (`-r`) omits it.
 
 | Flag | Short | Default | Description |
 |------|-------|---------|-------------|
-| `--target <target>` | `-t` | `host` | Bundle target: `host` or `dev-app` |
-| `--debug` | `-d` | default | Build debug (development) bundle |
-| `--release` | `-r` | — | Build release (production) bundle |
+| `--debug` | `-d` | default | Debug bundle with dev client embedded (if present) |
+| `--release` | `-r` | — | Release bundle without dev client |
 
 ---
 
 ## `t4l ios build`
 
-Build iOS app. Runs autolink, then bundle, then xcodebuild.
+Build iOS app. Runs autolink, then bundle, then xcodebuild. Debug (`-d`) includes the dev client when `@tamer4lynx/tamer-dev-client` is installed; release (`-r`) builds without it.
 
 | Flag | Short | Default | Description |
 |------|-------|---------|-------------|
-| `--target <target>` | `-t` | `host` | Build target: `host` or `dev-app` |
-| `--embeddable` | `-e` | — | Output to `embeddable/`: **AAR** for Android; **CocoaPod** for iOS. Use with `--release`. |
+| `--embeddable` | `-e` | — | Output to `embeddable/`: CocoaPod for iOS. Use with `--release`. |
 | `--install` | `-i` | — | Install and launch on booted simulator after building |
-| `--debug` | `-d` | default | Build debug (development) configuration |
-| `--release` | `-r` | — | Build release (production) configuration |
+| `--debug` | `-d` | default | Debug build with dev client embedded (if tamer-dev-client installed) |
+| `--release` | `-r` | — | Release build without dev client |
 
 ---
 

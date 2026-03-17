@@ -74,26 +74,27 @@ t4l start
 
 The terminal prints a QR code. Scan it with the Lynx dev app to connect and load your bundle with hot reload.
 
-### 5. Build the dev app
+### 5. Build your app
 
-The dev app embeds **tamer-dev-client** and loads your Lynx bundle from the connected dev server.
+Add **@tamer4lynx/tamer-dev-client** to your app to get a dev build with QR scan and HMR. Build with **debug** (`-d`) to embed the dev client; build with **release** (`-r`) for a production build without it.
 
 | Flag | Description |
 |------|-------------|
 | `--platform android` \| `ios` \| `all` | Build for one or both platforms. Default: `all`. |
-| `--target dev-app` \| `host` | `dev-app` (default): dev launcher with QR scan, HMR. `host`: production app. |
-| `--install` | Install APK to device or app to simulator after building. |
-| `--release` | Production build (optimized). Omit for debug. |
-| `--embeddable` | Output to `embeddable/`: **AAR** (Android) + **CocoaPod** (iOS) for adding LynxView to an existing app. Use with `--release`. |
+| `--debug` \| `-d` | Debug build with dev client (default). Requires `tamer-dev-client` for QR/HMR. |
+| `--release` \| `-r` | Release build without dev client. |
+| `--install` \| `-i` | Install APK to device or app to simulator after building. |
+| `--embeddable` \| `-e` | Output to `embeddable/`: **AAR** (Android) + **CocoaPod** (iOS) for adding LynxView to an existing app. Use with `--release`. |
 
 ```bash
-t4l build
-t4l build --platform android --install
-t4l build --platform ios --install
+t4l build                          # debug, all platforms (dev client if tamer-dev-client installed)
+t4l build -p android -d --install  # debug Android, install to device
+t4l build -p ios -d --install      # debug iOS, install to simulator
+t4l build -p android -r             # release Android, no dev client
 t4l build --embeddable --release   # for embedding in existing apps
 ```
 
-Use the dev app to connect to your local dev server (via URL or QR), then develop with HMR.
+Use the dev client (when built with `-d`) to connect to your local dev server via URL or QR, then develop with HMR.
 
 ## Next steps
 

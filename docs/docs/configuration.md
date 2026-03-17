@@ -34,9 +34,9 @@ Create it with `t4l init` or `t4l`.
 | `paths.lynxProject` | string | Same as top-level `lynxProject` |
 | `paths.lynxBundleRoot` | string | Bundle output dir inside Lynx project (default: `dist`) |
 | `paths.lynxBundleFile` | string | Bundle filename (default: `main.lynx.bundle`) |
-| `dev` | object | Dev mode configuration |
-| `dev.mode` | string | `standalone` \| `embedded` \| `off`. `embedded` = dev client in host app |
-| `devServer` | object | Dev server for HMR. When present, implies `dev.mode: embedded` |
+| `dev` | object | Dev mode configuration (optional). Dev client inclusion is now controlled by build type: **debug** (`-d`) embeds the dev client when `@tamer4lynx/tamer-dev-client` is installed; **release** (`-r`) omits it. |
+| `dev.mode` | string | `standalone` \| `embedded` \| `off`. Legacy; prefer using `-d` / `-r` for dev client. |
+| `devServer` | object | Dev server for HMR (host, port). Used when dev client is present. |
 | `devServer.host` | string | Host for native app to connect (e.g. `10.0.2.2` for Android emulator) |
 | `devServer.port` | number | Dev server port (default: 3000) |
 | `devServer.httpPort` | number | Alternative to `port` |
