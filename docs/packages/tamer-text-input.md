@@ -1,10 +1,10 @@
 # tamer-text-input
 
-Custom `<tamer-input>` element for Lynx. Requires native `TamerTextInput` custom element.
+Custom `<tamer-input>` element for Lynx that aims to combine `<input>` and `<textarea>` into a single component, similar to React Native’s `TextInput`. Requires native `TamerTextInput` custom element.
 
 ## Overview
 
-Single-line and multiline text input. Props mirror common input attributes. Events: `bindinput`, `bindfocus`, `bindblur`, `bindconfirm`, `bindcontentsizechange`, `bindselection`.
+Single-line and multiline text input via the `multiline` prop. Props mirror common input attributes. Events: `bindinput`, `bindfocus`, `bindblur`, `bindconfirm`, `bindcontentsizechange`, `bindselection`.
 
 ## Installation
 

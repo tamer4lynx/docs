@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "rspress build && node scripts/copy-md.mjs",
-    "dev": "rspress dev",
+    "dev": "rspress dev --port 3001",
     "preview": "rspress preview"
   },
   "dependencies": {

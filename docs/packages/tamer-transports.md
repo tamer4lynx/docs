@@ -6,11 +6,13 @@ Fetch, WebSocket, and EventSource polyfills for Lynx. Required for HMR and WebSo
 
 Installs polyfills on import:
 
-- **installFetchPolyfill()** — Ensures `fetch` works in Lynx
-- **installWebSocketPolyfill()** — WebSocket with base64 ArrayBuffer handling for Lynx
-- **installEventSourcePolyfill()** — EventSource via fetch streaming
+- **installFetchPolyfill()** — Replaces Lynx’s stock fetch with a polyfill that attempts to meet the browser-standard fetch API
+- **installWebSocketPolyfill()** — WebSocket polyfill that attempts to meet the browser-standard WebSocket API
+- **installEventSourcePolyfill()** — EventSource polyfill that attempts to meet the browser-standard EventSource API
 
 Exports `fetch`, `WebSocket`, `EventSource` (native or polyfilled).
+
+> **Note:** These polyfills are not fully tested. Report issues on GitHub.
 
 ## Installation
 

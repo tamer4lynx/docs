@@ -4,11 +4,14 @@ pageType: home
 hero:
   name: Tamer4Lynx
   text: Lynx ecosystem of native extensions and tooling
-  tagline: Tamer packages add routing, UI, and platform APIs on top of <a href="https://lynxjs.org/" target="_blank" rel="noopener">Lynx</a> for iOS, Android, and web.
+  tagline: Tamer packages add routing, UI, and platform APIs on top of <a href="https://lynxjs.org/" target="_blank" rel="noopener">Lynx</a> for iOS, Android, and web. All packages are published under <code>@tamer4lynx</code> on npm.
   actions:
     - theme: brand
       text: Getting Started
       link: /docs/getting-started/
+    - theme: alt
+      text: Configuration
+      link: /docs/configuration
     - theme: alt
       text: Commands
       link: /commands
@@ -38,6 +41,6 @@ features:
     details: Targets iOS, Android, and web from a single codebase with <a href="https://lynxjs.org/react/" target="_blank" rel="noopener">ReactLynx</a> and <a href="https://lynxjs.org/rspeedy/" target="_blank" rel="noopener">Rspeedy</a>.
     icon: 🌍
   - title: Framework agnostic
-    details: Tamer4Lynx is conceptually Lynx framework agnostic and should work with <a href="https://github.com/rahul-vashishtha/lynx-stack/tree/lynx-vue-implementation/packages/vue" target="_blank" rel="noopener">VueLynx</a> (@lynx-js/vue), <a href="https://github.com/haskell-miso/miso-lynx" target="_blank" rel="noopener">miso-lynx</a>, or other Lynx bindings. Some modules like tamer-router are specifically designed for @lynx-js/react.
+    details: Tamer4Lynx is conceptually Lynx framework agnostic and should work with <a href="https://github.com/haskell-miso/miso-lynx" target="_blank" rel="noopener">miso-lynx</a>, <a href="https://github.com/rahul-vashishtha/lynx-stack/tree/lynx-vue-implementation/packages/vue" target="_blank" rel="noopener">VueLynx</a> (@lynx-js/vue), or other Lynx bindings. Some modules like tamer-router are specifically designed for @lynx-js/react.
     icon: ⚡
 ---

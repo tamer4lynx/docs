@@ -5,11 +5,12 @@ Welcome to Tamer4Lynx documentation.
 ## Guides
 
 - [Getting Started](/docs/getting-started) — Install, init, dev server, build dev app
+- [Configuration](/docs/configuration) — tamer.config.json, tamer.config.ts, lynx.ext.json
 - [Commands](/commands) — CLI reference (`t4l`, `android`, `ios`, `build`, etc.)
 
 ## Packages
 
-- [Packages](/packages/) — tamer-router, tamer-dev-client, tamer-host, and more
+- [Packages](/packages/) — @tamer4lynx/* packages on npm (tamer-router, tamer-dev-client, tamer-host, and more)
 
 ## Lynx ecosystem
 

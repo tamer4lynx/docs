@@ -13,6 +13,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Docs', link: '/docs/' },
+      { text: 'Configuration', link: '/docs/configuration' },
       { text: 'Commands', link: '/commands' },
       { text: 'Packages', link: '/packages/' },
     ],
@@ -23,5 +24,9 @@ export default defineConfig({
         content: 'https://github.com/tamer4lynx/tamer4lynx',
       },
     ],
+    footer: {
+      message:
+        'If you find this helpful, consider <a href="https://ko-fi.com/nanofuxion" target="_blank" rel="noopener">supporting development</a>.',
+    },
   },
 });
