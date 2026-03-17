@@ -27,7 +27,7 @@ Create it with `t4l init` or `t4l`.
 | `ios.bundleId` | string | Bundle identifier (e.g. `com.example.MyApp`) |
 | `ios.urlSchemes` | array | URL schemes for deep linking. Each: `{ scheme, role? }` |
 | `ios.architectures` | string[] | Build architectures (default: `arm64`) |
-| `lynxProject` | string | Path to Lynx project (e.g. `packages/example`). Omit to auto-discover via workspaces |
+| `lynxProject` | string | Path to Lynx project (e.g. `packages/example`). Omit for single-folder layout (Lynx app is project root) or to auto-discover via workspaces |
 | `paths` | object | Override default paths |
 | `paths.androidDir` | string | Android project directory (default: `android`) |
 | `paths.iosDir` | string | iOS project directory (default: `ios`) |
@@ -43,20 +43,25 @@ Create it with `t4l init` or `t4l`.
 | `icon` | string \| object | App icon path or `{ source, android?, ios? }` |
 | `autolink` | boolean | When `true`, `t4l link` runs after `npm install` (if postinstall is configured) |
 
-### Example
+### Examples
+
+**Single-folder layout** (Lynx app, config, android/, ios/ in one directory — omit `lynxProject`):
 
 ```json
 {
-  "android": {
-    "appName": "MyApp",
-    "packageName": "com.example.myapp",
-    "sdk": "~/Library/Android/sdk"
-  },
-  "ios": {
-    "appName": "MyApp",
-    "bundleId": "com.example.MyApp",
-    "urlSchemes": [{ "scheme": "myapp" }]
-  },
+  "android": { "appName": "MyApp", "packageName": "com.example.myapp", "sdk": "~/Library/Android/sdk" },
+  "ios": { "appName": "MyApp", "bundleId": "com.example.MyApp" },
+  "paths": { "androidDir": "android", "iosDir": "ios" },
+  "autolink": true
+}
+```
+
+**Monorepo layout** (Lynx app in a package):
+
+```json
+{
+  "android": { "appName": "MyApp", "packageName": "com.example.myapp", "sdk": "~/Library/Android/sdk" },
+  "ios": { "appName": "MyApp", "bundleId": "com.example.MyApp" },
   "lynxProject": "packages/example",
   "paths": { "androidDir": "android", "iosDir": "ios" },
   "autolink": true

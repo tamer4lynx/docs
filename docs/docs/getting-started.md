@@ -15,17 +15,17 @@ Quick start with Tamer4Lynx: install the CLI, then use it in a Lynx project.
 All Tamer packages are under the `@tamer4lynx` scope on npm. Install the CLI globally:
 
 ```bash
-npm i -g @tamer4lynx/tamer4lynx
+npm i -g @tamer4lynx/cli
 ```
 
 With pnpm or Bun:
 
 ```bash
-pnpm add -g @tamer4lynx/tamer4lynx
-bun add -g @tamer4lynx/tamer4lynx
+pnpm add -g @tamer4lynx/cli
+bun add -g @tamer4lynx/cli
 ```
 
-Or from GitHub (run `npm uninstall -g @tamer4lynx/tamer4lynx` first if switching):
+Or from GitHub (run `npm uninstall -g @tamer4lynx/cli` first if switching):
 
 ```bash
 npm i -g tamer4lynx/tamer4lynx
@@ -45,7 +45,18 @@ pnpm create rspeedy
 
 **Using your own Lynx project?** Tamer4Lynx works with any Lynx binding — [miso-lynx](https://github.com/haskell-miso/miso-lynx), [VueLynx](https://github.com/rahul-vashishtha/lynx-stack/tree/lynx-vue-implementation/packages/vue) (@lynx-js/vue), or other Lynx bindings. Run `t4l init` from your project root.
 
-### 2. Initialize config
+### 2. Project layout: single folder vs monorepo
+
+A Tamer4Lynx project can be **one folder** or a **monorepo**:
+
+| Layout | Structure | When to use |
+|--------|-----------|-------------|
+| **Single folder** | `tamer.config.json`, Lynx app (`src/`, `lynx.config.ts`), `android/`, `ios/` all in the same directory | New projects, simple apps. Run `t4l init` and omit Lynx project path (or use `.`). |
+| **Monorepo** | `tamer.config.json` at root; Lynx app in `packages/myapp`; `android/`, `ios/` at root | Multiple packages, shared tooling. Set `lynxProject: "packages/myapp"` in config. |
+
+The example in this repo uses a monorepo layout. For a single-folder project, copy a Lynx app into a new directory, run `t4l init` there, and create native projects with `t4l android create` / `t4l ios create`. Everything lives in one place.
+
+### 3. Initialize config
 
 From the project root (where `tamer.config.json` will live):
 
@@ -53,9 +64,9 @@ From the project root (where `tamer.config.json` will live):
 t4l init
 ```
 
-Or run `t4l` with no arguments for interactive setup. The script prompts for Android app name, package name, SDK path, iOS bundle ID, and Lynx project path.
+Or run `t4l` with no arguments for interactive setup. The script prompts for Android app name, package name, SDK path, iOS bundle ID, and Lynx project path (leave blank for single-folder layout).
 
-### 3. Start the dev server
+### 4. Start the dev server
 
 ```bash
 t4l start
@@ -63,7 +74,7 @@ t4l start
 
 The terminal prints a QR code. Scan it with the Lynx dev app to connect and load your bundle with hot reload.
 
-### 4. Build the dev app
+### 5. Build the dev app
 
 The dev app embeds **tamer-dev-client** and loads your Lynx bundle from the connected dev server.
 
