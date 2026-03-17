@@ -6,6 +6,7 @@ Welcome to Tamer4Lynx documentation.
 
 - [Getting Started](/docs/getting-started) — Install, init, dev server, build dev app
 - [Configuration](/docs/configuration) — tamer.config.json, tamer.config.ts, lynx.ext.json
+- [Example Anatomy](/docs/example-anatomy) — Structure of packages/example
 - [Commands](/commands) — CLI reference (`t4l`, `android`, `ios`, `build`, etc.)
 
 ## Packages

@@ -1,6 +1,8 @@
 # Packages
 
-All Tamer packages are under the `@tamer4lynx` scope on npm. Install and run `t4l link` after adding. 
+All Tamer packages are under the `@tamer4lynx` scope on npm. Install and run `t4l link` after adding.
+
+See [Example Anatomy](/docs/example-anatomy) for a walkthrough of `packages/example` and how these packages fit together. 
 
 **add-core** 📦 = included in `t4l add-core`.
 
