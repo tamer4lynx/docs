@@ -10,7 +10,7 @@ Granular reference for all Tamer4Lynx commands and flags.
 |---------|-------------|
 | `t4l` or `t4l init` | Interactive setup: creates `tamer.config.json` in the current directory |
 | `t4l add [packages...]` | Add @tamer4lynx packages to the Lynx project |
-| `t4l add-core` | Add core packages (app-shell, screen, router, insets, transports, text-input, system-ui, icons) |
+| `t4l add-core` | Add core packages (app-shell, screen, router, insets, transports, input, system-ui, icons) |
 | `t4l --help` | Show help |
 | `t4l --version` | Show version |
 
@@ -30,7 +30,7 @@ Add `@tamer4lynx` packages to the Lynx project. Detects npm, pnpm, or bun from l
 
 | Argument | Description |
 |----------|-------------|
-| `packages...` | Package names (e.g. `tamer-auth`, `@tamer4lynx/tamer-auth`). Bare names get `@tamer4lynx/` prefix. |
+| `packages...` | Package names (e.g. `tamer-auth`, `input`, `@tamer4lynx/tamer-auth`). Bare names get `@tamer4lynx/` prefix. `input` maps to tamer-text-input. |
 
 **Future:** `t4l add` may track installed versions for compatibility (Expo-style).
 
@@ -45,7 +45,7 @@ t4l add @tamer4lynx/tamer-auth @tamer4lynx/tamer-secure-store
 
 ## `t4l add-core`
 
-Add core packages in one command: tamer-app-shell, tamer-screen, tamer-router, tamer-insets, tamer-transports, tamer-text-input, tamer-system-ui, tamer-icons.
+Add core packages in one command: tamer-app-shell, tamer-screen, tamer-router, tamer-insets, tamer-transports, tamer-text-input (alias: input), tamer-system-ui, tamer-icons.
 
 No flags. Run `t4l link` after adding.
 
