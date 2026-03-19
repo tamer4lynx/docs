@@ -22,14 +22,14 @@ npm install @tamer4lynx/tamer-host
 After creating an Android or iOS project (or if you already have one), run:
 
 ```bash
-t4l android inject
-t4l ios inject
+t4l inject android
+t4l inject ios
 ```
 
 Use `--force` to overwrite existing files:
 
 ```bash
-t4l android inject --force
+t4l inject android --force
 ```
 
 ### Embeddable output (no inject required)
@@ -50,7 +50,7 @@ Outputs to `embeddable/`: the bundle, Android (Kotlin) and iOS (Swift) snippets,
 
 ### Create flow
 
-`t4l android create` and `t4l ios create` use `tamer-host` templates when the package is installed. If `tamer-host` is not installed, the CLI falls back to inline templates.
+`t4l create android` and `t4l create ios` use `tamer-host` templates when the package is installed. If `tamer-host` is not installed, the CLI falls back to inline templates.
 
 ## Related
 

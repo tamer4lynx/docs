@@ -8,7 +8,7 @@ Tamer4Lynx uses three configuration files. Each serves a different purpose.
 
 **Location:** Project root (where you run `t4l`).
 
-**Purpose:** Defines the host native app: Android/iOS project paths, app identity, Lynx bundle location, dev server, and autolinking. Used by the CLI for `t4l android create`, `t4l ios create`, `t4l link`, `t4l build`, `t4l start`, etc.
+**Purpose:** Defines the host native app: Android/iOS project paths, app identity, Lynx bundle location, dev server, and autolinking. Used by the CLI for `t4l create android`, `t4l create ios`, `t4l link`, `t4l build`, `t4l start`, etc.
 
 Create it with `t4l init` or `t4l`.
 

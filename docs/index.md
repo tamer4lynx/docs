@@ -29,7 +29,7 @@ features:
     details: tamer-dev-client offers QR scan, discovery, URL persistence, and reload bridge for the dev launcher experience.
     icon: 🔧
   - title: UI components
-    details: tamer-app-shell, tamer-icons, tamer-insets, tamer-system-ui, and tamer-text-input for native UI building blocks.
+    details: tamer-app-shell, tamer-icons, tamer-insets, and tamer-system-ui for native UI building blocks. Text inputs use Lynx built-in `<input>` and `<textarea>`.
     icon: 🎨
   - title: Platform APIs
     details: tamer-screen, tamer-auth, tamer-secure-store, tamer-biometric, tamer-linking, and tamer-display-browser.

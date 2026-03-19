@@ -12,7 +12,7 @@ packages/example/
 ├── package.json
 ├── tsconfig.json
 ├── .env.example            # OAuth vars for native/auth
-├── intrinsic-element.d.ts # tamer-text-input + svg typings
+├── intrinsic-element.d.ts # input, textarea, svg typings
 ├── src/
 │   ├── index.tsx           # Entry: FileRouter + generated routes
 │   ├── App.tsx             # Legacy standalone (not used with router)
@@ -33,7 +33,7 @@ packages/example/
 │       ├── _layout.tsx     # Root layout: Tabs + useSystemUI
 │       ├── index.tsx       # Home tab
 │       ├── about.tsx
-│       ├── insets.tsx      # tamer-insets, tamer-text-input
+│       ├── insets.tsx      # tamer-insets, textarea
 │       ├── screen.tsx      # tamer-screen
 │       ├── secure.tsx      # tamer-secure-store, tamer-biometric
 │       └── native/
@@ -129,7 +129,7 @@ The `/native` route group uses a **Stack** for OAuth, linking, and browser scree
 | Page | Packages used | Purpose |
 |------|----------------|---------|
 | `index.tsx` | tamer-router, tamer-icons, jiggle | Home: logo tap, navigation buttons, Icon demo |
-| `insets.tsx` | tamer-insets, tamer-text-input | Safe area, keyboard insets, `<tamer-input>` |
+| `insets.tsx` | tamer-insets | Safe area, keyboard insets, `<textarea>` |
 | `screen.tsx` | tamer-screen | Screen, SafeArea, AvoidKeyboard |
 | `secure.tsx` | tamer-secure-store, tamer-biometric | Secure storage + biometric auth |
 | `native/auth.tsx` | tamer-auth | OAuth 2.0 / PKCE flow |
@@ -147,7 +147,7 @@ The `/native` route group uses a **Stack** for OAuth, linking, and browser scree
 
 ## TypeScript
 
-- **intrinsic-element.d.ts** — Extends Lynx types for `<tamer-input>` and `<svg content="..." />`.
+- **intrinsic-element.d.ts** — Extends Lynx types for `<input>`, `<textarea>`, and `<svg content="..." />`.
 - **rspeedy-env.d.ts** — Declares `app-bar`, `icon` for JSX.
 
 ---

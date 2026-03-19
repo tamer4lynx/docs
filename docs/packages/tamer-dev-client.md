@@ -134,7 +134,7 @@ The dev client ships with Connect, Recent, and Discover pages. The layout uses `
 
 ## Standard module pattern
 
-`tamer-dev-client` is a standard tamer module. When installed, `t4l android sync` and `t4l ios sync` read host templates from the package (`android/templates/`, `ios/templates/`) and apply them to wire the dev client into your host app. The templates use `{{PACKAGE_NAME}}` and `{{APP_NAME}}` placeholders.
+`tamer-dev-client` is a standard tamer module. When installed, `t4l sync android` (or `t4l sync`) reads host templates from the package (`android/templates/`, `ios/templates/`) and applies them to wire the dev client into your host app. The templates use `{{PACKAGE_NAME}}` and `{{APP_NAME}}` placeholders. (Sync is supported for Android; iOS dev client is synced via the iOS create/sync flow.)
 
 ## Build behavior
 

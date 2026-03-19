@@ -60,7 +60,7 @@ A Tamer4Lynx project can be **one folder** or a **monorepo**:
 | **Single folder** | `tamer.config.json`, Lynx app (`src/`, `lynx.config.ts`), `android/`, `ios/` all in the same directory | New projects, simple apps. Run `t4l init` and omit Lynx project path (or use `.`). |
 | **Monorepo** | `tamer.config.json` at root; Lynx app in `packages/myapp`; `android/`, `ios/` at root | Multiple packages, shared tooling. Set `lynxProject: "packages/myapp"` in config. |
 
-The example in this repo uses a monorepo layout. For a single-folder project, copy a Lynx app into a new directory, run `t4l init` there, and create native projects with `t4l android create` / `t4l ios create`. Everything lives in one place.
+The example in this repo uses a monorepo layout. For a single-folder project, copy a Lynx app into a new directory, run `t4l init` there, and create native projects with `t4l create android` / `t4l create ios`. Everything lives in one place.
 
 ### 3. Initialize config
 
@@ -84,19 +84,20 @@ The terminal prints a QR code. Scan it with the Lynx dev app to connect and load
 
 Add **@tamer4lynx/tamer-dev-client** to your app to get a dev build with QR scan and HMR. Build with **debug** (`-d`) to embed the dev client; build with **release** (`-r`) for a production build without it.
 
-| Flag | Description |
-|------|-------------|
-| `--platform android` \| `ios` \| `all` | Build for one or both platforms. Default: `all`. |
-| `--debug` \| `-d` | Debug build with dev client (default). Requires `tamer-dev-client` for QR/HMR. |
-| `--release` \| `-r` | Release build without dev client. |
-| `--install` \| `-i` | Install APK to device or app to simulator after building. |
-| `--embeddable` \| `-e` | Output to `embeddable/`: **AAR** (Android) + **CocoaPod** (iOS) for adding LynxView to an existing app. Use with `--release`. |
+Commands use the form `t4l <command> [target] [flags]`. For build, pass the platform as the target (or omit for both).
+
+| Flag | Short | Description |
+|------|-------|-------------|
+| `--debug` | `-d` | Debug build with dev client (default). Requires `tamer-dev-client` for QR/HMR. |
+| `--release` | `-r` | Release build without dev client. |
+| `--install` | `-i` | Install APK to device or app to simulator after building. |
+| `--embeddable` | `-e` | Output to `embeddable/`: **AAR** (Android) + **CocoaPod** (iOS). Use with `--release`. |
 
 ```bash
 t4l build                          # debug, all platforms (dev client if tamer-dev-client installed)
-t4l build -p android -d --install  # debug Android, install to device
-t4l build -p ios -d --install      # debug iOS, install to simulator
-t4l build -p android -r             # release Android, no dev client
+t4l build android --install        # debug Android, install to device
+t4l build ios --install            # debug iOS, install to simulator
+t4l build android --release        # release Android, no dev client
 t4l build --embeddable --release   # for embedding in existing apps
 ```
 

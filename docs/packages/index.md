@@ -6,7 +6,7 @@ All Tamer packages are under the `@tamer4lynx` scope on npm. Use `@prerelease` f
 
 See [Example Anatomy](/docs/example-anatomy) for a walkthrough of `packages/example` and how these packages fit together. 
 
-**add-core** 📦 = included in `t4l add-core` (app-shell, screen, router, insets, transports, input, system-ui, icons).
+**add-core** 📦 = included in `t4l add-core` (app-shell, screen, router, insets, transports, system-ui, icons).
 
 ## Core
 
@@ -26,7 +26,8 @@ See [Example Anatomy](/docs/example-anatomy) for a walkthrough of `packages/exam
 | [@tamer4lynx/tamer-insets](/packages/tamer-insets) | 📦 | `npm i @tamer4lynx/tamer-insets@prerelease` | Safe area and keyboard insets |
 | [@tamer4lynx/tamer-system-ui](/packages/tamer-system-ui) | 📦 | `npm i @tamer4lynx/tamer-system-ui@prerelease` | Status bar, nav bar, theme colors |
 | [@tamer4lynx/tamer-icons](/packages/tamer-icons) | 📦 | `npm i @tamer4lynx/tamer-icons@prerelease` | Icon component, Material/FontAwesome |
-| [@tamer4lynx/tamer-text-input](/packages/tamer-text-input) | 📦 | `npm i @tamer4lynx/tamer-text-input@prerelease` | Custom `<tamer-input>` element (combines input/textarea like React Native TextInput) |
+
+Text inputs use Lynx built-in `<input>` and `<textarea>` (xelement-input). Add `implementation(libs.lynx.xelement.input)` to your app; autolink adds it when needed.
 
 ## Platform
 
