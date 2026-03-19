@@ -12,7 +12,7 @@ See [Example Anatomy](/docs/example-anatomy) for a walkthrough of `packages/exam
 
 | Package | add-core | Install | Description |
 |---------|:--------:|---------|-------------|
-| [@tamer4lynx/tamer-dev-client](/packages/tamer-dev-client) | | `npm i @tamer4lynx/tamer-dev-client@prerelease` | Dev launcher — QR scan, discovery, URL persistence, reload |
+| [@tamer4lynx/tamer-dev-client](/packages/tamer-dev-client) | | `npm i @tamer4lynx/tamer-dev-client@prerelease` | Dev launcher — QR scan, discovery, recent, native module compatibility vs `meta.json` |
 | [@tamer4lynx/tamer-host](/packages/tamer-host) | | `npm i @tamer4lynx/tamer-host@prerelease` | Production Lynx host templates for injecting into existing apps |
 | [@tamer4lynx/tamer-router](/packages/tamer-router) | 📦 | `npm i @tamer4lynx/tamer-router@prerelease` | File-based routing, Stack and Tabs layouts |
 | [@tamer4lynx/tamer-plugin](/packages/tamer-plugin) | | `npm i @tamer4lynx/tamer-plugin@prerelease` | Rsbuild plugin for tamer config |

@@ -40,8 +40,18 @@ Create it with `t4l init` or `t4l`.
 | `devServer.host` | string | Host for native app to connect (e.g. `10.0.2.2` for Android emulator) |
 | `devServer.port` | number | Dev server port (default: 3000) |
 | `devServer.httpPort` | number | Alternative to `port` |
-| `icon` | string \| object | App icon path or `{ source, android?, ios? }` |
+| `icon` | string \| object | App icon: path string, or `{ source?, android?, ios?, androidAdaptive? }`. **`androidAdaptive`** (Android 8+): `{ foreground, background? }` or `{ foreground, backgroundColor? }`. Optional layout: **`foregroundScale`**: 0–1 uniform shrink (e.g. `0.62`); **`foregroundPadding`**: extra inset as number (% per side), `"8dp"`, `"10%"`, or `{ left, top, right, bottom }`. Scale and padding are merged into `<layer-list>` insets. `t4l build` / `t4l bundle` refreshes icons. |
 | `autolink` | boolean | When `true`, `t4l link` runs after `npm install` (if postinstall is configured) |
+
+### iOS autolink artifacts
+
+Besides `Podfile` and `LynxInitProcessor.swift`, **`t4l link ios`** (and any command that runs iOS autolink) may generate:
+
+| File | When | Purpose |
+|------|------|---------|
+| `tamer-host-native-modules.json` | `@tamer4lynx/tamer-dev-client` is in `node_modules` | Lists `moduleClassName` values for dev-client **compatibility** with dev server `meta.json`; copied into the app bundle as a resource |
+
+Commit this JSON (or re-run `t4l link ios` on CI) so the app stays aligned with linked native packages.
 
 ### Examples
 
@@ -67,6 +77,37 @@ Create it with `t4l init` or `t4l`.
   "autolink": true
 }
 ```
+
+**Android adaptive icon** (light logo on dark): set `foreground` to the logo asset and `backgroundColor` instead of a background image:
+
+```json
+{
+  "icon": {
+    "source": "packages/example/src/assets/logo.png",
+    "androidAdaptive": {
+      "foreground": "packages/example/src/assets/logo.png",
+      "backgroundColor": "#000000"
+    }
+  }
+}
+```
+
+If the logo is clipped by the launcher mask, shrink and/or pad the foreground layer:
+
+```json
+{
+  "androidAdaptive": {
+    "foreground": "packages/example/src/assets/logo.png",
+    "backgroundColor": "#000000",
+    "foregroundScale": 0.62,
+    "foregroundPadding": 6
+  }
+}
+```
+
+`foregroundScale=0.62` adds `((1−0.62)/2)*100 ≈ 19%` inset on each side. `foregroundPadding=6` adds another 6% per side. Both are merged into `android:left/top/right/bottom` on a `<layer-list>` item — no `ScaleDrawable` quirks.
+
+Keep `source` (and optional `ios`) so fallback launcher mipmaps and the iOS app icon still resolve from the same file.
 
 ---
 

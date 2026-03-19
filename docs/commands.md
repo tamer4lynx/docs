@@ -86,7 +86,7 @@ t4l build --embeddable --release
 
 Link native modules to the project and sync native dependencies. **Platform:** `ios` | `android` | `both` (optional; default `both`).
 
-- **iOS:** Updates Podfile and LynxInitProcessor, then runs **`pod install`** in the `ios` directory.
+- **iOS:** Updates Podfile and `LynxInitProcessor.swift` (imports, module registrations, `DevClientModule.attachSupportedModuleClassNames`), then runs **`pod install`** in the `ios` directory. If `@tamer4lynx/tamer-dev-client` is installed, also writes **`tamer-host-native-modules.json`** into `ios/<AppName>/` (lists JVM-style `moduleClassName` values matching dev server `meta.json`) and registers it in the Xcode project’s **Copy Bundle Resources**.
 - **Android:** Updates settings.gradle.kts, app/build.gradle.kts, and generated code, then runs **Gradle sync** (`./gradlew projects`) in the `android` directory.
 
 | Flag | Short | Description |
@@ -107,7 +107,7 @@ t4l link --silent
 
 ## `t4l bundle [platform]`
 
-Build the Lynx bundle and copy it to the native project. **Platform:** `ios` | `android` (optional; omit for both). Runs autolink before bundling.
+Build the Lynx bundle and copy it to the native project. **Platform:** `ios` | `android` (optional; omit for both). Runs **autolink** before bundling (iOS: includes `tamer-host-native-modules.json` when dev-client is present — see `t4l link`).
 
 | Flag | Short | Default | Description |
 |------|-------|---------|-------------|

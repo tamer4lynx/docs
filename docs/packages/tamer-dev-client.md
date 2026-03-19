@@ -12,6 +12,16 @@ The dev client provides:
 - **Reload** — Reload the Lynx bundle from the dev server
 - **Compatibility check** — Validates native modules between app and project; shows modal if incompatible
 
+### iOS: how the host’s native modules are known
+
+The dev server’s `meta.json` lists required native modules using the same JVM-style `moduleClassName` strings as Android (from each package’s `lynx.ext.json` / `tamer.json`).
+
+On **iOS**, Lynx does not enumerate registered modules at runtime. The host normally passes that list via `DevClientModule.attachSupportedModuleClassNames(...)` in generated `LynxInitProcessor.swift` (Tamer autolink).
+
+Additionally, **`t4l link ios` / `t4l bundle ios` / `t4l build ios`** (via autolink) writes **`tamer-host-native-modules.json`** into `ios/<AppName>/` and adds it to **Copy Bundle Resources**. It contains `{ "moduleClassNames": [ ... ] }` using the same discovery as dev server **`meta.json`** (`nativeModules[].moduleClassName`). `DevClientModule` reads this file **only when** the set from `attachSupportedModuleClassNames` is still empty (e.g. custom `LynxInit` without the `GENERATED DEV_CLIENT_SUPPORTED` block). Re-run **`t4l link ios`** after adding or removing `@tamer4lynx/*` native packages.
+
+**Recent tab:** Rows can show a cached icon (`data:` URL + `localStorage` when available) and a status dot: **green** when the server responds with Tamer `meta.json` and `tamerAppKey` matches the saved entry (if present); amber/gray/red for mismatch, stale meta, or offline.
+
 When you **build with debug** (`t4l build -d` or `t4l build`), the dev client UI is embedded and the Lynx bundle is loaded from the connected dev server. Build with **release** (`t4l build -r`) to produce an app without the dev client.
 
 ## Installation
@@ -62,8 +72,15 @@ Returns the dev launcher context. Throws if used outside `DevLauncherProvider`.
 | `navigateToConnectRef` | `MutableRefObject<(() => void) \| null>` | Ref for navigating to Connect tab (e.g. after QR scan) |
 | `theme` | `DevLauncherTheme \| null` | Theme from native (or null) |
 | `setTheme` | `(t: DevLauncherTheme \| null) => void` | Set theme |
-| `recentUrls` | `string[]` | Recently used URLs |
+| `recentUrls` | `string[]` | Recently used URLs (derived from `recentEntries`) |
+| `recentEntries` | `RecentEntry[]` | Recent rows: `url`, optional `label`, `iconUrl`, `tamerAppKey` |
+| `recentReachability` | `Record<string, RecentReachability>` | Per-URL: `checking` \| `matched` \| `mismatch` \| `stale` \| `offline` |
+| `recentRowIconSrc` | `Record<string, string>` | Cached `data:` icon URL per recent row `url` |
 | `discoveredServers` | `DiscoveredServer[]` | mDNS-discovered servers |
+| `removeRecentItem` | `(url: string) => void` | Remove a recent URL (native + UI state) |
+| `showIncompatibleModalForUrl` | `(parsed: string) => void` | Run compatibility check and open modal if missing modules |
+| `connectError` | `string` | Last connect error (e.g. unreachable URL) |
+| `clearConnectError` | `() => void` | Clear `connectError` |
 | `incompatibleModalVisible` | `boolean` | Whether compatibility modal is shown |
 | `setIncompatibleModalVisible` | `(v: boolean) => void` | Show/hide modal |
 | `incompatibleModules` | `RequiredModule[]` | Modules required by project but missing in app |
@@ -96,8 +113,24 @@ Merges partial theme with `FALLBACK_THEME`. Use when theme may be null.
 ### DiscoveredServer
 
 ```ts
-type DiscoveredServer = { url: string; name: string }
+type DiscoveredServer = {
+  url: string
+  name: string
+  compatible?: boolean
+  iconUrl?: string
+  tamerAppKey?: string
+}
 ```
+
+### RecentEntry
+
+```ts
+type RecentEntry = { url: string; tamerAppKey?: string; label?: string; iconUrl?: string }
+```
+
+### RecentReachability
+
+`'checking' | 'matched' | 'mismatch' | 'stale' | 'offline'` — see Recent tab behavior above.
 
 ### RequiredModule
 
@@ -114,11 +147,13 @@ Low-level native bridge. Methods:
 | `setDevServerUrl` | `{ url: string }` | — | Save dev server URL |
 | `getDevServerUrl` | — | `(url: string) => void` | Get saved URL |
 | `getRecentUrls` | — | `(urls: string[]) => void` | Get recent URLs |
+| `getRecentEntries` | — | `(rows: RecentEntry[]) => void` | Get recent rows (when native supports it) |
+| `removeRecentUrl` | `{ url: string }` | — | Remove one recent URL |
 | `getDiscoveredServers` | — | `(servers: DiscoveredServer[]) => void` | Get mDNS servers |
 | `startDiscovery` | — | — | Start mDNS discovery |
 | `stopDiscovery` | — | — | Stop discovery |
 | `reloadWithProjectBundle` | — | — | Reload bundle from dev server |
-| `checkServerCompatibility` | `{ url: string }` | `(compatible: boolean, requiredModules: unknown) => void` | Check if app has modules required by project |
+| `checkServerCompatibility` | `{ url: string }` | `(compatible: boolean, requiredModules: unknown) => void` | Check app vs project `meta.json` `nativeModules`. On **iOS**, native delivers one NSArray argument; **`devCall` normalizes** to the same two-arg shape as Android. Use `toRequiredModules` on the second value. |
 | `scanQR` | — | — | Open QR scanner |
 
 ### toRequiredModules(raw)

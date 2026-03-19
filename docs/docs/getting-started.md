@@ -103,6 +103,8 @@ t4l build --embeddable --release   # for embedding in existing apps
 
 Use the dev client (when built with `-d`) to connect to your local dev server via URL or QR, then develop with HMR.
 
+Whenever you add or remove **`@tamer4lynx/*`** native packages, run **`t4l link`** (or **`t4l link ios`** / **`t4l link android`**) so autolinking updates native projects. On iOS with **tamer-dev-client**, autolink also refreshes **`tamer-host-native-modules.json`** (used for dev-server compatibility checks).
+
 ## Next steps
 
 - [Configuration Reference](/docs/configuration) — tamer.config.json, tamer.config.ts, lynx.ext.json

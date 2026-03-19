@@ -54,5 +54,5 @@ Outputs to `embeddable/`: the bundle, Android (Kotlin) and iOS (Swift) snippets,
 
 ## Related
 
-- [tamer-dev-client](/packages/tamer-dev-client) — Adds dev launcher (QR scan, HMR) on top of the host
+- [tamer-dev-client](/packages/tamer-dev-client) — Adds dev launcher (QR scan, HMR, `meta.json` compatibility) on top of the host; iOS embedded flow syncs `LynxInitProcessor` + optional `tamer-host-native-modules.json` via `t4l link ios`
 - [Embedding LynxView into Native View](https://lynxjs.org/guide/embed-lynx-to-native) — Lynx guide for embedding LynxView in existing layouts
