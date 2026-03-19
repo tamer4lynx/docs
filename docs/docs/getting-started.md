@@ -12,17 +12,12 @@ Quick start with Tamer4Lynx: install the CLI, then use it in a Lynx project.
 
 ## Install Tamer4Lynx (one-time)
 
-All Tamer packages are under the `@tamer4lynx` scope on npm. Install the CLI globally:
+All Tamer packages are under the `@tamer4lynx` scope on npm. Install the CLI globally (use `@prerelease` for latest):
 
 ```bash
-npm i -g @tamer4lynx/cli
-```
-
-With pnpm or Bun:
-
-```bash
-pnpm add -g @tamer4lynx/cli
-bun add -g @tamer4lynx/cli
+npm i -g @tamer4lynx/cli@prerelease
+pnpm add -g @tamer4lynx/cli@prerelease
+bun add -g @tamer4lynx/cli@prerelease
 ```
 
 Or from GitHub (run `npm uninstall -g @tamer4lynx/cli` first if switching):
@@ -41,6 +36,17 @@ Create a new Lynx project with Rspeedy:
 
 ```bash
 pnpm create rspeedy
+cd my-app
+```
+
+Install dependencies:
+
+```bash
+npm install
+# or
+pnpm install
+# or
+bun install
 ```
 
 **Using your own Lynx project?** Tamer4Lynx works with any Lynx binding — [miso-lynx](https://github.com/haskell-miso/miso-lynx), [VueLynx](https://github.com/rahul-vashishtha/lynx-stack/tree/lynx-vue-implementation/packages/vue) (@lynx-js/vue), or other Lynx bindings. Run `t4l init` from your project root.

@@ -17,7 +17,9 @@ When you **build with debug** (`t4l build -d` or `t4l build`), the dev client UI
 ## Installation
 
 ```bash
-npm install @tamer4lynx/tamer-dev-client
+npm i @tamer4lynx/tamer-dev-client@prerelease
+pnpm add @tamer4lynx/tamer-dev-client@prerelease
+bun add @tamer4lynx/tamer-dev-client@prerelease
 ```
 
 Add to your app's dependencies. Linking runs automatically on install when your project has a postinstall script; otherwise run `t4l link`.
