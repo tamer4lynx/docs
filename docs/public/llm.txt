@@ -21,9 +21,7 @@ Lynx ecosystem of native extensions and tooling. Tamer packages add routing, UI,
 | tamer-insets | Safe area and keyboard insets |
 | tamer-system-ui | Status bar, nav bar, theme colors |
 | tamer-icons | Icon component, Material/FontAwesome |
-| tamer-text-input | Custom tamer-input element |
 | tamer-transports | Fetch, WebSocket, EventSource polyfills |
-| lynxwebsockets | Native WebSocket module and polyfill |
 | jiggle | Vibration/haptic native module |
 | tamer-auth | OAuth 2.0 / PKCE |
 | tamer-secure-store | Secure key-value storage |

@@ -84,7 +84,10 @@ t4l build --embeddable --release
 
 ## `t4l link [platform]`
 
-Link native modules to the project. **Platform:** `ios` | `android` | `both` (optional; default `both`).
+Link native modules to the project and sync native dependencies. **Platform:** `ios` | `android` | `both` (optional; default `both`).
+
+- **iOS:** Updates Podfile and LynxInitProcessor, then runs **`pod install`** in the `ios` directory.
+- **Android:** Updates settings.gradle.kts, app/build.gradle.kts, and generated code, then runs **Gradle sync** (`./gradlew projects`) in the `android` directory.
 
 | Flag | Short | Description |
 |------|-------|-------------|
@@ -97,6 +100,8 @@ t4l link
 t4l link android
 t4l link --silent
 ```
+
+**Host apps (`tamer-dev-app`, projects created with `t4l ios create`):** `LynxInitProcessor.swift` from **tamer-dev-client** templates only contains `GENERATED IMPORTS` / `GENERATED AUTOLINK` placeholders. Run `t4l link` from the app root (where `tamer.config.json` lives) so those sections are filled from your `node_modules` `@tamer4lynx/*` packages. In the monorepo, `packages/tamer-dev-app` provides `npm run link:native` after building the CLI (`npm run build` at repo root).
 
 ---
 
