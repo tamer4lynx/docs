@@ -80,6 +80,8 @@ t4l build android --release --install
 t4l build --embeddable --release
 ```
 
+**Node 22+ and `ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING` (dev-client):** Older `@tamer4lynx/tamer-dev-client` releases (e.g. **0.0.10**) only published `lynx.config.ts`. Rspeedy picks `.ts` before `.mjs`, and Node 22 will not strip types for files under `node_modules`. Use **≥ 0.0.12** (`lynx.config.mjs` + `rspeedy build --config lynx.config.mjs`), or temporarily use Node 20 for the install/build.
+
 ---
 
 ## `t4l link [platform]`
@@ -102,6 +104,8 @@ t4l link --silent
 ```
 
 **Host apps (`tamer-dev-app`, projects created with `t4l ios create`):** `LynxInitProcessor.swift` from **tamer-dev-client** templates only contains `GENERATED IMPORTS` / `GENERATED AUTOLINK` placeholders. Run `t4l link` from the app root (where `tamer.config.json` lives) so those sections are filled from your `node_modules` `@tamer4lynx/*` packages. In the monorepo, `packages/tamer-dev-app` provides `npm run link:native` after building the CLI (`npm run build` at repo root).
+
+**iOS `No podspec found` for a Tamer package:** Often the app depended on **`npm install …@latest`**, where **`latest`** points at an older tarball without `ios/`. Reinstall the **newest published semver** (e.g. `bun add @tamer4lynx/tamer-insets@0.0.3`) or use **`t4l add`**, which resolves the **highest version** from the registry, then `t4l link ios` again.
 
 ---
 
@@ -160,6 +164,8 @@ Start the dev server with HMR and WebSocket support (Expo-like). Prints a QR cod
 
 Add `@tamer4lynx` packages to the Lynx project. Detects npm, pnpm, or bun from lockfiles and runs the appropriate install in the Lynx project directory.
 
+For **scoped `@tamer4lynx/*` packages without a version**, the CLI runs **`npm view <pkg> versions --json`**, picks the **highest semver** published on the registry, and installs `name@version`. That avoids relying on npm’s **`latest`** dist-tag or a single tag like **`prerelease`** when they point at an older publish. If the registry query fails, it falls back to `@prerelease`. Requires **network access** to the npm registry.
+
 | Argument | Description |
 |----------|-------------|
 | `packages...` | Package names (e.g. `tamer-auth`, `@tamer4lynx/tamer-auth`). Bare names get `@tamer4lynx/` prefix. |
@@ -177,7 +183,7 @@ t4l add @tamer4lynx/tamer-auth @tamer4lynx/tamer-secure-store
 
 ## `t4l add-core`
 
-Add core packages in one command: tamer-app-shell, tamer-screen, tamer-router, tamer-insets, tamer-transports, tamer-system-ui, tamer-icons. Run `t4l link` after adding.
+Add core packages in one command: tamer-app-shell, tamer-screen, tamer-router, tamer-insets, tamer-transports, tamer-system-ui, tamer-icons. Resolves the **highest published semver** per package (same as `t4l add`). Run `t4l link` after adding.
 
 No flags. Run `t4l link` after adding.
 

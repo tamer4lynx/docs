@@ -8,6 +8,8 @@ Lynx ecosystem of native extensions and tooling. Tamer packages add routing, UI,
 - [Commands](https://tamer4lynx.github.io/commands) — CLI reference (t4l, android, ios, build)
 - [Packages](https://tamer4lynx.github.io/packages/) — Package index
 
+**Install Tamer packages:** do not rely on npm’s **`latest`** for `@tamer4lynx/*` — it may lag behind the newest tarball (e.g. missing `ios/`). Prefer an explicit version or run **`t4l add` / `t4l add-core`**, which query the registry and install the **highest published semver** per package.
+
 ## Packages
 
 | Package | Description |
