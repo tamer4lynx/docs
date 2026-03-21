@@ -11,9 +11,9 @@ Environment: On startup, `t4l` loads **`.env`** then **`.env.local`** from the d
 | Command | Description |
 |---------|-------------|
 | `t4l` or `t4l init` | Interactive setup: creates `tamer.config.json` in the current directory |
-| `t4l add [packages...]` | Add @tamer4lynx packages to the Lynx project |
-| `t4l add-core` | Add core packages (app-shell, screen, router, insets, transports, system-ui, icons) |
-| `t4l add-dev` | Add dev packages (dev-app, dev-client, and all their dependencies) |
+| `t4l add …` | Add `@tamer4lynx/*` to the Lynx project — details below |
+| `t4l add-core` | Install the core stack in one command — details below |
+| `t4l add-dev` | Install dev-app, dev-client, and their dependencies — details below |
 | `t4l signing [platform]` | Configure Android/iOS signing (interactive; Android can generate a keystore with `keytool`) |
 | `t4l --help` | Show help |
 | `t4l --version` | Show version |
@@ -136,7 +136,7 @@ t4l link --silent
 3. Run `t4l link` after adding dependencies to update Podfile/Gradle and native registration code.
 4. For iOS, run `pod install` in the `ios/` directory after podspec changes.
 
-**iOS `No podspec found` for a Tamer package:** Often the app depended on **`npm install …@latest`**, where **`latest`** points at an older tarball without `ios/`. Reinstall the **newest published semver** (e.g. `bun add @tamer4lynx/tamer-insets@0.0.3`) or use **`t4l add`**, which resolves the **highest version** from the registry, then `t4l link ios` again.
+**iOS `No podspec found` for a Tamer package:** Often the app depended on **`npm install …@latest`**, where **`latest`** points at an older tarball without `ios/`. Prefer **`t4l add tamer-insets`** (or the relevant package): it resolves the **highest published semver** from the registry, unlike `latest` when that tag lags. Then run **`t4l link ios`** again.
 
 **Xcode reports unknown UUID in `project.pbxproj`:** This can occur after merge conflicts or if the project file was manually edited. Fix by reverting `ios/<AppName>.xcodeproj/project.pbxproj` from git and re-running `t4l bundle ios` or `t4l link ios` to regenerate resource references.
 
@@ -198,9 +198,9 @@ Start the dev server with HMR and WebSocket support (Expo-like). Shows an **Ink*
 
 ## `t4l add [packages...]`
 
-Add `@tamer4lynx` packages to the Lynx project. Detects npm, pnpm, or bun from lockfiles and runs the appropriate install in the Lynx project directory.
+Add `@tamer4lynx` packages to the **Lynx project** (`lynxProject` in `tamer.config.json`). Detects npm, pnpm, or bun from lockfiles and runs the appropriate install there.
 
-For **scoped `@tamer4lynx/*` packages without a version**, the CLI runs **`npm view <pkg> versions --json`**, picks the **highest semver** published on the registry, and installs `name@version`. That avoids relying on npm’s **`latest`** dist-tag or a single tag like **`prerelease`** when they point at an older publish. If the registry query fails, it falls back to `@prerelease`. Requires **network access** to the npm registry.
+For **scoped `@tamer4lynx/*` packages without a version**, the CLI runs **`npm view <pkg> versions --json`**, picks the **highest semver** published on the registry, and installs `name@version`. That avoids relying on npm’s **`latest`** dist-tag or **`prerelease`** when they point at an older publish. If the registry query fails, it falls back to `@prerelease`. Requires **network access** to the npm registry.
 
 | Argument | Description |
 |----------|-------------|
@@ -219,9 +219,17 @@ t4l add @tamer4lynx/tamer-auth @tamer4lynx/tamer-secure-store
 
 ## `t4l add-core`
 
-Add core packages in one command: tamer-app-shell, tamer-screen, tamer-router, tamer-insets, tamer-transports, tamer-system-ui, tamer-icons. Resolves the **highest published semver** per package (same as `t4l add`). Run `t4l link` after adding.
+Adds these packages in one command: **tamer-app-shell**, **tamer-screen**, **tamer-router**, **tamer-insets**, **tamer-transports**, **tamer-system-ui**, **tamer-icons**. Same **highest semver** resolution as `t4l add`. No flags.
 
-No flags. Run `t4l link` after adding.
+---
+
+## `t4l add-dev`
+
+Adds **tamer-dev-app**, **tamer-dev-client**, and their dependencies (same semver resolution as `t4l add`). No flags.
+
+---
+
+**After `t4l add`, `t4l add-core`, or `t4l add-dev`:** run **`t4l link`** so native modules are wired into iOS/Android.
 
 ---
 
@@ -235,7 +243,7 @@ No flags.
 
 ## `t4l autolink-toggle` / `t4l autolink`
 
-Toggle `autolink` on/off in `tamer.config.json`. When enabled, `t4l link` runs after `npm install` (if `postinstall` is configured). Does not affect build or bundle commands, which always run link.
+Toggle `autolink` on/off in `tamer.config.json`. When enabled, `t4l link` runs after **installing dependencies** (e.g. `postinstall` after `npm install` / `pnpm install` / `bun install`). Does not affect build or bundle commands, which always run link.
 
 No flags.
 
