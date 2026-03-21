@@ -41,3 +41,4 @@ Text inputs use Lynx built-in `<input>` and `<textarea>` (xelement-input). Add `
 | [@tamer4lynx/tamer-biometric](/packages/tamer-biometric) | | `npm i @tamer4lynx/tamer-biometric@prerelease` | Biometric authentication |
 | [@tamer4lynx/tamer-linking](/packages/tamer-linking) | | `npm i @tamer4lynx/tamer-linking@prerelease` | Deep linking |
 | [@tamer4lynx/tamer-display-browser](/packages/tamer-display-browser) | | `npm i @tamer4lynx/tamer-display-browser@prerelease` | In-app browser for OAuth |
+| [@tamer4lynx/tamer-webview](/packages/tamer-webview) | | `npm i @tamer4lynx/tamer-webview@prerelease` | Embedded WebView custom element (`webview`) |
