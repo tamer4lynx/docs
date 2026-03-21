@@ -18,6 +18,10 @@ Environment: On startup, `t4l` loads **`.env`** then **`.env.local`** from the d
 | `t4l --help` | Show help |
 | `t4l --version` | Show version |
 
+### Developing the CLI (this repository)
+
+Do not run `node index.ts` — Node ESM does not resolve extensionless `./src/...` imports. From the repo root: `npm run cli -- <args>` (runs `tsx index.ts`), or `npm run build && node dist/index.js <args>`.
+
 ---
 
 ## `t4l init`
