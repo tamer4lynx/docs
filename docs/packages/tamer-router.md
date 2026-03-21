@@ -8,7 +8,7 @@ File-based routing for Lynx with React 17 and react-router 6.
 - Conventions: `index` → index route, `[param]` → dynamic segment, `_layout.tsx` → layout wrapper
 - **Stack** and **Tabs** layouts with AppBar, TabBar, Content (via tamer-app-shell)
 - `useTamerRouter()` / `useTamerNavigate()` for stack-aware navigation (`push`, `replace`, `back`, `canGoBack`)
-- Android back button handled by the router (native module); listens to `tamer-router:back` event
+- **System back (Android hardware back / iOS gesture):** the native **`TamerRouterNativeModule`** emits a **`tamer-router:back`** event on **`GlobalEventEmitter`**. `FileRouter` subscribes and runs **screen-level back handlers first** (`useBackHandler` / `usePreventBack`); if none consume the event (`return true`), the router pops the stack when `canGoBack()` is true. The JS side calls **`NativeModules.TamerRouterNativeModule.didHandleBack(consumed)`** so native can finish transitions / snapshot overlays. See **Hardware back** below.
 
 ## Installation
 
@@ -127,6 +127,35 @@ Tabs layout with AppBar, Content, and TabBar.
 ### useScreenOptions(options)
 
 Call inside a screen to set title/header. Options merged with `Stack.Screen` / `Tabs.Screen`.
+
+### Hardware back: `useBackHandler` / `usePreventBack`
+
+Intercept the system back event **before** the router pops the stack. Handlers are stacked; the **most recently registered** enabled handler runs first.
+
+**You do not need Stack, Tabs, or the rest of the navigation API** (`useTamerNavigate`, generated routes, etc.) to use these hooks. You only need your UI to render under **`FileRouter`** so the back-handler context exists—that can be a **minimal** setup (e.g. one route, one screen, no `Stack` / `Tabs` components). If you skip **`FileRouter`** entirely, the hooks do nothing; you can still listen to **`tamer-router:back`** on **`GlobalEventEmitter`** yourself and call **`NativeModules.TamerRouterNativeModule.didHandleBack(...)`** from custom code.
+
+| Export | Description |
+|--------|-------------|
+| `useBackHandler(handler, enabled?)` | `handler` returns **`true`** if the event was consumed (router **does not** navigate back), **`false`** to allow default back behavior. Use `'background only'` in the handler body per ReactLynx rules. |
+| `usePreventBack(enabled?)` | While `enabled` is true, back is fully consumed (router does not pop). Same as `useBackHandler(() => enabled, enabled)`. |
+
+```tsx
+import { useBackHandler, usePreventBack } from '@tamer4lynx/tamer-router'
+
+// Close a modal on back instead of leaving the screen
+useBackHandler(() => {
+  if (modalOpen) {
+    setModalOpen(false)
+    return true
+  }
+  return false
+}, modalOpen)
+
+// Block back until the user saves (or while a sheet is open)
+usePreventBack(unsavedChanges)
+```
+
+Native ↔ JS: after handlers run, the router notifies the host via **`didHandleBack`** so Android (e.g. transition snapshot) and iOS stay in sync.
 
 ### useTamerRouter() / useTamerNavigate()
 

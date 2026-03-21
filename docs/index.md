@@ -23,7 +23,7 @@ hero:
     alt: Tamer4Lynx
 features:
   - title: File-based routing
-    details: tamer-router provides Stack and Tabs layouts with AppBar/TabBar, Android back handling, and Rsbuild plugin for route generation.
+    details: tamer-router provides Stack and Tabs layouts with AppBar/TabBar, Rsbuild route generation, and system back integration (`tamer-router:back`, `useBackHandler` / `usePreventBack`, native `didHandleBack`).
     icon: 🧭
   - title: Dev client
     details: tamer-dev-client offers QR scan, discovery, URL persistence, and reload bridge for the dev launcher experience.
@@ -32,7 +32,7 @@ features:
     details: tamer-app-shell, tamer-icons, tamer-insets, and tamer-system-ui for native UI building blocks. Text inputs use Lynx built-in `<input>` and `<textarea>`.
     icon: 🎨
   - title: Platform APIs
-    details: tamer-screen, tamer-auth, tamer-secure-store, tamer-biometric, tamer-linking, and tamer-display-browser.
+    details: tamer-transports, tamer-screen, tamer-auth, tamer-secure-store, tamer-biometric, tamer-linking, tamer-display-browser, and tamer-webview.
     icon: 📦
   - title: Lynx Autolink RFC
     details: Aligned with the <a href="https://github.com/lynx-family/lynx/discussions/2653" target="_blank" rel="noopener">Lynx Autolink RFC</a>. Uses lynx.ext.json for extension discovery and linking.

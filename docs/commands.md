@@ -103,6 +103,7 @@ Build your app. **Platform:** `ios` | `android` (optional; omit for both). With 
 | `--release` | `-r` | — | Release build without dev client (unsigned). |
 | `--production` | `-p` | — | Production build for app store (signed). |
 | `--install` | `-i` | — | **Android:** install APK to device. **iOS:** with **debug** (`-d`), install `.app` to the **booted simulator**; with **production** (`-p`), install to the **first connected device** via `devicectl`. |
+| `--clean` | `-C` | — | **Android only:** run Gradle `clean` before building (helps with stubborn caches). No effect on iOS-only builds. |
 
 **Examples:**
 
@@ -112,6 +113,7 @@ t4l build android
 t4l build android -i
 t4l build ios -r
 t4l build android --release --install
+t4l build android -C
 t4l build --embeddable
 ```
 
@@ -231,7 +233,7 @@ t4l add @tamer4lynx/tamer-auth @tamer4lynx/tamer-secure-store
 
 ## `t4l add-core`
 
-Adds the core stack. No flags.
+Adds the core stack: **tamer-app-shell**, **tamer-screen**, **tamer-router**, **tamer-insets**, **tamer-transports**, **tamer-system-ui**, **tamer-icons**. Each package is resolved to the **highest published semver** on npm (same as `t4l add` / `t4l add-dev`). No flags.
 
 ---
 
@@ -269,14 +271,14 @@ The following form still works: **`t4l <platform> <subcommand> [flags]`**.
 |---------|-------------|
 | `t4l android create` | Same as `t4l create android`. Use `-r` or `--release` for dev-app. |
 | `t4l android link` | Same as `t4l link android` |
-| `t4l android bundle` | Same as `t4l bundle android`. Flags: `-d`, `-r`. |
-| `t4l android build` | Same as `t4l build android`. Flags: `-d`, `-r`, `-i`, `-e`. |
+| `t4l android bundle` | Same as `t4l bundle android`. Flags: `-d`, `-r`, `-p`. |
+| `t4l android build` | Same as `t4l build android`. Flags: `-d`, `-r`, `-p`, `-i`, `-e`, `-C`. |
 | `t4l android sync` | Same as `t4l sync android` |
 | `t4l android inject` | Same as `t4l inject android`. Flag: `-f`. |
 | `t4l ios create` | Same as `t4l create ios` |
 | `t4l ios link` | Same as `t4l link ios` |
-| `t4l ios bundle` | Same as `t4l bundle ios`. Flags: `-d`, `-r`. |
-| `t4l ios build` | Same as `t4l build ios`. Flags: `-d`, `-r`, `-i`, `-e`. |
+| `t4l ios bundle` | Same as `t4l bundle ios`. Flags: `-d`, `-r`, `-p`. |
+| `t4l ios build` | Same as `t4l build ios`. Flags: `-d`, `-r`, `-p`, `-i`, `-e`. |
 | `t4l ios inject` | Same as `t4l inject ios`. Flag: `-f`. |
 
 **Note:** `t4l link` previously used `--ios` / `--android`; the new form is `t4l link ios` or `t4l link android`. The legacy flags are no longer used; use the platform argument instead.
