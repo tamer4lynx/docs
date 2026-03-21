@@ -173,7 +173,9 @@ t4l inject ios -f
 
 ## `t4l sync [platform]`
 
-Sync dev client files (TemplateProvider, MainActivity, DevClientManager) from tamer.config.json. **Platform:** `android` only (default).
+Sync dev client files (TemplateProvider, MainActivity, DevClientManager) from `tamer.config.json`. **Platform:** `android` only (default).
+
+**Note:** This runs automatically during `t4l bundle` and `t4l build`. Use it manually when you've changed `tamer.config.json` (e.g., `devServer.host` or `devServer.port`) and want to update the generated Android files without building or bundling.
 
 **Examples:**
 
@@ -198,15 +200,13 @@ Start the dev server with HMR and WebSocket support (Expo-like). Shows an **Ink*
 
 ## `t4l add [packages...]`
 
-Add `@tamer4lynx` packages to the **Lynx project** (`lynxProject` in `tamer.config.json`). Detects npm, pnpm, or bun from lockfiles and runs the appropriate install there.
+Add `@tamer4lynx` packages to the Lynx project.
 
-For **scoped `@tamer4lynx/*` packages without a version**, the CLI runs **`npm view <pkg> versions --json`**, picks the **highest semver** published on the registry, and installs `name@version`. That avoids relying on npm’s **`latest`** dist-tag or **`prerelease`** when they point at an older publish. If the registry query fails, it falls back to `@prerelease`. Requires **network access** to the npm registry.
 
 | Argument | Description |
 |----------|-------------|
 | `packages...` | Package names (e.g. `tamer-auth`, `@tamer4lynx/tamer-auth`). Bare names get `@tamer4lynx/` prefix. |
 
-**Future:** `t4l add` may track installed versions for compatibility (Expo-style).
 
 **Examples:**
 
@@ -219,13 +219,13 @@ t4l add @tamer4lynx/tamer-auth @tamer4lynx/tamer-secure-store
 
 ## `t4l add-core`
 
-Adds these packages in one command: **tamer-app-shell**, **tamer-screen**, **tamer-router**, **tamer-insets**, **tamer-transports**, **tamer-system-ui**, **tamer-icons**. Same **highest semver** resolution as `t4l add`. No flags.
+Adds the core stack. No flags.
 
 ---
 
 ## `t4l add-dev`
 
-Adds **tamer-dev-app**, **tamer-dev-client**, and their dependencies (same semver resolution as `t4l add`). No flags.
+Adds **tamer-dev-app**, **tamer-dev-client**, and their dependencies. No flags.
 
 ---
 
