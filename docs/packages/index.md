@@ -34,6 +34,7 @@ Text inputs use Lynx built-in `<input>` and `<textarea>` (xelement-input). Add `
 | Package | add-core | Install | Description |
 |---------|:--------:|---------|-------------|
 | [@tamer4lynx/tamer-transports](/packages/tamer-transports) | 📦 | `npm i @tamer4lynx/tamer-transports@prerelease` | Fetch, WebSocket, EventSource polyfills |
+| [@tamer4lynx/tamer-local-storage](/packages/tamer-local-storage) | | `npm i @tamer4lynx/tamer-local-storage@prerelease` | Web `localStorage` API (SharedPreferences / UserDefaults); not in add-core |
 | [@tamer4lynx/jiggle](/packages/jiggle) | | `npm i @tamer4lynx/jiggle@prerelease` | Vibration/haptic native module |
 | [@tamer4lynx/tamer-auth](/packages/tamer-auth) | | `npm i @tamer4lynx/tamer-auth@prerelease` | OAuth 2.0 / PKCE |
 | [@tamer4lynx/tamer-secure-store](/packages/tamer-secure-store) | | `npm i @tamer4lynx/tamer-secure-store@prerelease` | Secure key-value storage |

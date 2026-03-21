@@ -22,7 +22,7 @@ Additionally, **`t4l link ios` / `t4l bundle ios` / `t4l build ios`** (via autol
 
 **Recent tab:** Rows can show a cached icon (`data:` URL + `localStorage` when available) and a status dot: **green** when the server responds with Tamer `meta.json` and `tamerAppKey` matches the saved entry (if present); amber/gray/red for mismatch, stale meta, or offline.
 
-When you **build with debug** (`t4l build -d` or `t4l build`), the dev client UI is embedded and the Lynx bundle is loaded from the connected dev server. Build with **release** (`t4l build -r`) to produce an app without the dev client.
+When you **build with debug** (`t4l build -d` or `t4l build`), the dev client UI is embedded and the Lynx bundle is loaded from the connected dev server. Build with **release** (`t4l build -r`) for an **unsigned** app without the dev-client shell. **Production** (`t4l build -p`) is **signed** (store-oriented) and also omits the dev client; configure signing first (`t4l signing`). See [Getting Started](/docs/getting-started) and [Commands](/commands).
 
 ## Installation
 
@@ -36,7 +36,7 @@ Add to your app's dependencies. Linking runs automatically on install when your 
 
 ## Dependencies
 
-Requires: `tamer-app-shell`, `tamer-insets`, `tamer-system-ui`, `tamer-plugin`, `tamer-router`, `react-router`, `@lynx-js/react`.
+**Peer:** `@lynx-js/react`. **Bundled dependencies:** `@tamer4lynx/tamer-app-shell`, `tamer-insets`, `tamer-system-ui`, `tamer-plugin`, `tamer-router` (routing hooks like `useNavigate` come from **tamer-router**, which re-exports react-router—you do not need a direct `react-router` dependency for typical usage).
 
 ## Setup
 

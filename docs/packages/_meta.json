@@ -10,6 +10,7 @@
   "tamer-system-ui": "tamer-system-ui",
   "tamer-icons": "tamer-icons",
   "tamer-transports": "tamer-transports",
+  "tamer-local-storage": "tamer-local-storage",
   "tamer-auth": "tamer-auth",
   "tamer-secure-store": "tamer-secure-store",
   "tamer-biometric": "tamer-biometric",

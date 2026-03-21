@@ -28,6 +28,58 @@ npm i -g tamer4lynx/tamer4lynx
 
 ---
 
+## Greenfield: Rspeedy + iOS host (example flow)
+
+1. **Create the Lynx app** (Rspeedy does not always run `install` for you—run it explicitly):
+
+```bash
+bun create rspeedy
+cd my-app
+bun install
+```
+
+2. **Install the CLI** (pick one package manager):
+
+```bash
+bun add -g @tamer4lynx/cli@prerelease
+```
+
+3. **Initialize Tamer** — writes `tamer.config.json` and patches TypeScript config (see below):
+
+```bash
+t4l init
+```
+
+4. **Create the native iOS project** (use `t4l`, not Rspeedy—there is no `r4l` command):
+
+```bash
+t4l create ios
+```
+
+5. **Add packages** — dev launcher stack, or core only:
+
+```bash
+t4l add-dev    # dev-app, dev-client, and their @tamer4lynx dependencies
+# or, if you do not need the dev client / dev app:
+t4l add-core   # app-shell, screen, router, insets, transports, system-ui, icons
+```
+
+6. **Link native modules** (required after adding packages unless [autolink](/docs/configuration) is enabled):
+
+```bash
+t4l link ios
+```
+
+7. **Debug build and install on the simulator**:
+
+```bash
+t4l build ios -d -i
+```
+
+For **signed, App Store–style device builds**, use **`t4l build ios -p`** after `t4l signing ios`. That is **not** a simulator build. See [Commands](/commands) and the build table below.
+
+---
+
 ## Use in a project
 
 ### 1. Create a Lynx project (or use existing)
@@ -70,7 +122,9 @@ From the project root (where `tamer.config.json` will live):
 t4l init
 ```
 
-Or run `t4l` with no arguments for interactive setup. The script prompts for Android app name, package name, SDK path, iOS bundle ID, and Lynx project path (leave blank for single-folder layout).
+Or run `t4l` with no arguments for interactive setup. The wizard prompts for Android app name, package name, SDK path, iOS bundle ID, and Lynx project path (leave blank for single-folder layout).
+
+**TypeScript / `tsconfig.json`:** On save, `t4l init` updates the Lynx app’s `tsconfig.json` when it exists (root, or under `lynxProject` if you set one): it may **flatten project references** to avoid TS6310 when building, and it **adds an `include` glob** for Tamer declaration files: `node_modules/@tamer4lynx/tamer-*/src/**/*.d.ts`. Stop after the first file it successfully updates.
 
 ### 4. Start the dev server
 
@@ -82,32 +136,37 @@ The terminal prints a QR code. Scan it with the Lynx dev app to connect and load
 
 ### 5. Build your app
 
-Add **@tamer4lynx/tamer-dev-client** to your app to get a dev build with QR scan and HMR. Build with **debug** (`-d`) to embed the dev client; build with **release** (`-r`) for a production build without it.
+Add **@tamer4lynx/tamer-dev-client** (e.g. via `t4l add-dev`) to embed the dev launcher for QR scan and HMR. **Debug** (`-d`) embeds the dev client when that package is installed. **Release** (`-r`) omits the dev client and is **unsigned**. **Production** (`-p`) is **signed** and intended for store or signed device distribution—configure signing first (`t4l signing`). See [Commands](/commands) for details.
 
 Commands use the form `t4l <command> [target] [flags]`. For build, pass the platform as the target (or omit for both).
 
 | Flag | Short | Description |
 |------|-------|-------------|
 | `--debug` | `-d` | Debug build with dev client (default). Requires `tamer-dev-client` for QR/HMR. |
-| `--release` | `-r` | Release build without dev client. |
-| `--install` | `-i` | Install APK to device or app to simulator after building. |
-| `--embeddable` | `-e` | Output to `embeddable/`: **AAR** (Android) + **CocoaPod** (iOS). Use with `--release`. |
+| `--release` | `-r` | Release build **without** dev client; **unsigned** (not the same as store signing). |
+| `--production` | `-p` | **Signed** build for App Store / signed distribution. **Not** a simulator build on iOS (`iphoneos`). Requires `t4l signing` first. |
+| `--install` | `-i` | After build: Android installs APK; iOS **debug** installs to **simulator**, **production** installs to a **connected device** (`devicectl`). |
+| `--embeddable` | `-e` | Output embeddable artifacts for existing apps; implies a release-style embeddable build (see [Commands](/commands)). |
+
+**iOS quick reference:** `-p` always targets **devices** (`iphoneos`). `-d -i` targets the **simulator** and installs there. `-d` without `-i` still builds for `iphoneos` but with signing disabled (local artifact, not for App Store).
 
 ```bash
 t4l build                          # debug, all platforms (dev client if tamer-dev-client installed)
 t4l build android --install        # debug Android, install to device
-t4l build ios --install            # debug iOS, install to simulator
-t4l build android --release        # release Android, no dev client
-t4l build --embeddable --release   # for embedding in existing apps
+t4l build ios --install            # debug iOS, install to booted simulator
+t4l build android --release        # release Android, no dev client, unsigned
+t4l build ios -p                   # signed production (device); use after signing setup
+t4l build --embeddable             # embeddable output (release-style)
 ```
 
 Use the dev client (when built with `-d`) to connect to your local dev server via URL or QR, then develop with HMR.
 
-Whenever you add or remove **`@tamer4lynx/*`** native packages, run **`t4l link`** (or **`t4l link ios`** / **`t4l link android`**) so autolinking updates native projects. On iOS with **tamer-dev-client**, autolink also refreshes **`tamer-host-native-modules.json`** (used for dev-server compatibility checks).
+Whenever you add or remove **`@tamer4lynx/*`** native packages, run **`t4l link`** (or **`t4l link ios`** / **`t4l link android`**) so autolinking updates native projects—unless **`autolink: true`** in `tamer.config.json` runs `t4l link` after installs (see `t4l autolink-toggle`). On iOS with **tamer-dev-client**, autolink also refreshes **`tamer-host-native-modules.json`** (used for dev-server compatibility checks).
 
 ## Next steps
 
 - [Configuration Reference](/docs/configuration) — tamer.config.json, tamer.config.ts, lynx.ext.json
+- [Commands](/commands) — full CLI reference
 - [tamer-dev-client](/packages/tamer-dev-client) — Dev launcher API and setup
 - [tamer-router](/packages/tamer-router) — File-based routing and layouts
 

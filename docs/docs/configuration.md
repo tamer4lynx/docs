@@ -12,6 +12,15 @@ Tamer4Lynx uses three configuration files. Each serves a different purpose.
 
 Create it with `t4l init` or `t4l`.
 
+### Signing and production builds (`-p`)
+
+**Store-ready / signed** native builds use **`t4l build [platform] -p`** (or `--production`). That is separate from **`-r`** (unsigned release without the dev client).
+
+1. Run **`t4l signing`**, **`t4l signing android`**, or **`t4l signing ios`** to write signing-related fields into `tamer.config.json` (and optionally append keystore password env var names to `.env` / `.env.local` on Android). See the full behavior in [Commands](/commands) under **`t4l signing`** and **`t4l build`**.
+2. **`t4l build -p`** without a platform requires signing to be configured for **both** Android and iOS; use **`t4l build android -p`** or **`t4l build ios -p`** for a single platform.
+
+On **iOS**, **`-p`** builds for **`iphoneos`** (not the simulator). For App Store submission you still typically archive and export an IPA in Xcode; the CLI documents that limitation in [Commands](/commands).
+
 ### Fields
 
 | Field | Type | Description |

@@ -41,7 +41,8 @@ packages/example/
 │           ├── index.tsx
 │           ├── auth.tsx    # tamer-auth (OAuth)
 │           ├── linking.tsx  # tamer-linking
-│           └── browser.tsx  # tamer-display-browser
+│           ├── browser.tsx  # tamer-display-browser
+│           └── storage.tsx # tamer-secure-store (async key-value)
 ```
 
 ---
@@ -119,6 +120,7 @@ The `/native` route group uses a **Stack** for OAuth, linking, and browser scree
   <Stack.Screen name="auth" path="/native/auth" options={{ title: 'OAuth' }} />
   <Stack.Screen name="linking" path="/native/linking" options={{ title: 'tamer-linking' }} />
   <Stack.Screen name="browser" path="/native/browser" options={{ title: 'tamer-display-browser' }} />
+  <Stack.Screen name="storage" path="/native/storage" options={{ title: 'tamer-secure-store' }} />
 </Stack>
 ```
 
@@ -135,6 +137,7 @@ The `/native` route group uses a **Stack** for OAuth, linking, and browser scree
 | `native/auth.tsx` | tamer-auth | OAuth 2.0 / PKCE flow |
 | `native/linking.tsx` | tamer-linking | Deep linking |
 | `native/browser.tsx` | tamer-display-browser | In-app browser for OAuth |
+| `native/storage.tsx` | tamer-secure-store | Encrypted async storage demo (`getItemAsync` / `setItemAsync`) |
 
 ---
 

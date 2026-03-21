@@ -26,7 +26,7 @@ Do not run `node index.ts` — Node ESM does not resolve extensionless `./src/..
 
 ## `t4l init`
 
-Initialize `tamer.config.json` with an **Ink** interactive wizard: step-by-step prompts with validation (Android package / iOS bundle ID), optional `$ENV` resolution for the Android SDK path, and a confirmation when reusing Android values for iOS. Writes `tamer.config.json` and updates `tsconfig.json` `include` for tamer types when applicable.
+Initialize `tamer.config.json` with an **Ink** interactive wizard: step-by-step prompts with validation (Android package / iOS bundle ID), optional `$ENV` resolution for the Android SDK path, and a confirmation when reusing Android values for iOS. Writes `tamer.config.json`. For **TypeScript**, when a `tsconfig.json` exists (project root or under `lynxProject`), it may **flatten project references** (TS6310) and **append an `include` glob** for `node_modules/@tamer4lynx/tamer-*/src/**/*.d.ts`.
 
 No flags.
 
@@ -90,13 +90,19 @@ Build your app. **Platform:** `ios` | `android` (optional; omit for both). With 
 
 **Production (`-p`):** Configure signing first (`t4l signing`, or `t4l signing android` / `t4l signing ios`). If signing is not set up for a platform you are building, the CLI exits with instructions. `t4l build -p` with no platform builds **both** Android and iOS and requires signing for **both**; use `t4l build android -p` or `t4l build ios -p` to build a single platform.
 
+**iOS `-r` / `-p` vs dev-client:** Release/production builds **do not** build or copy `dev-client.lynx.bundle` and use the plain host `ViewController` (main bundle only). You may still see `@tamer4lynx/tamer-dev-client` in the autolinker’s package list because it provides native iOS pods; that is not the same as embedding the dev-client Lynx shell.
+
+**Lynx DevTool:** Debug (`-d`) hosts with `tamer-dev-client` register native DevTool hooks so you can attach the [desktop Lynx DevTool](https://lynxjs.org/guide/devtool.md) over USB. **`-r` / `-p` builds do not enable DevTool** (iOS: `#if DEBUG` only; Android: debug classpath / no-op in release).
+
+**iOS `-p` and `-i`:** Production (`-p`) always builds for **real devices** (`iphoneos`) with code signing enabled (configure via `t4l signing ios`). With `-i`, the CLI installs to the **first connected device** using `xcrun devicectl` (Xcode 15+). Debug (`-d`) with `-i` still targets the **simulator** (`simctl install`). For App Store distribution, archive and export an IPA in Xcode; `t4l` does not produce an IPA.
+
 | Flag | Short | Default | Description |
 |------|-------|---------|-------------|
-| `--embeddable` | `-e` | — | Output to `embeddable/` for adding LynxView to an existing app. Use with `--release`. |
+| `--embeddable` | `-e` | — | Output to `embeddable/` for adding LynxView to an existing app. Runs a **release-style** embeddable build internally; you do **not** need to pass `--release`. When `-e` is present, the CLI only performs the embeddable step (other build mode flags are not used for a normal app build in that run). |
 | `--debug` | `-d` | default | Debug build with dev client embedded (if tamer-dev-client is installed). |
 | `--release` | `-r` | — | Release build without dev client (unsigned). |
 | `--production` | `-p` | — | Production build for app store (signed). |
-| `--install` | `-i` | — | Install APK to device or app to simulator after building. |
+| `--install` | `-i` | — | **Android:** install APK to device. **iOS:** with **debug** (`-d`), install `.app` to the **booted simulator**; with **production** (`-p`), install to the **first connected device** via `devicectl`. |
 
 **Examples:**
 
@@ -106,8 +112,10 @@ t4l build android
 t4l build android -i
 t4l build ios -r
 t4l build android --release --install
-t4l build --embeddable --release
+t4l build --embeddable
 ```
+
+**Deprecated:** `t4l build-dev-app [platform] [-i]` — use **`t4l build [platform] -d`** (and **`--install`** if needed). A warning is printed when the old command is used.
 
 **Node 22+ and `ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING` (dev-client):** Older `@tamer4lynx/tamer-dev-client` releases (e.g. **0.0.10**) only published `lynx.config.ts`. Rspeedy picks `.ts` before `.mjs`, and Node 22 will not strip types for files under `node_modules`. Use **≥ 0.0.12** (`lynx.config.mjs` + `rspeedy build --config lynx.config.mjs`), or temporarily use Node 20 for the install/build.
 
@@ -229,7 +237,7 @@ Adds the core stack. No flags.
 
 ## `t4l add-dev`
 
-Adds **tamer-dev-app**, **tamer-dev-client**, and their dependencies. No flags.
+Adds the **dev stack**: **tamer-dev-app**, **tamer-dev-client**, and the `@tamer4lynx/*` packages they need (**app-shell**, **icons**, **insets**, **plugin**, **router**, **screen**, **system-ui**). Each is resolved to the **highest published semver** on npm (same idea as `add-core` / `t4l add`). No flags.
 
 ---
 
