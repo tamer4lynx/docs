@@ -4,17 +4,17 @@ pageType: home
 hero:
   name: Tamer4Lynx
   text: Lynx ecosystem of native extensions and tooling
-  tagline: Tamer packages add routing, UI, and platform APIs on top of <a href="https://lynxjs.org/" target="_blank" rel="noopener">Lynx</a> for iOS, Android, and web. All packages are published under <code>@tamer4lynx</code> on npm.
+  tagline: Tamer packages add routing, UI, and platform APIs on top of <a href="https://lynxjs.org/" target="_blank" rel="noopener">Lynx</a> for iOS, Android, and web. Install them with <code>t4l add</code> / <code>t4l add-core</code> (highest published semver per package), not only <code>npm install @latest</code>. All packages are published under <code>@tamer4lynx</code> on npm.
   actions:
     - theme: brand
       text: Getting Started
-      link: /docs/getting-started/
+      link: /guide/getting-started/
     - theme: alt
       text: Configuration
-      link: /docs/configuration
+      link: /guide/configuration
     - theme: alt
       text: Commands
-      link: /commands
+      link: /reference/commands
     - theme: alt
       text: GitHub
       link: https://github.com/tamer4lynx/tamer4lynx
@@ -26,7 +26,7 @@ features:
     details: tamer-router provides Stack and Tabs layouts with AppBar/TabBar, Rsbuild route generation, and system back integration (`tamer-router:back`, `useBackHandler` / `usePreventBack`, native `didHandleBack`).
     icon: 🧭
   - title: Dev client
-    details: tamer-dev-client offers QR scan, discovery, URL persistence, and reload bridge for the dev launcher experience.
+    details: tamer-dev-client offers QR scan, discovery, URL persistence, recent-server reachability dots, and a reload bridge for the dev launcher experience.
     icon: 🔧
   - title: UI components
     details: tamer-app-shell, tamer-icons, tamer-insets, and tamer-system-ui for native UI building blocks. Text inputs use Lynx built-in `<input>` and `<textarea>`.

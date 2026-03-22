@@ -1,21 +1,7 @@
 {
-  "index": "Overview",
-  "tamer-dev-client": "tamer-dev-client",
-  "tamer-host": "tamer-host",
-  "tamer-router": "tamer-router",
-  "tamer-plugin": "tamer-plugin",
-  "tamer-app-shell": "tamer-app-shell",
-  "tamer-screen": "tamer-screen",
-  "tamer-insets": "tamer-insets",
-  "tamer-system-ui": "tamer-system-ui",
-  "tamer-icons": "tamer-icons",
-  "tamer-transports": "tamer-transports",
-  "tamer-local-storage": "tamer-local-storage",
-  "tamer-auth": "tamer-auth",
-  "tamer-secure-store": "tamer-secure-store",
-  "tamer-biometric": "tamer-biometric",
-  "tamer-linking": "tamer-linking",
-  "tamer-display-browser": "tamer-display-browser",
-  "tamer-webview": "tamer-webview",
-  "jiggle": "jiggle"
+  "index": "Packages",
+  "core": "Core",
+  "ui": "UI",
+  "platform": "Platform",
+  "tooling": "Tooling"
 }

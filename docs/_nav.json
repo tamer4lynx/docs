@@ -1,15 +1,14 @@
 [
   {
+    "text": "Guide",
+    "link": "/guide/"
+  },
+  {
     "text": "Commands",
-    "link": "/docs/"
+    "link": "/reference/commands"
   },
   {
-    "text": "Hello world",
-    "link": "/hello/",
-    "activeMatch": "/hello/"
-  },
-  {
-    "text": "API",
-    "link": "https://rspress.rs/api/index.html"
+    "text": "Packages",
+    "link": "/packages/"
   }
 ]

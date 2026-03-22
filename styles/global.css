@@ -1,0 +1,72 @@
+/* Main article only — avoid affecting nav / sidebar lists */
+.rp-doc-layout__doc-container .rspress-doc ul,
+.rp-doc-layout__doc-container .rspress-doc ol {
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+  padding-left: 1.35rem;
+}
+
+.rp-doc-layout__doc-container .rspress-doc li {
+  margin: 0.55rem 0;
+  line-height: 1.65;
+}
+
+.rp-doc-layout__doc-container .rspress-doc li > p {
+  margin: 0.4rem 0;
+}
+
+.rp-doc-layout__doc-container .rspress-doc li > p:first-child {
+  margin-top: 0;
+}
+
+.rp-doc-layout__doc-container .rspress-doc li > p:last-child {
+  margin-bottom: 0;
+}
+
+.rp-doc-layout__doc-container .rspress-doc ul ul,
+.rp-doc-layout__doc-container .rspress-doc ol ol,
+.rp-doc-layout__doc-container .rspress-doc ul ol,
+.rp-doc-layout__doc-container .rspress-doc ol ul {
+  margin-top: 0.45rem;
+  margin-bottom: 0.45rem;
+}
+
+/* Keep CLI flags and short inline tokens on one line (e.g. `-p`, `--production`) */
+.rp-doc-layout__doc-container .rspress-doc code {
+  white-space: nowrap;
+}
+
+.rp-doc-layout__doc-container .rspress-doc pre code {
+  white-space: pre;
+}
+
+/* Navbar: larger logo + site name */
+.rp-nav__title__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.rp-nav__title__logo img {
+  height: 2.75rem;
+  width: auto;
+}
+
+.rp-nav__title__link::after {
+  content: 'Tamer4Lynx';
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--rp-c-text-1);
+}
+
+@media (max-width: 640px) {
+  .rp-nav__title__logo img {
+    height: 2.35rem;
+  }
+
+  .rp-nav__title__link::after {
+    font-size: 1rem;
+  }
+}

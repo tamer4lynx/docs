@@ -1,0 +1,8 @@
+{
+  "index": "Overview",
+  "tamer-dev-client": "tamer-dev-client",
+  "tamer-host": "tamer-host",
+  "tamer-router": "tamer-router",
+  "tamer-plugin": "tamer-plugin",
+  "tamer-app-shell": "tamer-app-shell"
+}

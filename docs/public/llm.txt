@@ -4,11 +4,12 @@ Lynx ecosystem of native extensions and tooling. Tamer packages add routing, UI,
 
 ## Documentation
 
-- [Getting Started](https://tamer4lynx.github.io/docs/getting-started)
-- [Commands](https://tamer4lynx.github.io/commands) — CLI reference (t4l, android, ios, build)
-- [Packages](https://tamer4lynx.github.io/packages/) — Package index
+- [Getting Started](https://tamer4lynx.github.io/guide/getting-started)
+- [Configuration](https://tamer4lynx.github.io/guide/configuration)
+- [CLI commands](https://tamer4lynx.github.io/reference/commands) — `t4l` reference
+- [Packages](https://tamer4lynx.github.io/packages/) — Overview (see also Core, UI, Platform, Tooling sections on the site)
 
-**Install Tamer packages:** do not rely on npm’s **`latest`** for `@tamer4lynx/*` — it may lag behind the newest tarball (e.g. missing `ios/`). Prefer an explicit version or run **`t4l add` / `t4l add-core`**, which query the registry and install the **highest published semver** per package.
+**Install Tamer packages:** do not rely on npm’s **`latest`** or ad-hoc tags like **`@prerelease`** for `@tamer4lynx/*` — **`latest`** may lag (e.g. missing `ios/`). Prefer **`t4l add <pkg>`**, **`t4l add-core`**, or **`t4l add-dev`**, which query the registry and install the **highest published semver** per package, then **`t4l link`**. For manual installs, pin an **explicit version** from the registry.
 
 ## Packages
 
@@ -22,8 +23,10 @@ Lynx ecosystem of native extensions and tooling. Tamer packages add routing, UI,
 | tamer-screen | Screen, SafeArea, AvoidKeyboard |
 | tamer-insets | Safe area and keyboard insets |
 | tamer-system-ui | Status bar, nav bar, theme colors |
-| tamer-icons | Icon component, Material/FontAwesome |
+| tamer-icons | Native `<icon>`; fonts; TS via `t4l` `.tamer` / optional import |
+| tamer-webview | Native `<webview>` (WKWebView / Android WebView); TS via `.tamer/tamer-components.d.ts` from `t4l link` |
 | tamer-transports | Fetch, WebSocket, EventSource polyfills |
+| tamer-local-storage | Web `localStorage` API (SharedPreferences / UserDefaults) |
 | jiggle | Vibration/haptic native module |
 | tamer-auth | OAuth 2.0 / PKCE |
 | tamer-secure-store | Secure key-value storage |
