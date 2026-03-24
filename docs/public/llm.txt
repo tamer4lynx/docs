@@ -1,6 +1,6 @@
 # Tamer4Lynx
 
-Lynx ecosystem of native extensions and tooling. Tamer packages add routing, UI, and platform APIs on top of Lynx for iOS, Android, and web.
+Lynx ecosystem of native extensions and tooling. Tamer packages add routing, UI, and platform APIs on top of Lynx for iOS, Android, and web. HarmonyOS support is coming soon.
 
 ## Documentation
 

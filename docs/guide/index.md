@@ -4,7 +4,7 @@
 
 **Lynx** is the cross-platform rendering engine and JS runtime ([docs](https://lynxjs.org/)). You write a Lynx app (often with **ReactLynx** and **Rspeedy**).
 
-**Tamer4Lynx** is the layer *around* that app for real products: a **CLI** (`t4l` from `@tamer4lynx/cli`) plus **npm packages** (`@tamer4lynx/*`) that add routing, native shell UI, networking helpers, auth, secure storage, deep links, and more — with **iOS and Android host projects** generated or linked by the CLI.
+**Tamer4Lynx** is the layer *around* that app for real products: a **CLI** (`t4l` from `@tamer4lynx/cli`) plus **npm packages** (`@tamer4lynx/*`) that add routing, native shell UI, networking helpers, auth, secure storage, deep links, and more — with **iOS and Android host projects** generated or linked by the CLI. **HarmonyOS** support is coming soon.
 
 If you only remember three things:
 

@@ -5,8 +5,8 @@ hero:
   name: Tamer4Lynx
   text: Native routing, UI, and platform APIs for Lynx apps
   tagline: |
-    <p><strong>Tamer</strong> extends <a href="https://lynxjs.org/" target="_blank" rel="noopener">Lynx</a> with routing, shell UI, and native modules—auth, storage, transports, and more—for <strong>iOS, Android, and web</strong>. You keep building with ReactLynx and Rspeedy.</p>
-    <p><strong>Debug</strong> and <strong>production</strong> builds take a few commands—you skip the repetitive Xcode and Gradle setup.</p>
+    <p><strong>Tamer</strong> extends <a href="https://lynxjs.org/" target="_blank" rel="noopener">Lynx</a> with routing, shell UI, and native modules—auth, storage, transports, and more—for <strong>iOS, Android, and web</strong>. <strong>HarmonyOS</strong> support is coming soon. You keep building with Lynx and Rspeedy; <strong>Tamer</strong> handles native hosts, modules, and builds.</p>
+    <p><strong>Debug</strong> and <strong>production</strong> builds take a few commands, <strong>native modules</strong> included—you skip the repetitive Xcode and Gradle setup.</p>
   actions:
     - theme: brand
       text: Getting Started
@@ -40,7 +40,7 @@ features:
     details: Aligned with the <a href="https://github.com/lynx-family/lynx/discussions/2653" target="_blank" rel="noopener">Lynx Autolink RFC</a>. Uses lynx.ext.json for extension discovery and linking.
     icon: 🔗
   - title: Cross-platform
-    details: Targets iOS, Android, and web from a single codebase with <a href="https://lynxjs.org/react/" target="_blank" rel="noopener">ReactLynx</a> and <a href="https://lynxjs.org/rspeedy/" target="_blank" rel="noopener">Rspeedy</a>.
+    details: Targets iOS, Android, and web from a single codebase with <a href="https://lynxjs.org/react/" target="_blank" rel="noopener">ReactLynx</a> and <a href="https://lynxjs.org/rspeedy/" target="_blank" rel="noopener">Rspeedy</a>. HarmonyOS support coming soon.
     icon: 🌍
   - title: Framework agnostic
     details: Tamer4Lynx is conceptually Lynx framework agnostic and should work with <a href="https://github.com/haskell-miso/miso-lynx" target="_blank" rel="noopener">miso-lynx</a>, <a href="https://github.com/rahul-vashishtha/lynx-stack/tree/lynx-vue-implementation/packages/vue" target="_blank" rel="noopener">VueLynx</a> (@lynx-js/vue), or other Lynx bindings. Some modules like tamer-router are specifically designed for @lynx-js/react.

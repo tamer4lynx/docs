@@ -100,7 +100,7 @@ export default defineConfig({
   globalStyles: path.join(__dirname, 'styles', 'global.css'),
   title: 'Tamer4Lynx',
   description:
-    'CLI and npm packages (@tamer4lynx/*) for Lynx: routing, native UI, platform APIs, iOS/Android hosts',
+    'CLI and npm packages (@tamer4lynx/*) for Lynx: routing, native UI, platform APIs, iOS/Android hosts. HarmonyOS support coming soon.',
   icon: '/tamer-logo.png',
   logo: {
     light: '/tamer-logo.png',
