@@ -11,6 +11,8 @@ Lynx ecosystem of native extensions and tooling. Tamer packages add routing, UI,
 
 **Install Tamer packages:** do not rely on npm’s **`latest`** or ad-hoc tags like **`@prerelease`** for `@tamer4lynx/*` — **`latest`** may lag (e.g. missing `ios/`). Prefer **`t4l add <pkg>`**, **`t4l add-core`**, or **`t4l add-dev`**, which query the registry and install the **highest published semver** per package, then **`t4l link`**. For manual installs, pin an **explicit version** from the registry.
 
+**Dev / HMR host:** The QR + HMR native app is **built from your project** after **`t4l link`**, so it includes **only** the native modules your app uses. A **single generalized** install-once dev launcher is **planned**; until then, use **`t4l build ios -d`** / **`t4l build android -d`** (see [Getting Started](https://tamer4lynx.github.io/guide/getting-started)).
+
 ## Packages
 
 | Package | Description |

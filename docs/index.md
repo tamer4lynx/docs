@@ -3,8 +3,10 @@ pageType: home
 
 hero:
   name: Tamer4Lynx
-  text: Lynx ecosystem of native extensions and tooling
-  tagline: Tamer packages add routing, UI, and platform APIs on top of <a href="https://lynxjs.org/" target="_blank" rel="noopener">Lynx</a> for iOS, Android, and web. Install them with <code>t4l add</code> / <code>t4l add-core</code> (highest published semver per package), not only <code>npm install @latest</code>. All packages are published under <code>@tamer4lynx</code> on npm.
+  text: Native routing, UI, and platform APIs for Lynx apps
+  tagline: |
+    <p><strong>Tamer</strong> extends <a href="https://lynxjs.org/" target="_blank" rel="noopener">Lynx</a> with routing, shell UI, and native modules—auth, storage, transports, and more—for <strong>iOS, Android, and web</strong>. You keep building with ReactLynx and Rspeedy.</p>
+    <p><strong>Debug</strong> and <strong>production</strong> builds take a few commands—you skip the repetitive Xcode and Gradle setup.</p>
   actions:
     - theme: brand
       text: Getting Started

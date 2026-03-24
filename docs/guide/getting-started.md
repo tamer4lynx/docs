@@ -1,14 +1,8 @@
 # Getting Started
 
-Quick start with Tamer4Lynx: install the CLI, then use it in a Lynx project.
+Use this page if you already have (or will create) a **Lynx** app and want **Tamer** — the `t4l` CLI and `@tamer4lynx/*` packages — to manage native hosts and extensions.
 
-## Recent updates (CLI and packages)
-
-Install **`@tamer4lynx/*`** with **`t4l add`**, **`t4l add-core`**, or **`t4l add-dev`** (not `npm install …@latest` / `…@prerelease`). The CLI resolves the **highest published semver** per package; then run **`t4l link`**. Details: [Commands](/reference/commands), [Packages](/packages/).
-
-On startup the CLI loads **`.env`** / **`.env.local`** beside `tamer.config.json` (signing, App Store Connect keys). **`t4l init`** and **`t4l signing`** are Ink wizards; **`t4l start`** is an Ink dashboard (**`r`** rebuild, **`l`** logs, **`q`** quit). With **`syncTamerComponentTypes`** (default), **`t4l init`** can flatten `tsconfig` references and emit **`.tamer/tamer-components.d.ts`**.
-
-Newer packages worth a look: [tamer-router](/packages/core/tamer-router) (**`useBackHandler`** / **`usePreventBack`** and system back), [tamer-webview](/packages/platform/tamer-webview), [tamer-local-storage](/packages/platform/tamer-local-storage), and [tamer-dev-client](/packages/core/tamer-dev-client) (recent-server reachability, icon sync, **initData** reload).
+**Install Tamer packages through the CLI** (`t4l add`, `t4l add-core`, `t4l add-dev`), not only `npm install @tamer4lynx/…@latest`, so each package resolves to the **highest published semver**; then run **`t4l link`**. See [Packages](/packages/) for the full list and [Commands](/reference/commands) for every flag.
 
 ## Prerequisites
 
@@ -117,6 +111,12 @@ t4l build android --embeddable     # embeddable output (release-style)
 
 Use the dev client (when built with `-d`) to connect to your local dev server via URL or QR, then develop with HMR.
 
+### Dev host and native modules
+
+The **debug / HMR** native app is **built from your project** after **`t4l link`**, so the iOS and Android binaries include **the native modules your app actually uses** (autolinked pods, Gradle modules, registration). That keeps the on-device shell aligned with your bundle and avoids one universal binary that must embed every possible extension.
+
+A **single generalized dev launcher** you can install without building (store-style) is **planned**; until then, use **`t4l build ios -d`** / **`t4l build android -d`** (or the monorepo **tamer-dev-app** flow) so your host matches your dependency set.
+
 Whenever you add or remove **`@tamer4lynx/*`** native packages, run **`t4l link`** (or **`t4l link ios`** / **`t4l link android`**) so autolinking updates native projects—unless **`autolink: true`** in `tamer.config.json` runs `t4l link` after installs (see `t4l autolink-toggle`). On iOS with **tamer-dev-client**, autolink also refreshes **`tamer-host-native-modules.json`** (used for dev-server compatibility checks).
 
 ---
@@ -170,6 +170,14 @@ t4l build ios -d -i
 ```
 
 For **signed, App Store–style device builds**, use **`t4l build ios -p`** after `t4l signing ios`. That is **not** a simulator build. See [Commands](/reference/commands) and the **Build your app** table above.
+
+## CLI and workspace notes
+
+- **Environment files:** On startup, `t4l` loads **`.env`** then **`.env.local`** beside `tamer.config.json` (Android signing passwords, App Store Connect API keys for **`t4l build ios -p --ipa`**, and similar). See [Commands](/reference/commands) (Global section).
+- **Interactive flows:** **`t4l init`** and **`t4l signing`** are Ink wizards. **`t4l start`** is an Ink dashboard: **`r`** rebuild bundle, **`l`** toggle logs, **`q`** quit.
+- **TypeScript:** With **`syncTamerComponentTypes`** enabled (default in new configs), **`t4l init`** / **`t4l link`** can adjust the Lynx app `tsconfig.json` and generate **`.tamer/tamer-components.d.ts`**. Details: [Ambient types](/packages/tooling/tamer-ambient-types).
+
+Worth exploring next in the package docs: [tamer-router](/packages/core/tamer-router) (back handling), [tamer-webview](/packages/platform/tamer-webview), [tamer-local-storage](/packages/platform/tamer-local-storage), [tamer-dev-client](/packages/core/tamer-dev-client).
 
 ## Next steps
 

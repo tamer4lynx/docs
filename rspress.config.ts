@@ -99,7 +99,8 @@ export default defineConfig({
   root: path.join(__dirname, 'docs'),
   globalStyles: path.join(__dirname, 'styles', 'global.css'),
   title: 'Tamer4Lynx',
-  description: 'Lynx ecosystem of native extensions and tooling',
+  description:
+    'CLI and npm packages (@tamer4lynx/*) for Lynx: routing, native UI, platform APIs, iOS/Android hosts',
   icon: '/tamer-logo.png',
   logo: {
     light: '/tamer-logo.png',

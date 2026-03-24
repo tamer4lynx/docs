@@ -1,14 +1,21 @@
 # Packages
 
-All Tamer packages are under the `@tamer4lynx` scope on npm.
+This page lists every **`@tamer4lynx/*`** package and how to install it.
 
-**Preferred install:** **`t4l add <name>`** (or **`t4l add-core`** / **`t4l add-dev`**) so each package is resolved to the **highest published semver** on the registry. That avoids relying on npm’s **`latest`** tag (often stale) or ad-hoc dist-tags such as **`@prerelease`**. After adding native packages, run **`t4l link`**.
+**Why use `t4l add` instead of npm?**  
+All packages are published under **`@tamer4lynx`** on npm, but the **`latest`** dist-tag does not always point at the newest semver. The CLI resolves each package to the **highest version published on the registry** and then you run **`t4l link`** to wire native code. That is the supported path.
 
-**Manual install:** `npm install @tamer4lynx/<pkg>@<version>` with an explicit version from the registry if you are not using the CLI.
+| Goal | Command |
+|------|---------|
+| One command for the main UI + router + networking stack | `t4l add-core` |
+| Dev launcher (QR, HMR shell) and its dependencies | `t4l add-dev` |
+| Individual packages | `t4l add <name>` (e.g. `t4l add tamer-auth`) |
 
-See [Example Anatomy](/guide/example-anatomy) for a walkthrough of `packages/example` and how these packages fit together.
+**Manual install** (only if you must): `npm install @tamer4lynx/<pkg>@<exact-version>` with a version taken from the npm registry page, then `t4l link`.
 
-**add-core** 📦 = included in `t4l add-core` (app-shell, screen, router, insets, transports, system-ui, icons).
+See [Example Anatomy](/guide/example-anatomy) for how the repo’s sample app combines these packages.
+
+**Legend:** **add-core** 📦 = included in `t4l add-core` (app-shell, screen, router, insets, transports, system-ui, icons).
 
 ## Core
 
