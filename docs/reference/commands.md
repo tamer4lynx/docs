@@ -14,6 +14,7 @@ Environment: On startup, `t4l` loads **`.env`** then **`.env.local`** from the d
 | `t4l add …` | Add `@tamer4lynx/*` to the Lynx project — details below |
 | `t4l add-core` | Install the core stack in one command — details below |
 | `t4l add-dev` | Install dev-app, dev-client, and their dependencies — details below |
+| `t4l update` | Bump every `@tamer4lynx/*` listed in **package.json** to the **highest published semver** — details below |
 | `t4l signing [platform]` | Configure Android/iOS signing (interactive; Android can generate a keystore with `keytool`) |
 | `t4l --help` | Show help |
 | `t4l --version` | Show version |
@@ -250,7 +251,15 @@ Adds the **dev stack**: **tamer-dev-app**, **tamer-dev-client**, and the `@tamer
 
 ---
 
-**After `t4l add`, `t4l add-core`, or `t4l add-dev`:** run **`t4l link`** so native modules are wired into iOS/Android.
+## `t4l update`
+
+Scans **`dependencies`**, **`devDependencies`**, **`peerDependencies`**, and **`optionalDependencies`** in the Lynx project’s **package.json** for **`@tamer4lynx/*`** names and re-installs each at the **highest published semver** on npm (same resolution as `t4l add`). Skips **`file:`**, **`link:`**, **`portal:`**, and **`workspace:`** specs so local / monorepo links stay unchanged. If nothing matches, add packages first with **`t4l add`** / **`add-core`** / **`add-dev`**. No flags.
+
+If npm reports **`ETARGET`** for **`@tamer4lynx/...@^0.0.n`**, remember that **`^` on 0.0.x** only allows the same patch line (e.g. **`^0.0.3`** is **`<0.0.4`**). A transitive dependency may still pin an older range; published **`@tamer4lynx/*`** packages use **`>=0.0.1`**-style ranges for internal deps so newer **0.0.x** releases stay compatible.
+
+---
+
+**After `t4l add`, `t4l add-core`, `t4l add-dev`, or `t4l update`:** run **`t4l link`** so native modules are wired into iOS/Android.
 
 ---
 
