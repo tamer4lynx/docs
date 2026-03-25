@@ -41,7 +41,7 @@ Applies `useInsets()` as padding on specified edges. Default `edges` is all four
 <AvoidKeyboard behavior?: 'padding'|'position' animate?: boolean style?>{children}</AvoidKeyboard>
 ```
 
-When keyboard is visible, adds bottom padding (`padding`) or `bottom` offset (`position`). Cancels bottom safe area inset when using padding. `animate={false}` snaps into place instead of animating.
+When keyboard is visible, adds bottom padding (`padding`) or `bottom` offset (`position`). With `SafeArea` bottom edge, applies a negative margin while the keyboard is open. `animate` animates `padding-bottom` or `bottom`; `animate={false}` snaps without transition.
 
 ### useSafeAreaContext()
 

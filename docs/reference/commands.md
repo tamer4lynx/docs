@@ -207,9 +207,11 @@ t4l sync android
 
 ## `t4l start`
 
-Start the dev server with HMR and WebSocket support (Expo-like). Shows an **Ink** dashboard: URLs, build status, QR code for the Lynx dev app, optional log panel, and WebSocket connection count.
+Start the dev server with HMR and WebSocket support (Expo-like). Prints bundle URLs, `meta.json`, QR code, and WebSocket endpoint.
 
-**Keyboard shortcuts** (while the dashboard is focused): **`r`** rebuild the Lynx bundle, **`l`** toggle the log panel, **`q`** quit (and shut down the server).
+**Multiple bundles:** set `paths.lynxAdditionalBundles` in `tamer.config.json` to an array of extra `.lynx.bundle` filenames under the same `paths.lynxBundleRoot` as `paths.lynxBundleFile`. Each is listed under `bundles` in `meta.json` and served from the dev server alongside the primary bundle.
+
+**Keyboard shortcuts** (stdin, TTY): **`r`** rebuild, **`c`** / **Ctrl+L** clear screen, **Ctrl+C** exit.
 
 | Flag | Short | Description |
 |------|-------|-------------|
@@ -238,7 +240,7 @@ t4l add @tamer4lynx/tamer-auth @tamer4lynx/tamer-secure-store
 
 ## `t4l add-core`
 
-Adds the core stack: **tamer-app-shell**, **tamer-screen**, **tamer-router**, **tamer-insets**, **tamer-transports**, **tamer-system-ui**, **tamer-icons**. Each package is resolved to the **highest published semver** on npm (same as `t4l add` / `t4l add-dev`). No flags.
+Adds the core stack: **tamer-app-shell**, **tamer-screen**, **tamer-router**, **tamer-insets**, **tamer-transports**, **tamer-system-ui**, **tamer-icons**, **tamer-env** (Rspeedy `.env` plugin). Each package is resolved to the **highest published semver** on npm (same as `t4l add` / `t4l add-dev`). No flags.
 
 ---
 

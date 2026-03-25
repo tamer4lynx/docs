@@ -8,7 +8,7 @@ File-based routing for Lynx with React 17 and react-router 6.
 - Conventions: `index` → index route, `[param]` → dynamic segment, `_layout.tsx` → layout wrapper
 - **Stack** and **Tabs** layouts with AppBar, TabBar, Content (via tamer-app-shell)
 - `useTamerRouter()` / `useTamerNavigate()` for stack-aware navigation (`push`, `replace`, `back`, `canGoBack`)
-- **System back (Android hardware back / iOS gesture):** the native **`TamerRouterNativeModule`** emits a **`tamer-router:back`** event on **`GlobalEventEmitter`**. `FileRouter` subscribes and runs **screen-level back handlers first** (`useBackHandler` / `usePreventBack`); if none consume the event (`return true`), the router pops the stack when `canGoBack()` is true. The JS side calls **`NativeModules.TamerRouterNativeModule.didHandleBack(consumed)`** so native can finish transitions / snapshot overlays. See **Hardware back** below.
+- **System back (Android hardware back / iOS gesture):** the native **`TamerRouterNativeModule`** emits a **`tamer-router:back`** event on **`GlobalEventEmitter`**. Either **`FileRouter`** or **`BackHandlerRoot`** subscribes and runs **screen-level back handlers first** (`useBackHandler` / `usePreventBack`). Under **`FileRouter`**, if none consume the event, the router pops when `canGoBack()` is true. Under **`BackHandlerRoot`** only, unhandled back calls **`didHandleBack(false)`**. The JS side always notifies the host via **`didHandleBack(consumed)`** for transitions / snapshot overlays. See **Hardware back** below.
 
 ## Installation
 
@@ -130,14 +130,20 @@ Call inside a screen to set title/header. Options merged with `Stack.Screen` / `
 
 ### Hardware back: `useBackHandler` / `usePreventBack`
 
-Intercept the system back event **before** the router pops the stack. Handlers are stacked; the **most recently registered** enabled handler runs first.
+Intercept the system back event **before** default handling. Handlers are stacked; the **most recently registered** enabled handler runs first.
 
-**You do not need Stack, Tabs, or the rest of the navigation API** (`useTamerNavigate`, generated routes, etc.) to use these hooks. You only need your UI to render under **`FileRouter`** so the back-handler context exists—that can be a **minimal** setup (e.g. one route, one screen, no `Stack` / `Tabs` components). If you skip **`FileRouter`** entirely, the hooks do nothing; you can still listen to **`tamer-router:back`** on **`GlobalEventEmitter`** yourself and call **`NativeModules.TamerRouterNativeModule.didHandleBack(...)`** from custom code.
+**You do not need Stack, Tabs, or the rest of the navigation API** (`useTamerNavigate`, generated routes, etc.) to use these hooks. Use either:
+
+- **`FileRouter`** — minimal file-based setup (e.g. one route, one screen, no `Stack` / `Tabs`), or
+- **`BackHandlerRoot`** — no react-router tree; wrap your root UI. Same native module and **`lynx.ext.json`** as tamer-router.
+
+If you use **neither**, the hooks do nothing; you can still listen to **`tamer-router:back`** on **`GlobalEventEmitter`** and call **`didHandleBack`** yourself.
 
 | Export | Description |
 |--------|-------------|
-| `useBackHandler(handler, enabled?)` | `handler` returns **`true`** if the event was consumed (router **does not** navigate back), **`false`** to allow default back behavior. Use `'background only'` in the handler body per ReactLynx rules. |
-| `usePreventBack(enabled?)` | While `enabled` is true, back is fully consumed (router does not pop). Same as `useBackHandler(() => enabled, enabled)`. |
+| `BackHandlerRoot` | Provider for `useBackHandler` / `usePreventBack` without `FileRouter`. Children only. |
+| `useBackHandler(handler, enabled?)` | `handler` returns **`true`** if the event was consumed, **`false`** to pass through (under `FileRouter`, router may pop; under `BackHandlerRoot` only, unhandled → `didHandleBack(false)`). |
+| `usePreventBack(enabled?)` | While `enabled` is true, back is fully consumed. Same as `useBackHandler(() => enabled, enabled)`. |
 
 ```tsx
 import { useBackHandler, usePreventBack } from '@tamer4lynx/tamer-router'

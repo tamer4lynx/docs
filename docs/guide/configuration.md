@@ -42,7 +42,8 @@ On **iOS**, **`-p`** builds for **`iphoneos`** (not the simulator). For App Stor
 | `paths.iosDir` | string | iOS project directory (default: `ios`) |
 | `paths.lynxProject` | string | Same as top-level `lynxProject` |
 | `paths.lynxBundleRoot` | string | Bundle output dir inside Lynx project (default: `dist`) |
-| `paths.lynxBundleFile` | string | Bundle filename (default: `main.lynx.bundle`) |
+| `paths.lynxBundleFile` | string | Primary bundle filename (default: `main.lynx.bundle`); used as default URL in dev `meta.json` |
+| `paths.lynxAdditionalBundles` | string[] | More bundle filenames in the **same** `lynxBundleRoot` (e.g. `auth.lynx.bundle`). `t4l start` lists them in `meta.json` (`bundles`), and `t4l bundle` / embeddable checks that each file exists after `npm run build`. Assets are still copied from the whole output dir. |
 | `dev` | object | Dev mode configuration (optional). Dev client inclusion is now controlled by build type: **debug** (`-d`) embeds the dev client when `@tamer4lynx/tamer-dev-client` is installed; **release** (`-r`) omits it. |
 | `dev.mode` | string | `standalone` \| `embedded` \| `off`. Prefer `-d` / `-r` for dev client behavior when applicable. |
 | `devServer` | object | Dev server for HMR (host, port). Used when dev client is present. |

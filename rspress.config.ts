@@ -79,7 +79,7 @@ const packagesSidebar = [
     text: 'Tooling',
     collapsible: true,
     collapsed: false,
-    items: [pkg('tooling', 'tamer-ambient-types')],
+    items: [pkg('tooling', 'tamer-ambient-types'), pkg('tooling', 'tamer-env')],
   },
   lynxEcosystemGroup,
 ];
