@@ -108,14 +108,6 @@ export default defineConfig({
     dark: '/tamer-logo.png',
   },
   llms: true,
-  builderConfig: {
-    server: {
-      publicDir: [
-        { name: path.join(__dirname, 'docs', 'public') },
-        { name: path.join(__dirname, 'doc_build') },
-      ],
-    },
-  },
   themeConfig: {
     nav: [
       { text: 'Guide', link: '/guide/', activeMatch: '^/guide' },
