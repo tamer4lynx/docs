@@ -7,38 +7,40 @@ All packages are published under **`@tamer4lynx`** on npm, but the **`latest`** 
 
 | Goal | Command |
 |------|---------|
-| One command for the main UI + router + networking stack | `t4l add-core` |
-| Dev launcher (QR, HMR shell) and its dependencies | `t4l add-dev` |
+| Full production-ready app stack (routing, UI, transports, host) | `t4l add-core` |
+| Everything in core plus the dev launcher (QR scan, HMR) | `t4l add-dev` |
 | Individual packages | `t4l add <name>` (e.g. `t4l add tamer-auth`) |
 
 **Manual install** (only if you must): `npm install @tamer4lynx/<pkg>@<exact-version>` with a version taken from the npm registry page, then `t4l link`.
 
-See [Example Anatomy](/guide/example-anatomy) for how the repo’s sample app combines these packages.
+See [Example Anatomy](/guide/example-anatomy) for how the repo's sample app combines these packages.
 
-**Legend:** **add-core** 📦 = included in `t4l add-core` (app-shell, screen, router, insets, transports, system-ui, icons, tamer-env).
+**Legend:** **📦 core** = included in `t4l add-core`. **🛠 dev** = added by `t4l add-dev` (superset of core).
 
 ## Core
 
 Section: [Core packages](/packages/core/)
 
-| Package | add-core | Add command | Description |
+| Package | Included | Add command | Description |
 |---------|:--------:|-------------|-------------|
-| [@tamer4lynx/tamer-dev-client](/packages/core/tamer-dev-client) | | `t4l add tamer-dev-client` or `t4l add-dev` | Dev launcher — QR scan, discovery, recent (live reachability), native module compatibility vs `meta.json` |
-| [@tamer4lynx/tamer-host](/packages/core/tamer-host) | | `t4l add tamer-host` | Production Lynx host templates for injecting into existing apps |
-| [@tamer4lynx/tamer-router](/packages/core/tamer-router) | 📦 | `t4l add tamer-router` | File-based routing, Stack and Tabs layouts, `useBackHandler` / `usePreventBack` |
-| [@tamer4lynx/tamer-plugin](/packages/core/tamer-plugin) | | `t4l add tamer-plugin` | Rsbuild plugin for tamer config |
-| [@tamer4lynx/tamer-app-shell](/packages/core/tamer-app-shell) | 📦 | `t4l add tamer-app-shell` | AppBar, TabBar, Content components |
+| [@tamer4lynx/tamer-host](/packages/core/tamer-host) | 📦 core | `t4l add tamer-host` | Lynx host templates — usually auto-installed by `t4l create`; add manually for existing projects |
+| [@tamer4lynx/tamer-navigation](/packages/core/tamer-navigation) | 📦 core | `t4l add tamer-navigation` | Native stack transport (`TamerNav` push/pop/dispatch) — coming to npm |
+| [@tamer4lynx/tamer-plugin](/packages/core/tamer-plugin) | 📦 core | `t4l add tamer-plugin` | Rsbuild plugin that loads `tamer.config` and merges nested plugins |
+| [@tamer4lynx/tamer-router](/packages/core/tamer-router) | 📦 core | `t4l add tamer-router` | File-based routing, Stack/Tabs layouts, `useBackHandler` / `usePreventBack`, cross-spoke state bridge |
+| [@tamer4lynx/tamer-app-shell](/packages/core/tamer-app-shell) | 📦 core | `t4l add tamer-app-shell` | AppBar, TabBar, Content navigation chrome |
+| [@tamer4lynx/tamer-dev-client](/packages/core/tamer-dev-client) | 🛠 dev | `t4l add-dev` | Dev launcher — QR scan, discovery, recent (live reachability), native module compatibility |
+| [@tamer4lynx/tamer-dev-app](/packages/core/tamer-dev-client) | 🛠 dev | `t4l add-dev` | Standalone dev launcher app wrapping tamer-dev-client |
 
 ## UI
 
 Section: [UI packages](/packages/ui/)
 
-| Package | add-core | Add command | Description |
+| Package | Included | Add command | Description |
 |---------|:--------:|-------------|-------------|
-| [@tamer4lynx/tamer-screen](/packages/ui/tamer-screen) | 📦 | `t4l add tamer-screen` | Screen, SafeArea, AvoidKeyboard |
-| [@tamer4lynx/tamer-insets](/packages/ui/tamer-insets) | 📦 | `t4l add tamer-insets` | Safe area and keyboard insets |
-| [@tamer4lynx/tamer-system-ui](/packages/ui/tamer-system-ui) | 📦 | `t4l add tamer-system-ui` | Status bar, nav bar, theme colors |
-| [@tamer4lynx/tamer-icons](/packages/ui/tamer-icons) | 📦 | `t4l add tamer-icons` | Native `<icon>`; typings via `t4l` / `.tamer` |
+| [@tamer4lynx/tamer-screen](/packages/ui/tamer-screen) | 📦 core | `t4l add tamer-screen` | Screen, SafeArea, AvoidKeyboard |
+| [@tamer4lynx/tamer-insets](/packages/ui/tamer-insets) | 📦 core | `t4l add tamer-insets` | Safe area and keyboard insets |
+| [@tamer4lynx/tamer-system-ui](/packages/ui/tamer-system-ui) | 📦 core | `t4l add tamer-system-ui` | Status bar, nav bar, theme colors |
+| [@tamer4lynx/tamer-icons](/packages/ui/tamer-icons) | 📦 core | `t4l add tamer-icons` | Native `<icon>` element; typings via `.tamer/` |
 
 Text inputs use Lynx built-in `<input>` and `<textarea>` (xelement-input). Add `implementation(libs.lynx.xelement.input)` to your app; autolink adds it when needed.
 
@@ -46,23 +48,23 @@ Text inputs use Lynx built-in `<input>` and `<textarea>` (xelement-input). Add `
 
 Section: [Platform packages](/packages/platform/)
 
-| Package | add-core | Add command | Description |
+| Package | Included | Add command | Description |
 |---------|:--------:|-------------|-------------|
-| [@tamer4lynx/tamer-transports](/packages/platform/tamer-transports) | 📦 | `t4l add tamer-transports` | Fetch, WebSocket, EventSource polyfills |
-| [@tamer4lynx/tamer-local-storage](/packages/platform/tamer-local-storage) | | `t4l add tamer-local-storage` | Web `localStorage` API (SharedPreferences / UserDefaults); not in add-core |
+| [@tamer4lynx/tamer-transports](/packages/platform/tamer-transports) | 📦 core | `t4l add tamer-transports` | Fetch, WebSocket, EventSource polyfills |
+| [@tamer4lynx/tamer-linking](/packages/platform/tamer-linking) | 🛠 dev | `t4l add tamer-linking` | Deep linking — also installed by `t4l add-dev` for QR/URL handling |
+| [@tamer4lynx/tamer-local-storage](/packages/platform/tamer-local-storage) | | `t4l add tamer-local-storage` | Web `localStorage` API (SharedPreferences / UserDefaults) |
 | [@tamer4lynx/jiggle](/packages/platform/jiggle) | | `t4l add jiggle` | Vibration/haptic native module |
 | [@tamer4lynx/tamer-auth](/packages/platform/tamer-auth) | | `t4l add tamer-auth` | OAuth 2.0 / PKCE |
 | [@tamer4lynx/tamer-secure-store](/packages/platform/tamer-secure-store) | | `t4l add tamer-secure-store` | Secure key-value storage |
 | [@tamer4lynx/tamer-biometric](/packages/platform/tamer-biometric) | | `t4l add tamer-biometric` | Biometric authentication |
-| [@tamer4lynx/tamer-linking](/packages/platform/tamer-linking) | | `t4l add tamer-linking` | Deep linking |
 | [@tamer4lynx/tamer-display-browser](/packages/platform/tamer-display-browser) | | `t4l add tamer-display-browser` | In-app browser for OAuth |
-| [@tamer4lynx/tamer-webview](/packages/platform/tamer-webview) | | `t4l add tamer-webview` | Native `<webview>` (WKWebView / Android WebView); typings via `t4l` / `.tamer` |
+| [@tamer4lynx/tamer-webview](/packages/platform/tamer-webview) | | `t4l add tamer-webview` | Native `<webview>` (WKWebView / Android WebView) |
 
 ## Tooling
 
 Section: [Tooling](/packages/tooling/)
 
-| Package | add-core | Add command | Description |
+| Package | Included | Add command | Description |
 |---------|:--------:|-------------|-------------|
+| [@tamer4lynx/tamer-env](/packages/tooling/tamer-env) | 📦 core | `t4l add tamer-env` | `.env` loading and `process.env` / `defineFromEnv` for Rspeedy; auto-discovered by tamer-plugin |
 | [Ambient types (CLI)](/packages/tooling/tamer-ambient-types) | | — (generated by CLI) | `.tamer/tamer-components.d.ts` from `t4l init` / `t4l link` |
-| [@tamer4lynx/tamer-env](/packages/tooling/tamer-env) | 📦 | `t4l add tamer-env` | `.env` loading and `process.env` / `defineFromEnv` for Rspeedy |

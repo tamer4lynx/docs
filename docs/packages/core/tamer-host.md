@@ -11,6 +11,8 @@ Production Lynx host templates for injecting LynxView into existing Android and 
 
 ## Installation
 
+You usually don't need to install this manually. Running **`t4l create android`** or **`t4l create ios`** automatically pulls `tamer-host` templates when the package is present — the CLI falls back to inline templates if it isn't. If you are adding Tamer to an existing project that was created before `tamer-host` was introduced, install it explicitly:
+
 ```bash
 t4l add tamer-host
 ```

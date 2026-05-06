@@ -43,6 +43,7 @@ const packagesSidebar = [
     items: [
       pkg('core', 'tamer-dev-client'),
       pkg('core', 'tamer-host'),
+      pkg('core', 'tamer-navigation'),
       pkg('core', 'tamer-router'),
       pkg('core', 'tamer-plugin'),
       pkg('core', 'tamer-app-shell'),
@@ -105,6 +106,15 @@ export default defineConfig({
   logo: {
     light: '/tamer-logo.png',
     dark: '/tamer-logo.png',
+  },
+  llms: true,
+  builderConfig: {
+    server: {
+      publicDir: [
+        { name: path.join(__dirname, 'docs', 'public') },
+        { name: path.join(__dirname, 'doc_build') },
+      ],
+    },
   },
   themeConfig: {
     nav: [

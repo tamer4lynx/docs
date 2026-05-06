@@ -5,9 +5,10 @@ Routing, dev tooling, host templates, Rsbuild integration, and app shell primiti
 | Package | Role |
 |---------|------|
 | [tamer-dev-client](/packages/core/tamer-dev-client) | Dev launcher (QR, HMR, recent servers, compatibility checks) |
-| [tamer-host](/packages/core/tamer-host) | Production Lynx host templates for existing native apps |
-| [tamer-router](/packages/core/tamer-router) | File-based routing, Stack/Tabs, system back hooks |
+| [tamer-host](/packages/core/tamer-host) | Lynx host templates — usually auto-installed by `t4l create`; add manually only for existing projects |
+| [tamer-navigation](/packages/core/tamer-navigation) | Native stack transport (`TamerNav` push/pop/dispatch) — the foundation `tamer-router` builds on; use directly for custom coordinators |
+| [tamer-router](/packages/core/tamer-router) | File-based routing, Stack/Tabs, system back hooks, cross-spoke state bridge |
 | [tamer-plugin](/packages/core/tamer-plugin) | Rsbuild plugin merging `tamer.config` |
 | [tamer-app-shell](/packages/core/tamer-app-shell) | AppBar, TabBar, Content, navigation chrome |
 
-Use **`t4l add-core`** to install the default UI stack (includes app-shell, router, and related packages). Use **`t4l add-dev`** for the dev-client stack.
+**`t4l add-core`** installs everything needed for a production app: host templates, plugin, navigation, router, app-shell, screen, insets, system-ui, icons, transports, and env. **`t4l add-dev`** is a superset that also adds the dev launcher (tamer-dev-client, tamer-dev-app, tamer-linking).

@@ -45,3 +45,15 @@ interface KeyboardStateWithRaw extends KeyboardState {
   raw: KeyboardState
 }
 ```
+
+## Platform notes
+
+### iOS (v0.0.4+)
+
+Call **`TamerInsetsModule.attachHostView(lynxView)`** after adding your LynxView to the hierarchy so safe-area and keyboard overlap match the Lynx surface. Call **`attachHostView(nil)`** before tearing down. Templates in tamer-host / tamer-dev-client do this automatically.
+
+The keyboard visibility threshold was relaxed from `> 0.5pt` to `> 0pt` in v0.0.4, fixing detection on iOS 26.2 where keyboard height above safe area is minimal.
+
+### Android
+
+After keyboard height updates, the module reschedules a few delayed inset re-reads to handle custom ROMs that report IME size incorrectly on first frames.
