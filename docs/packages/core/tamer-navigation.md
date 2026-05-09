@@ -25,7 +25,17 @@ Use `tamer-router` for most apps. Use `TamerNav` directly when:
 - You want full control over push/pop timing and result payloads
 - You're building something that doesn't fit a file-based page model
 
-The example app's `src/example_stack.tsx` shows this pattern in full — a hand-rolled coordinator that calls `TamerNav.push`, `TamerNav.pop`, and listens to `tamer-nav:popped` to keep its own route stack in sync, with no `FileRouter` involved.
+The example app's [`src/example_stack.tsx`](https://github.com/tamer4lynx/tamer4lynx/blob/main/packages/example/src/example_stack.tsx) shows this pattern in full — a hand-rolled coordinator that calls `TamerNav.push`, `TamerNav.pop`, and listens to `tamer-nav:popped` to keep its own route stack in sync, with no `FileRouter` involved.
+
+### Using TamerNav with non-React Lynx bindings
+
+`TamerNav` itself is just a JS bridge over a native primitive — `push` / `pop` / `dispatch` / `update` work for any Lynx binding. What changes is how you wire **state hydration across spokes**, since `tamer-router`'s `providerConnector` is React-shaped.
+
+- **[miso-lynx](https://lynxjs.haskell-miso.org/) (Haskell):** Push/pop work as-is. For shared state, drive everything through your Haskell model and serialize the relevant slice into `TamerNav.push({ stateJson })`. On the spoke side, read it via `readHydratedStateJson` and decode it through your Haskell-side parser, then call `TamerNav.update({ stateJson })` from the spoke when the model changes. You won't use the React `providerConnector` array — replace it with the equivalent in your effect system.
+- **[VueLynx](https://vue.lynxjs.org/) (`@lynx-js/vue`):** Push/pop work as-is. Replace the React `providerConnector` with a Vue plugin (or a small composable) that reads `readHydratedStateJson` once on mount and calls `subscribeHydratedStateJson` to keep refs reactive. For Pinia, serialize each store's `$state` into the aggregate JSON on the coordinator and `pinia.state.value = parsed[storeKey]` on hydrate. The shape mirrors `createZustandSync` from `tamer-router` — see that for the contract you're reproducing.
+- **Other bindings (Solid, Svelte, vanilla):** Anything that exposes a `getState` / `subscribe` / `hydrate` triple can plug in. Build the equivalent of the React `TamerStateSync` shape (`{ key, serialize(), hydrate(json), subscribe(fn) }`) and run the aggregate on push / `tamer-nav:popped` yourself. `tamer-router`'s [`createTamerStateSync`](/packages/core/tamer-router#cross-spoke-state-providerconnector) is the reference implementation.
+
+In every case, the **native side** (Android `TamerNavHost`, iOS `TamerNavHost`) is identical — the binding boundary lives entirely in JS.
 
 ## API
 
