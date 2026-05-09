@@ -204,13 +204,19 @@ t4l init
 t4l create ios
 ```
 
-5. **Add packages** — dev launcher stack, or core only:
+5. **Add packages** — dev launcher stack, or core only.
 
-```bash
-t4l add-dev    # dev-app, dev-client, and their @tamer4lynx dependencies
-# or, if you do not need the dev client / dev app:
-t4l add-core   # app-shell, screen, router, insets, transports, system-ui, icons
-```
+   Dev launcher stack (dev-app, dev-client, and their `@tamer4lynx` dependencies):
+
+   ```bash
+   t4l add-dev
+   ```
+
+   Or, if you do not need the dev client / dev app — core only (app-shell, screen, router, insets, transports, system-ui, icons):
+
+   ```bash
+   t4l add-core
+   ```
 
 6. **Link native modules** (required after adding packages unless [autolink](/guide/configuration) is enabled):
 
