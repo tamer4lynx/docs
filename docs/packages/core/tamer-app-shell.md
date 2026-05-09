@@ -39,28 +39,16 @@ import {
 
 ### Button
 
-Minimal:
 ```tsx
-<Button onTap={...}>Save</Button>
+<Button variant="outlined" icon="add" size="md" onTap={...}>New</Button>
 ```
 
-With variant and icon:
-```tsx
-<Button variant="outlined" icon="add" onTap={...}>New</Button>
-```
-
-`variant`: `'filled'` (default) | `'outlined'` | `'text'` | `'elevated'` | `'tonal'`
-`size`: `'xs'` | `'sm'` | `'md'` (default) | `'lg'` | `'xl'`
+`variant`: `'filled'` (default) | `'outlined'` | `'text'` | `'elevated'` | `'tonal'`  
+`size`: `'xs'` | `'sm'` | `'md'` (default) | `'lg'` | `'xl'`  
 `shape`: `'round'` (default) | `'square'`
 
 ### ButtonGroup
 
-Minimal:
-```tsx
-<ButtonGroup items={[{ id: 'a', label: 'A' }, { id: 'b', label: 'B' }]} onSelect={setSelected} />
-```
-
-With selection state:
 ```tsx
 <ButtonGroup
   items={[
@@ -75,28 +63,16 @@ With selection state:
 
 ### Card
 
-Minimal:
 ```tsx
-<Card>{...children}</Card>
-```
-
-With variant:
-```tsx
-<Card variant="outlined">{...children}</Card>
+<Card variant="elevated">{...children}</Card>
 ```
 
 `variant`: `'elevated'` (default) | `'filled'` | `'outlined'`
 
 ### Fab
 
-Minimal:
 ```tsx
-<Fab icon="add" onTap={...} />
-```
-
-With size:
-```tsx
-<Fab icon="add" size="small" onTap={...} />
+<Fab icon="add" size="regular" onTap={...} />
 ```
 
 `size`: `'small'` | `'regular'` (default) | `'large'`
@@ -109,12 +85,6 @@ With size:
 
 ### FabMenu
 
-Minimal:
-```tsx
-<FabMenu items={[{ id: 'a', icon: 'add', onTap: () => {} }]} />
-```
-
-With labels:
 ```tsx
 <FabMenu
   items={[
@@ -134,17 +104,6 @@ With labels:
 
 ### NavigationDrawer
 
-Minimal:
-```tsx
-<NavigationDrawer
-  open={open}
-  onDismiss={() => setOpen(false)}
-  sections={[{ items: [{ id: 'home', icon: 'home', label: 'Home' }] }]}
-  onSelect={setSelected}
-/>
-```
-
-With header and selection state:
 ```tsx
 <NavigationDrawer
   open={open}
@@ -165,12 +124,6 @@ With header and selection state:
 
 ### NavigationRail
 
-Minimal:
-```tsx
-<NavigationRail items={[{ id: 'home', icon: 'home' }]} onSelect={setSelected} />
-```
-
-With multiple items:
 ```tsx
 <NavigationRail
   items={[
@@ -195,12 +148,6 @@ With multiple items:
 
 ### Theme tokens
 
-Minimal:
-```tsx
-const { surface, onSurface } = useM3ThemeTokens()
-```
-
-In a view:
 ```tsx
 const t = useM3ThemeTokens()
 
