@@ -363,7 +363,7 @@ For **signed, App Store–style device builds**, use **`t4l build ios -p`** afte
 
 ## CLI and workspace notes
 
-- **Environment files:** On startup, `t4l` loads **`.env`** then **`.env.local`** beside `tamer.config.json` (Android signing passwords, App Store Connect API keys for **`t4l build ios -p --ipa`**, and similar). See [Commands](/reference/commands) (Global section).
+- **Environment files:** `t4l` loads `.env` then `.env.local` beside `tamer.config.json`. Shell / CI exports take precedence. See [Commands → Global](/reference/commands) for the full variable list (`ANDROID_KEYSTORE_PASSWORD`, `APP_STORE_CONNECT_API_KEY_PATH`, etc.).
 - **Interactive flows:** **`t4l init`** and **`t4l signing`** are Ink wizards. **`t4l start`** is an Ink dashboard: **`r`** rebuild bundle, **`l`** toggle logs, **`q`** quit.
 - **TypeScript:** With **`syncTamerComponentTypes`** enabled (default in new configs), **`t4l init`** / **`t4l link`** can adjust the Lynx app `tsconfig.json` and generate **`.tamer/tamer-components.d.ts`**. Details: [Ambient types](/packages/tooling/tamer-ambient-types).
 

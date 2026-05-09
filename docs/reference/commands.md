@@ -6,7 +6,26 @@ Commands use the form **`t4l <command> [target] [flags]`**. Target is a platform
 
 ## Global
 
-Environment: On startup, `t4l` loads **`.env`** then **`.env.local`** from the directory containing `tamer.config.json` (walking up from the current working directory). Values are applied only when the variable is **not** already set in the process environment (so CI or shell exports win). Use this for Android signing variables such as `ANDROID_KEYSTORE_PASSWORD` / `ANDROID_KEY_PASSWORD` referenced in `tamer.config.json`, and for **App Store Connect API** variables used with `t4l build ios -p --ipa`: **`APP_STORE_CONNECT_API_KEY_PATH`** (path to the `.p8` key file), **`APP_STORE_CONNECT_API_KEY_ID`**, and **`APP_STORE_CONNECT_ISSUER_ID`**. Optional overrides for those env var *names* live under `ios.appStoreConnect` in `tamer.config.json`. If all three are set, the CLI runs `xcodebuild archive` / `-exportArchive` with **app-store** export (distribution signing + API key auth) instead of zipping a locally signed `.app`.
+On startup `t4l` loads `.env` then `.env.local` from the directory containing `tamer.config.json` (walking up from the current working directory). Values are applied only when the variable is **not** already set in the process environment — so CI or shell exports always win.
+
+**Android signing** (referenced in `tamer.config.json`):
+
+```bash
+ANDROID_KEYSTORE_PATH=android/release.keystore
+ANDROID_KEYSTORE_PASSWORD=...
+ANDROID_KEY_ALIAS=release
+ANDROID_KEY_PASSWORD=...
+```
+
+**App Store Connect API** (used with `t4l build ios -p --ipa`):
+
+```bash
+APP_STORE_CONNECT_API_KEY_PATH=/path/to/AuthKey.p8
+APP_STORE_CONNECT_API_KEY_ID=XXXXXXXXXX
+APP_STORE_CONNECT_ISSUER_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+```
+
+Optional overrides for those variable names live under `ios.appStoreConnect` in `tamer.config.json`. When all three App Store Connect vars are set, the CLI runs `xcodebuild archive` + `-exportArchive` with **app-store** export (distribution signing + API key auth) instead of zipping a locally signed `.app`.
 
 | Command | Description |
 |---------|-------------|
