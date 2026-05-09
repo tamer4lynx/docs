@@ -37,38 +37,30 @@ import {
 } from '@tamer4lynx/tamer-app-shell'
 ```
 
-### Button — filled
+### Button
 
+Minimal:
 ```tsx
-<Button variant="filled" size="md" onTap={...}>Save</Button>
+<Button onTap={...}>Save</Button>
 ```
 
-### Button — outlined with icon
-
+With variant and icon:
 ```tsx
 <Button variant="outlined" icon="add" onTap={...}>New</Button>
 ```
 
-### Button — text
-
-```tsx
-<Button variant="text" onTap={...}>Cancel</Button>
-```
-
-### Button — elevated
-
-```tsx
-<Button variant="elevated" onTap={...}>Open</Button>
-```
-
-### Button — tonal
-
-```tsx
-<Button variant="tonal" onTap={...}>Filter</Button>
-```
+`variant`: `'filled'` (default) | `'outlined'` | `'text'` | `'elevated'` | `'tonal'`
+`size`: `'xs'` | `'sm'` | `'md'` (default) | `'lg'` | `'xl'`
+`shape`: `'round'` (default) | `'square'`
 
 ### ButtonGroup
 
+Minimal:
+```tsx
+<ButtonGroup items={[{ id: 'a', label: 'A' }, { id: 'b', label: 'B' }]} onSelect={setSelected} />
+```
+
+With selection state:
 ```tsx
 <ButtonGroup
   items={[
@@ -81,47 +73,33 @@ import {
 />
 ```
 
-### Card — elevated
+### Card
 
+Minimal:
 ```tsx
-<Card variant="elevated">
-  ...children...
-</Card>
+<Card>{...children}</Card>
 ```
 
-### Card — filled
-
+With variant:
 ```tsx
-<Card variant="filled">
-  ...children...
-</Card>
+<Card variant="outlined">{...children}</Card>
 ```
 
-### Card — outlined
-
-```tsx
-<Card variant="outlined">
-  ...children...
-</Card>
-```
+`variant`: `'elevated'` (default) | `'filled'` | `'outlined'`
 
 ### Fab
 
+Minimal:
 ```tsx
-<Fab icon="add" size="regular" onTap={...} />
+<Fab icon="add" onTap={...} />
 ```
 
-### Fab — small
-
+With size:
 ```tsx
 <Fab icon="add" size="small" onTap={...} />
 ```
 
-### Fab — large
-
-```tsx
-<Fab icon="add" size="large" onTap={...} />
-```
+`size`: `'small'` | `'regular'` (default) | `'large'`
 
 ### ExtendedFab
 
@@ -131,6 +109,12 @@ import {
 
 ### FabMenu
 
+Minimal:
+```tsx
+<FabMenu items={[{ id: 'a', icon: 'add', onTap: () => {} }]} />
+```
+
+With labels:
 ```tsx
 <FabMenu
   items={[
@@ -140,7 +124,7 @@ import {
 />
 ```
 
-### FloatingFabContainer (edge-anchored, respects tab bar + safe area)
+### FloatingFabContainer
 
 ```tsx
 <FloatingFabContainer>
@@ -148,8 +132,19 @@ import {
 </FloatingFabContainer>
 ```
 
-### Navigation drawer / rail
+### NavigationDrawer
 
+Minimal:
+```tsx
+<NavigationDrawer
+  open={open}
+  onDismiss={() => setOpen(false)}
+  sections={[{ items: [{ id: 'home', icon: 'home', label: 'Home' }] }]}
+  onSelect={setSelected}
+/>
+```
+
+With header and selection state:
 ```tsx
 <NavigationDrawer
   open={open}
@@ -166,7 +161,17 @@ import {
   selectedId={selected}
   onSelect={setSelected}
 />
+```
 
+### NavigationRail
+
+Minimal:
+```tsx
+<NavigationRail items={[{ id: 'home', icon: 'home' }]} onSelect={setSelected} />
+```
+
+With multiple items:
+```tsx
 <NavigationRail
   items={[
     { id: 'home',  icon: 'home' },
@@ -178,8 +183,24 @@ import {
 />
 ```
 
+### ScreenScopedOverlay
+
+```tsx
+<ScreenScopedOverlay level={SCREEN_OVERLAY_LEVEL_DRAWER} visible={open}>
+  ...overlay content...
+</ScreenScopedOverlay>
+```
+
+`level`: `SCREEN_OVERLAY_LEVEL_FLOATING` (10) for menus/FABs, `SCREEN_OVERLAY_LEVEL_DRAWER` (20) for drawers.
+
 ### Theme tokens
 
+Minimal:
+```tsx
+const { surface, onSurface } = useM3ThemeTokens()
+```
+
+In a view:
 ```tsx
 const t = useM3ThemeTokens()
 
