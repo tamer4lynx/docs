@@ -1,0 +1,252 @@
+import { PackageManagerTabs, Tabs, Tab } from '@theme';
+
+# Getting Started
+
+The fastest way to run a Lynx project against Tamer is to install the **prebuilt Tamer Dev App** on your phone or simulator, then point it at your local dev server. No Xcode/Android build required.
+
+## Quickest path: prebuilt Tamer Dev App
+
+The Tamer Dev App is an Expo Go-style host. Download from the [latest release](https://github.com/tamer4lynx/tamer4lynx/releases/latest), install, scan the QR from `t4l start`.
+
+<Tabs queryKey="platform">
+  <Tab label="Android (emulator or device)" value="android">
+    Download `TamerDevApp-<version>.apk` from the [release](https://github.com/tamer4lynx/tamer4lynx/releases/latest) — universal APK with `arm64-v8a`, `armeabi-v7a`, `x86_64`.
+    ```bash
+    adb install TamerDevApp-<version>.apk
+    adb shell am start -n com.nanofuxion.tamerdevapp/.MainActivity
+    ```
+  </Tab>
+  <Tab label="iOS Simulator" value="ios-sim">
+    Download `TamerDevApp-Simulator-<version>.zip`, unzip, install on a booted simulator.
+    ```bash
+    unzip TamerDevApp-Simulator-<version>.zip
+    xcrun simctl install booted ./TamerDevApp.app
+    xcrun simctl launch booted com.nanofuxion.tamerdevapp
+    ```
+  </Tab>
+  <Tab label="iOS Device" value="ios-device">
+    Download `TamerDevApp-Device-Unsigned-<version>.zip`. The `.app` ships unsigned to keep the release portable. Re-sign with your own Apple identity, embed a provisioning profile that matches `com.nanofuxion.tamerdevapp` (or rewrite the bundle id), wrap as IPA, install. Step-by-step in the bundled `SIGN-AND-INSTALL.txt`.
+  </Tab>
+</Tabs>
+
+Then in your Lynx project:
+
+```bash
+t4l start
+```
+
+The dashboard prints a QR — scan it inside the dev app. Bundles hot-reload over the dev server. **No native build required for this path.**
+
+:::tip Use this path when…
+You want to iterate on Lynx UI without touching native code, or you don't have Xcode / Android SDK installed locally.
+:::
+
+## When to build the dev client yourself
+
+Roll your own dev host when:
+
+- You're authoring or consuming a **custom native module / element** that isn't in the prebuilt app.
+- You need a different **bundle id**, signing identity, or app icon.
+- You want a single binary that ships only the Tamer packages your app actually uses.
+
+The rest of this page covers that flow. New to native module authoring? See [Native Modules & Elements](/guide/native-modules) first.
+
+## Prerequisites
+
+Node.js **20.19+** or **Bun**; **Android SDK** for Android builds; **Xcode** on macOS for iOS.
+
+## Install Tamer4Lynx (one-time)
+
+All Tamer packages are under the `@tamer4lynx` scope on npm. Install the CLI globally:
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm i -g @tamer4lynx/cli@latest',
+    yarn: 'yarn global add @tamer4lynx/cli@latest',
+    pnpm: 'pnpm add -g @tamer4lynx/cli@latest',
+    bun: 'bun add -g @tamer4lynx/cli@latest',
+  }}
+/>
+
+Or from GitHub (run `npm uninstall -g @tamer4lynx/cli` first if switching):
+
+```bash
+npm i -g tamer4lynx/tamer4lynx
+```
+
+## Use in a project
+
+### 1. Create a Lynx project (or use existing)
+
+Create a new Lynx project with Rspeedy:
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rspeedy',
+    yarn: 'yarn create rspeedy',
+    pnpm: 'pnpm create rspeedy',
+    bun: 'bun create rspeedy',
+  }}
+/>
+
+Then `cd my-app` and install:
+
+<PackageManagerTabs command="install" />
+
+**Using your own Lynx project?** Tamer4Lynx works with any Lynx binding — [miso-lynx](https://github.com/haskell-miso/miso-lynx), [VueLynx](https://github.com/rahul-vashishtha/lynx-stack/tree/lynx-vue-implementation/packages/vue) (`@lynx-js/vue`), or other Lynx bindings. Run `t4l init` from your project root.
+
+### 2. Project layout: single folder vs monorepo
+
+A Tamer4Lynx project can be **one folder** or a **monorepo**:
+
+| Layout | Structure | When to use |
+|--------|-----------|-------------|
+| **Single folder** | `tamer.config.json`, Lynx app (`src/`, `lynx.config.ts`), `android/`, `ios/` all in the same directory | New projects, simple apps. Run `t4l init` and omit Lynx project path (or use `.`). |
+| **Monorepo** | `tamer.config.json` at root; Lynx app in `packages/myapp`; `android/`, `ios/` at root | Multiple packages, shared tooling. Set `lynxProject: "packages/myapp"` in config. |
+
+The example in this repo uses a monorepo layout. For a single-folder project, copy a Lynx app into a new directory, run `t4l init` there, and create native projects with `t4l create android` / `t4l create ios`.
+
+### 3. Initialize config
+
+From the project root (where `tamer.config.json` will live):
+
+```bash
+t4l init
+```
+
+Or run `t4l` with no arguments for interactive setup. The wizard prompts for Android app name, package name, SDK path, iOS bundle ID, and Lynx project path (leave blank for single-folder layout).
+
+**TypeScript / `tsconfig.json`:** On save, `t4l init` updates the Lynx app's `tsconfig.json` when it exists (root, or under `lynxProject` if you set one): it may **flatten project references** to avoid TS6310 when building, then generates **`.tamer/tamer-components.d.ts`** and ensures **`include`** for it (see [Ambient types](/packages/tooling/tamer-ambient-types)).
+
+### 4. Start the dev server
+
+```bash
+t4l start
+```
+
+The terminal prints a QR code. Scan it with the Tamer Dev App (prebuilt, above) or with your own dev client built via `t4l build <platform> -d -i`.
+
+### 5. Build your app
+
+Add **`@tamer4lynx/tamer-dev-client`** (e.g. via `t4l add-dev`) to embed the dev launcher for QR scan and HMR.
+
+| Flag | Short | Description |
+|------|-------|-------------|
+| `--debug` | `-d` | Debug build with dev client (default). Requires `tamer-dev-client` for QR/HMR. |
+| `--release` | `-r` | Release build **without** dev client; **unsigned**. |
+| `--production` | `-p` | **Signed** build for App Store / signed distribution. Requires `t4l signing` first. |
+| `--install` | `-i` | After build: Android installs APK; iOS **debug** installs to **simulator**; **production** (`-p`) installs to a **physical device only** (`devicectl`). |
+| `--embeddable` | `-e` | Output embeddable artifacts for existing apps; use **`t4l build android --embeddable`** (Android only). |
+
+**iOS quick reference:** `-p` always targets **devices** (`iphoneos`). `-d -i` targets the **simulator** and installs there. **`t4l build ios -p --ipa`** exports an IPA after archiving.
+
+**Platform:** `t4l build` requires **`android` or `ios`** each time (one platform per command).
+
+<Tabs queryKey="platform">
+  <Tab label="Android" value="android">
+    ```bash
+    t4l build android -d               # debug Android (dev client if tamer-dev-client installed)
+    t4l build android --install        # debug, install to running emulator/device
+    t4l build android --release        # release Android, no dev client, unsigned
+    t4l build android --embeddable     # embeddable output (release-style)
+    ```
+  </Tab>
+  <Tab label="iOS" value="ios">
+    ```bash
+    t4l build ios --install            # debug iOS, install to booted simulator
+    t4l build ios -p                   # signed production (device); use after signing setup
+    t4l build ios -p --ipa             # archive + export IPA
+    ```
+  </Tab>
+</Tabs>
+
+Use the dev client (when built with `-d`) to connect to your local dev server via URL or QR, then develop with HMR.
+
+### Dev host and native modules
+
+The **debug / HMR** native app you build is **made from your project** after **`t4l link`**, so the iOS and Android binaries include **the native modules your app actually uses** (autolinked pods, Gradle modules, registration).
+
+Whenever you add or remove **`@tamer4lynx/*`** native packages, run **`t4l link`** (or **`t4l link ios`** / **`t4l link android`**) so autolinking updates native projects — unless **`autolink: true`** in `tamer.config.json` runs `t4l link` after installs (see `t4l autolink-toggle`).
+
+## Greenfield: Rspeedy + iOS host (example flow)
+
+1. **Create the Lynx app**:
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rspeedy && cd my-app && npm install',
+    yarn: 'yarn create rspeedy && cd my-app && yarn install',
+    pnpm: 'pnpm create rspeedy && cd my-app && pnpm install',
+    bun: 'bun create rspeedy && cd my-app && bun install',
+  }}
+/>
+
+2. **Install the CLI**:
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm i -g @tamer4lynx/cli@latest',
+    yarn: 'yarn global add @tamer4lynx/cli@latest',
+    pnpm: 'pnpm add -g @tamer4lynx/cli@latest',
+    bun: 'bun add -g @tamer4lynx/cli@latest',
+  }}
+/>
+
+3. **Initialize Tamer** — writes `tamer.config.json` and patches TypeScript config:
+
+```bash
+t4l init
+```
+
+4. **Create the native iOS project**:
+
+```bash
+t4l create ios
+```
+
+5. **Add packages** — dev launcher stack, or core only:
+
+```bash
+t4l add-dev    # dev-app, dev-client, and their @tamer4lynx dependencies
+# or, if you do not need the dev client / dev app:
+t4l add-core   # app-shell, screen, router, insets, transports, system-ui, icons
+```
+
+6. **Link native modules** (required after adding packages unless [autolink](/guide/configuration) is enabled):
+
+```bash
+t4l link ios
+```
+
+7. **Debug build and install on the simulator**:
+
+```bash
+t4l build ios -d -i
+```
+
+For **signed, App Store–style device builds**, use **`t4l build ios -p`** after `t4l signing ios`. That is **not** a simulator build.
+
+## CLI and workspace notes
+
+- **Environment files:** On startup, `t4l` loads **`.env`** then **`.env.local`** beside `tamer.config.json` (Android signing passwords, App Store Connect API keys for **`t4l build ios -p --ipa`**, and similar). See [Commands](/reference/commands) (Global section).
+- **Interactive flows:** **`t4l init`** and **`t4l signing`** are Ink wizards. **`t4l start`** is an Ink dashboard: **`r`** rebuild bundle, **`l`** toggle logs, **`q`** quit.
+- **TypeScript:** With **`syncTamerComponentTypes`** enabled (default in new configs), **`t4l init`** / **`t4l link`** can adjust the Lynx app `tsconfig.json` and generate **`.tamer/tamer-components.d.ts`**. Details: [Ambient types](/packages/tooling/tamer-ambient-types).
+
+Worth exploring next: [tamer-router](/packages/core/tamer-router) (back handling), [tamer-webview](/packages/platform/tamer-webview), [tamer-local-storage](/packages/platform/tamer-local-storage), [tamer-dev-client](/packages/core/tamer-dev-client).
+
+## Next steps
+
+- [Native Modules & Elements](/guide/native-modules) — author your own Tamer-compatible native package
+- [Configuration Reference](/guide/configuration) — `tamer.config.json`, `tamer.config.ts`, `lynx.ext.json`
+- [Commands](/reference/commands) — full CLI reference
+- [tamer-dev-client](/packages/core/tamer-dev-client) — Dev launcher API and setup
+
+## Lynx ecosystem
+
+- [Lynx](https://lynxjs.org/) — Cross-platform rendering engine
+- [Rspeedy](https://lynxjs.org/rspeedy/) — Build tool for Lynx
+- [ReactLynx](https://lynxjs.org/react/) — React on Lynx
+
+## Framework agnostic
+
+Tamer4Lynx is conceptually Lynx framework agnostic. Native modules and tooling work with any Lynx binding, including [miso-lynx](https://github.com/haskell-miso/miso-lynx) and [VueLynx](https://github.com/rahul-vashishtha/lynx-stack/tree/lynx-vue-implementation/packages/vue) (`@lynx-js/vue`). Some packages like **tamer-router** are specifically designed for `@lynx-js/react`.

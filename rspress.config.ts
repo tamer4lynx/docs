@@ -24,6 +24,7 @@ const guideSidebar = [
     collapsed: false,
     items: [
       { text: 'Getting Started', link: '/guide/getting-started' },
+      { text: 'Native Modules & Elements', link: '/guide/native-modules' },
       { text: 'Configuration', link: '/guide/configuration' },
       { text: 'Example Anatomy', link: '/guide/example-anatomy' },
     ],
