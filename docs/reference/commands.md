@@ -85,18 +85,14 @@ Create a project or extension. **Target:** `ios` | `android` | `module` | `eleme
 
 | Flag | Short | Description |
 |------|-------|-------------|
-| `--debug` | `-d` | For android: create host project (default) |
-| `--release` | `-r` | For android: create dev-app project |
-
-Cannot use `--debug` and `--release` together.
+| `--release` | `-r` | Android: create a release-variant project |
 
 **Examples:**
 
 ```bash
 t4l create ios
-t4l create android              # host project
-t4l create android -r           # dev-app project
-t4l create android --release
+t4l create android
+t4l create android -r
 t4l create module
 t4l create element
 t4l create combo
@@ -304,7 +300,7 @@ The following form works: **`t4l <platform> <subcommand> [flags]`**.
 
 | Command | Description |
 |---------|-------------|
-| `t4l android create` | Same as `t4l create android`. Use `-r` or `--release` for dev-app. |
+| `t4l android create` | Same as `t4l create android`. Use `-r` / `--release` for release variant. |
 | `t4l android link` | Same as `t4l link android` |
 | `t4l android bundle` | Same as `t4l bundle android`. Flags: `-d`, `-r`, `-p`. |
 | `t4l android build` | Same as `t4l build android`. Flags: `-d`, `-r`, `-p`, `-i`, `-e`, `-C`. |
