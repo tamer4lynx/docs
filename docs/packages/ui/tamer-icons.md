@@ -4,9 +4,9 @@ Typings and font assets for the native Lynx **`<icon>`** element (Material Icons
 
 ## Overview
 
-- **`<icon>`** — Native custom element; **`IconElementProps`** in **`packages/tamer-icons/src/icon-jsx.ts`** extends **`ViewProps`** from **`@lynx-js/types`**, so you also get standard view props (**`className`**, **`id`**, **`style`**, …) alongside **`icon`**, **`set`**, **`size`**, **`iconColor`**.
-- **`IconSet`** — `'material' | 'fontawesome' | 'fa'` (exported for app code)
-- **Fonts** — Material Icons and Font Awesome codepoints. Fonts must be loaded via `lynx.addFont` or `@font-face`; the package provides **`MATERIAL_ICONS_URL`** and **`FONTAWESOME_SOLID_URL`**.
+- **`<icon>`** — Native custom element; **`IconElementProps`** in **`packages/tamer-icons/src/icon-jsx.ts`** extends **`ViewProps`** from **`@lynx-js/types`**, so you also get standard view props (**`className`**, **`id`**, **`style`**, …) alongside **`icon`**, **`set`**, **`size`**, **`iconColor`**, and (Material Symbols only) **`fill`** (0 = outline, 1 = filled).
+- **`IconSet`** — `'material' | 'material_symbols' | 'fontawesome' | 'fa' | 'fontawesome_brands' | 'fab'` (exported for app code).
+- **Fonts** — Material Icons (classic), Material Symbols (variable-weight outlined), Font Awesome solid, Font Awesome brands. Fonts ship inside the iOS pod resource bundle and Android `assets/fonts/`; for web preview the package exposes **`MATERIAL_ICONS_URL`**, **`MATERIAL_ICONS_CLASSIC_URL`**, **`FONTAWESOME_SOLID_URL`**, and **`FONTAWESOME_BRANDS_URL`**.
 
 ### iOS (CocoaPods)
 
@@ -52,21 +52,43 @@ import '@tamer4lynx/tamer-icons'
 | Attribute | Description |
 |-----------|-------------|
 | `icon` | Icon name / codepoint key |
-| `set` | `'material'` \| `'fontawesome'` \| `'fa'` |
+| `set` | `'material'` \| `'material_symbols'` \| `'fontawesome'` \| `'fa'` \| `'fontawesome_brands'` \| `'fab'` |
 | `size` | Number (often paired with `style` width/height) |
 | `iconColor` | Color string |
+| `fill` | `0` (outline) or `1` (filled). Material Symbols only. |
 | `style` | `ViewProps['style']` (Lynx view style) |
 | `className`, `id`, … | From **`ViewProps`** — same as other Lynx views |
+
+### Examples
+
+```tsx
+{/* Material classic */}
+<icon icon="home" set="material" size={24} iconColor="#333" />
+
+{/* Material Symbols, filled variant */}
+<icon icon="favorite" set="material_symbols" fill={1} size={24} iconColor="#e53935" />
+
+{/* Font Awesome solid */}
+<icon icon="envelope" set="fa" size={20} iconColor="#666" />
+
+{/* Font Awesome brands — github, discord, twitter, x-twitter, youtube,
+    linkedin, npm, apple, android, google ship as built-in codepoints */}
+<icon icon="github"  set="fab" size={20} iconColor="#000" />
+<icon icon="discord" set="fab" size={20} iconColor="#5865f2" />
+```
 
 ### Exports
 
 | Export | Description |
 |--------|-------------|
 | `IconElementProps` | Props type for `<icon>` |
-| `IconSet` | `'material'` \| `'fontawesome'` \| `'fa'` |
-| `MATERIAL_ICONS_URL` | Material Icons font URL |
-| `FONTAWESOME_SOLID_URL` | Font Awesome solid URL |
+| `IconSet` | All set names (see above) |
+| `MATERIAL_ICONS_URL` | Material Symbols (variable) font URL |
+| `MATERIAL_ICONS_CLASSIC_URL` | Material Icons (classic) font URL |
+| `FONTAWESOME_SOLID_URL` | Font Awesome solid font URL |
+| `FONTAWESOME_BRANDS_URL` | Font Awesome brands font URL |
 | `MATERIAL_CODEPOINTS` | Material icon codepoint map |
+| `FONTAWESOME_BRANDS_CODEPOINTS` | Font Awesome brands codepoint map |
 
 ## See also
 
