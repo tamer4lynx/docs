@@ -37,12 +37,39 @@ import {
 } from '@tamer4lynx/tamer-app-shell'
 ```
 
-### Buttons
+### Button — filled
 
 ```tsx
 <Button variant="filled" size="md" onTap={...}>Save</Button>
-<Button variant="outlined" icon="add" onTap={...}>New</Button>
+```
 
+### Button — outlined with icon
+
+```tsx
+<Button variant="outlined" icon="add" onTap={...}>New</Button>
+```
+
+### Button — text
+
+```tsx
+<Button variant="text" onTap={...}>Cancel</Button>
+```
+
+### Button — elevated
+
+```tsx
+<Button variant="elevated" onTap={...}>Open</Button>
+```
+
+### Button — tonal
+
+```tsx
+<Button variant="tonal" onTap={...}>Filter</Button>
+```
+
+### ButtonGroup
+
+```tsx
 <ButtonGroup
   items={[
     { id: 'left',  label: 'Left'   },
@@ -54,7 +81,7 @@ import {
 />
 ```
 
-### Card
+### Card — elevated
 
 ```tsx
 <Card variant="elevated">
@@ -62,21 +89,60 @@ import {
 </Card>
 ```
 
-### Floating action buttons
+### Card — filled
+
+```tsx
+<Card variant="filled">
+  ...children...
+</Card>
+```
+
+### Card — outlined
+
+```tsx
+<Card variant="outlined">
+  ...children...
+</Card>
+```
+
+### Fab
 
 ```tsx
 <Fab icon="add" size="regular" onTap={...} />
+```
 
+### Fab — small
+
+```tsx
+<Fab icon="add" size="small" onTap={...} />
+```
+
+### Fab — large
+
+```tsx
+<Fab icon="add" size="large" onTap={...} />
+```
+
+### ExtendedFab
+
+```tsx
 <ExtendedFab icon="edit" onTap={...}>Compose</ExtendedFab>
+```
 
+### FabMenu
+
+```tsx
 <FabMenu
   items={[
     { id: 'a', icon: 'image', label: 'Photo', onTap: () => {} },
     { id: 'b', icon: 'mic',   label: 'Voice', onTap: () => {} },
   ]}
 />
+```
 
-{/* Edge-anchored, respects tab bar + safe area */}
+### FloatingFabContainer (edge-anchored, respects tab bar + safe area)
+
+```tsx
 <FloatingFabContainer>
   <Fab icon="add" onTap={...} />
 </FloatingFabContainer>
