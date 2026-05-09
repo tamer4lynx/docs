@@ -1,36 +1,8 @@
 # tamer-app-shell
 
-App chrome (AppBar / TabBar / Screen / SafeArea) + a set of Material 3 components (Button, Card, FAB, NavigationDrawer, NavigationRail, …) for Lynx. Used by tamer-router `Stack` / `Tab` layouts and standalone in any Lynx page.
+App chrome (AppBar / TabBar / Screen / SafeArea) plus a Material 3 component set (Button, Card, FAB, NavigationDrawer, NavigationRail, …) for Lynx. Used by tamer-router `Stack` / `Tab` layouts and standalone in any Lynx page.
 
-## Overview
-
-### App chrome
-
-- **AppBar** — Title bar with back button, actions
-- **TabBar** — Bottom tab bar with icons and labels
-- **Content** — Scrollable content area
-- **Screen** — Full-screen flex container (re-exported from tamer-screen)
-- **SafeArea** — Padding for safe area insets (re-exported from tamer-screen)
-- **AppShellProvider** / **`useAppShellContext()`** — Toggle showAppBar / showTabBar
-- **AppShellRouterContext** / **`useAppShellRouter()`** — back / canGoBack / replace (provided by FileRouter; usable directly with manual coordinators)
-
-### Material 3 components
-
-- **Button** — `<Button variant size shape onTap>` — `filled` / `outlined` / `text` / `elevated` / `tonal` × `xs` / `sm` / `md` / `lg` / `xl` × `round` / `square`
-- **ButtonGroup** — Connected button row (`ButtonGroupProps` / `ButtonGroupItem`)
-- **Card** — `<Card variant>` with `elevated` / `filled` / `outlined`
-- **Fab / ExtendedFab / FabMenu** — Floating action buttons; `FabSize` `'small' | 'regular' | 'large'`
-- **FloatingFabContainer** + **`useFloatingFabOffsets()`** — Anchors a FAB at the screen edge, accounting for tab bar + insets
-- **ScreenScopedOverlay** — Overlay layer scoped to the current screen (drawer / dialog / floating elements). Z-levels exposed as `SCREEN_OVERLAY_LEVEL_FLOATING` (10) and `SCREEN_OVERLAY_LEVEL_DRAWER` (20)
-- **NavigationDrawer** — Side drawer with `DrawerSection` / `DrawerItem`
-- **NavigationRail** — Vertical navigation rail with `NavRailItem`
-
-### M3 theme tokens
-
-- **`useM3ThemeTokens()`** — Returns the full M3 token set (`primary`, `onPrimary`, `surface`, `surfaceContainer*`, …) derived from the active palette in [tamer-system-ui](/packages/ui/tamer-system-ui). Use this in your own components to stay aligned with the rest of the shell.
-- **`px(...values)`** — Helper for converting a list of numbers to a px string.
-
-## Installation
+## Install
 
 ```bash
 t4l add-core
@@ -39,9 +11,126 @@ t4l add-core
 
 Run **`t4l link`** after installing.
 
+## Usage
+
+Each export drops in directly — most pages need only a few. Imports first:
+
+```tsx
+import {
+  AppBar,
+  TabBar,
+  Screen,
+  SafeArea,
+  Button,
+  ButtonGroup,
+  Card,
+  Fab,
+  ExtendedFab,
+  FabMenu,
+  FloatingFabContainer,
+  NavigationDrawer,
+  NavigationRail,
+  ScreenScopedOverlay,
+  SCREEN_OVERLAY_LEVEL_DRAWER,
+  SCREEN_OVERLAY_LEVEL_FLOATING,
+  useM3ThemeTokens,
+} from '@tamer4lynx/tamer-app-shell'
+```
+
+### Buttons
+
+```tsx
+<Button variant="filled" size="md" onTap={...}>Save</Button>
+<Button variant="outlined" icon="add" onTap={...}>New</Button>
+
+<ButtonGroup
+  items={[
+    { id: 'left',  label: 'Left'   },
+    { id: 'mid',   label: 'Middle' },
+    { id: 'right', label: 'Right'  },
+  ]}
+  selectedId={selected}
+  onSelect={setSelected}
+/>
+```
+
+### Card
+
+```tsx
+<Card variant="elevated">
+  ...children...
+</Card>
+```
+
+### Floating action buttons
+
+```tsx
+<Fab icon="add" size="regular" onTap={...} />
+
+<ExtendedFab icon="edit" onTap={...}>Compose</ExtendedFab>
+
+<FabMenu
+  items={[
+    { id: 'a', icon: 'image', label: 'Photo', onTap: () => {} },
+    { id: 'b', icon: 'mic',   label: 'Voice', onTap: () => {} },
+  ]}
+/>
+
+{/* Edge-anchored, respects tab bar + safe area */}
+<FloatingFabContainer>
+  <Fab icon="add" onTap={...} />
+</FloatingFabContainer>
+```
+
+### Navigation drawer / rail
+
+```tsx
+<NavigationDrawer
+  open={open}
+  onDismiss={() => setOpen(false)}
+  sections={[
+    {
+      header: 'Mail',
+      items: [
+        { id: 'inbox', icon: 'inbox', label: 'Inbox' },
+        { id: 'sent',  icon: 'send',  label: 'Sent'  },
+      ],
+    },
+  ]}
+  selectedId={selected}
+  onSelect={setSelected}
+/>
+
+<NavigationRail
+  items={[
+    { id: 'home',  icon: 'home' },
+    { id: 'fav',   icon: 'star' },
+    { id: 'about', icon: 'info' },
+  ]}
+  selectedId={selected}
+  onSelect={setSelected}
+/>
+```
+
+### Theme tokens
+
+```tsx
+const t = useM3ThemeTokens()
+
+<view style={{ backgroundColor: t.surface, borderColor: t.outlineVariant }}>
+  <text style={{ color: t.onSurface }}>Hi</text>
+</view>
+```
+
+The token set tracks the active light / dark palette from [tamer-system-ui](/packages/ui/tamer-system-ui), so theme switches propagate without per-component plumbing.
+
+The `packages/example` app at `pages/m3/` exercises every component above — see [Example Anatomy](/guide/example-anatomy).
+
 ## API
 
-### AppBar
+### App chrome
+
+#### `<AppBar>`
 
 ```tsx
 <AppBar
@@ -55,9 +144,9 @@ Run **`t4l link`** after installing.
 />
 ```
 
-`AppBarAction`: `{ icon: string; set?: IconSet; onTap: () => void }`. If `leftAction` is undefined and `canGoBack()`, shows default back button.
+`AppBarAction`: `{ icon: string; set?: IconSet; onTap: () => void }`. If `leftAction` is undefined and `canGoBack()`, shows the default back button.
 
-### TabBar
+#### `<TabBar>`
 
 ```tsx
 <TabBar
@@ -67,55 +156,31 @@ Run **`t4l link`** after installing.
 />
 ```
 
-`TabItem`: `{ icon: string; set?: IconSet; label?: string; path?: string; onTap?: () => void }`. Uses `AppShellRouterContext.replace(path, { tab: true })` when path is set.
+`TabItem`: `{ icon: string; set?: IconSet; label?: string; path?: string; onTap?: () => void }`. Uses `AppShellRouterContext.replace(path, { tab: true })` when `path` is set.
 
-### Content
+#### `<Content>`
 
-Scrollable view. Pass `children` and optional `style`.
+Scrollable view. Accepts `children` and optional `style`.
 
-### Screen
+#### `<Screen>` / `<SafeArea>`
 
-Full-screen flex column. Pass `children` and optional `style`.
+Re-exported from [tamer-screen](/packages/ui/tamer-screen). `Screen` is a full-screen flex column. `SafeArea` accepts `edges?: ('top'|'right'|'bottom'|'left')[]` plus `children`.
 
-### SafeArea
-
-Re-exported from tamer-screen. Pass `edges?: ('top'|'right'|'bottom'|'left')[]` and `children`.
-
-### AppShellProvider
+#### `<AppShellProvider>` / `useAppShellContext()`
 
 ```tsx
 <AppShellProvider showAppBar showTabBar barHeight?>{children}</AppShellProvider>
 ```
 
-### useAppShellContext()
+`useAppShellContext()` returns `{ showAppBar, showTabBar, barHeight }`.
 
-Returns `{ showAppBar, showTabBar, barHeight }`.
+#### `useAppShellRouter()`
 
-### useAppShellRouter()
+Returns `AppShellRouterContextValue | null`: `back`, `canGoBack`, `replace(route, options?)`. Provided by `FileRouter`; usable directly with manual coordinators.
 
-Returns `AppShellRouterContextValue | null`: `back`, `canGoBack`, `replace(route, options?)`.
+### Material 3 components
 
-## Material 3 components
-
-Each M3 component is a self-contained export — import directly from the package and drop in:
-
-```tsx
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  Fab,
-  ExtendedFab,
-  FabMenu,
-  FloatingFabContainer,
-  NavigationDrawer,
-  NavigationRail,
-  ScreenScopedOverlay,
-  useM3ThemeTokens,
-} from '@tamer4lynx/tamer-app-shell'
-```
-
-### Button
+#### `<Button>`
 
 ```tsx
 <Button
@@ -131,109 +196,48 @@ import {
 </Button>
 ```
 
-### ButtonGroup
+#### `<ButtonGroup>`
 
-```tsx
-<ButtonGroup
-  items={[
-    { id: 'left',  label: 'Left'  },
-    { id: 'mid',   label: 'Middle' },
-    { id: 'right', label: 'Right' },
-  ]}
-  selectedId={selected}
-  onSelect={setSelected}
-/>
-```
+`ButtonGroupProps` accepts `items: ButtonGroupItem[]`, `selectedId`, `onSelect`. Connected button row.
 
-### Card
+#### `<Card variant>`
 
-```tsx
-<Card variant="elevated">
-  ...children...
-</Card>
-```
+`'elevated' | 'filled' | 'outlined'`.
 
-### Fab / ExtendedFab / FabMenu
+#### `<Fab>` / `<ExtendedFab>` / `<FabMenu>`
 
-```tsx
-<Fab icon="add" size="regular" onTap={...} />
+`FabSize`: `'small' | 'regular' | 'large'`. `FabMenu` takes `FabMenuItem[]` (id, icon, label, onTap).
 
-<ExtendedFab icon="edit" onTap={...}>Compose</ExtendedFab>
+#### `<FloatingFabContainer>` / `useFloatingFabOffsets()`
 
-<FabMenu
-  items={[
-    { id: 'a', icon: 'image', label: 'Photo', onTap: () => {} },
-    { id: 'b', icon: 'mic',   label: 'Voice', onTap: () => {} },
-  ]}
-/>
-```
+Wraps a FAB at the screen edge accounting for tab bar + insets. The hook returns `{ bottom, right, … }` in px if you want the math without the wrapper.
 
-For an edge-anchored FAB that respects the tab bar + safe area, wrap in `FloatingFabContainer`:
+#### `<ScreenScopedOverlay>`
 
-```tsx
-<FloatingFabContainer>
-  <Fab icon="add" onTap={...} />
-</FloatingFabContainer>
-```
+Mounts an overlay (sheet, drawer, dialog) above the current screen — sits below pushed routes. Use `level={SCREEN_OVERLAY_LEVEL_FLOATING}` (10) for menus / FABs and `level={SCREEN_OVERLAY_LEVEL_DRAWER}` (20) for drawers.
 
-`useFloatingFabOffsets()` returns `{ bottom, right, … }` in px if you need the same math without the wrapper.
+#### `<NavigationDrawer>`
 
-### NavigationDrawer
+Side drawer; takes `DrawerSection[]` of `DrawerItem`s, `open`, `onDismiss`, `selectedId`, `onSelect`.
 
-```tsx
-<NavigationDrawer
-  open={open}
-  onDismiss={() => setOpen(false)}
-  sections={[
-    {
-      header: 'Mail',
-      items: [
-        { id: 'inbox',  icon: 'inbox',  label: 'Inbox' },
-        { id: 'sent',   icon: 'send',   label: 'Sent'  },
-      ],
-    },
-  ]}
-  selectedId={selected}
-  onSelect={setSelected}
-/>
-```
+#### `<NavigationRail>`
 
-### NavigationRail
+Vertical rail; takes `NavRailItem[]`, `selectedId`, `onSelect`.
 
-```tsx
-<NavigationRail
-  items={[
-    { id: 'home',  icon: 'home'   },
-    { id: 'fav',   icon: 'star'   },
-    { id: 'about', icon: 'info'   },
-  ]}
-  selectedId={selected}
-  onSelect={setSelected}
-/>
-```
+#### `useM3ThemeTokens()`
 
-### ScreenScopedOverlay
+Returns the M3 token set (`primary`, `onPrimary`, `surface`, `surfaceContainer*`, `outline`, `outlineVariant`, …) derived from the active palette in [tamer-system-ui](/packages/ui/tamer-system-ui).
 
-Mounts an overlay (sheet, drawer, dialog) above the current screen — sits below pushed routes. Use `level={SCREEN_OVERLAY_LEVEL_FLOATING}` for menus / FABs and `level={SCREEN_OVERLAY_LEVEL_DRAWER}` for drawers.
+#### `px(...values)`
 
-```tsx
-<ScreenScopedOverlay level={SCREEN_OVERLAY_LEVEL_DRAWER} visible={open}>
-  <NavigationDrawer ... />
-</ScreenScopedOverlay>
-```
+Helper for converting a list of numbers to a px string.
 
-### useM3ThemeTokens()
+---
 
-```tsx
-const t = useM3ThemeTokens()
+## How it works
 
-<view style={{ backgroundColor: t.surface, borderColor: t.outlineVariant }}>
-  <text style={{ color: t.onSurface }}>...</text>
-</view>
-```
-
-The token set tracks the active light/dark palette from [tamer-system-ui](/packages/ui/tamer-system-ui), so theme switches propagate without per-component plumbing.
-
-## See also
-
-The `packages/example` app at `pages/m3/` exercises every component above — see [Example Anatomy](/guide/example-anatomy) for the routing setup.
+- **App chrome** is a thin layer over plain Lynx `<view>` / `<text>` — no native module. `AppBar` / `TabBar` read insets from [tamer-insets](/packages/ui/tamer-insets) and palette from [tamer-system-ui](/packages/ui/tamer-system-ui). `Screen` / `SafeArea` come from [tamer-screen](/packages/ui/tamer-screen).
+- **`AppShellRouterContext`** is populated by `FileRouter` (or your own coordinator). Components that show a back button (`AppBar`, `NavigationDrawer` headers) consume it via `useAppShellRouter()`.
+- **M3 components** consume `useM3ThemeTokens()` directly, so any theme change propagates without re-rendering the whole tree manually.
+- **`ScreenScopedOverlay`** mounts into the active screen's overlay layer, not document root — pushed routes hide existing overlays automatically and overlays don't bleed across stack entries.
+- **`FloatingFabContainer`** subscribes to `useInsets()` + a constant tab-bar visual height (80px); `useFloatingFabOffsets()` exposes the same math.
