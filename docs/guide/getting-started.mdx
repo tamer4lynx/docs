@@ -68,11 +68,27 @@ All Tamer packages are under the `@tamer4lynx` scope on npm. Install the CLI glo
   }}
 />
 
-Or from GitHub (run `npm uninstall -g @tamer4lynx/cli` first if switching):
+Or install from GitHub. First uninstall the npm copy if you're switching:
 
-```bash
-npm i -g tamer4lynx/tamer4lynx
-```
+<PackageManagerTabs
+  command={{
+    npm: 'npm uninstall -g @tamer4lynx/cli',
+    yarn: 'yarn global remove @tamer4lynx/cli',
+    pnpm: 'pnpm remove -g @tamer4lynx/cli',
+    bun: 'bun remove -g @tamer4lynx/cli',
+  }}
+/>
+
+Then install from the GitHub repo:
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm i -g tamer4lynx/tamer4lynx',
+    yarn: 'yarn global add tamer4lynx/tamer4lynx',
+    pnpm: 'pnpm add -g github:tamer4lynx/tamer4lynx',
+    bun: 'bun add -g github:tamer4lynx/tamer4lynx',
+  }}
+/>
 
 ## Use in a project
 
