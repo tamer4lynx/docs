@@ -111,7 +111,7 @@ export default defineConfig({
   llms: true,
   themeConfig: {
     nav: [
-      { text: 'Guide', link: '/guide/', activeMatch: '^/guide' },
+      { text: 'Guide', link: '/guide/getting-started', activeMatch: '^/guide' },
       { text: 'Commands', link: '/reference/commands', activeMatch: '^/reference' },
       { text: 'Packages', link: '/packages/', activeMatch: '^/packages' },
     ],
