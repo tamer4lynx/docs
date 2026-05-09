@@ -9,23 +9,24 @@ The fastest way to run a Lynx project against Tamer is to install the **prebuilt
 The Tamer Dev App is an Expo Go-style host. Download from the [latest release](https://github.com/tamer4lynx/tamer4lynx/releases/latest), install, scan the QR from `t4l start`.
 
 <Tabs queryKey="platform">
-  <Tab label="Android (emulator or device)" value="android">
-    Download `TamerDevApp-<version>.apk` from the [release](https://github.com/tamer4lynx/tamer4lynx/releases/latest) — universal APK with `arm64-v8a`, `armeabi-v7a`, `x86_64`.
-    ```bash
-    adb install TamerDevApp-<version>.apk
-    adb shell am start -n com.nanofuxion.tamerdevapp/.MainActivity
-    ```
-  </Tab>
-  <Tab label="iOS Simulator" value="ios-sim">
-    Download `TamerDevApp-Simulator-<version>.zip`, unzip, install on a booted simulator.
+  <Tab label="iOS" value="ios">
+    **Simulator** — download `TamerDevApp-Simulator-<version>.zip`, unzip, install on a booted simulator:
+
     ```bash
     unzip TamerDevApp-Simulator-<version>.zip
     xcrun simctl install booted ./TamerDevApp.app
     xcrun simctl launch booted com.nanofuxion.tamerdevapp
     ```
+
+    **Device** — download `TamerDevApp-Device-Unsigned-<version>.zip`. The `.app` ships unsigned to keep the release portable. Re-sign with your own Apple identity, embed a provisioning profile that matches `com.nanofuxion.tamerdevapp` (or rewrite the bundle id), wrap as IPA, install. Step-by-step in the bundled `SIGN-AND-INSTALL.txt`.
   </Tab>
-  <Tab label="iOS Device" value="ios-device">
-    Download `TamerDevApp-Device-Unsigned-<version>.zip`. The `.app` ships unsigned to keep the release portable. Re-sign with your own Apple identity, embed a provisioning profile that matches `com.nanofuxion.tamerdevapp` (or rewrite the bundle id), wrap as IPA, install. Step-by-step in the bundled `SIGN-AND-INSTALL.txt`.
+  <Tab label="Android" value="android">
+    Download `TamerDevApp-<version>.apk` from the [release](https://github.com/tamer4lynx/tamer4lynx/releases/latest). Universal APK — supports `arm64-v8a`, `armeabi-v7a`, `x86_64` (emulators + physical devices).
+
+    ```bash
+    adb install TamerDevApp-<version>.apk
+    adb shell am start -n com.nanofuxion.tamerdevapp/.MainActivity
+    ```
   </Tab>
 </Tabs>
 
