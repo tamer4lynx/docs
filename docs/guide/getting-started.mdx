@@ -89,10 +89,6 @@ Build your own dev host from your project. Picks up your custom native modules, 
 You're authoring or consuming custom native modules / elements, need control over signing, or want a single binary scoped to your app's actual dependency set. New to native module authoring? See [Native Modules & Elements](/guide/native-modules).
 :::
 
-## Prerequisites
-
-Node.js **20.19+** or **Bun**; **Android SDK** for Android builds; **Xcode** on macOS for iOS.
-
 ## 1. Install the CLI globally
 
 All Tamer packages live under the `@tamer4lynx` scope on npm.
@@ -105,6 +101,8 @@ All Tamer packages live under the `@tamer4lynx` scope on npm.
     bun: 'bun add -g @tamer4lynx/cli@latest',
   }}
 />
+
+For native builds later in this flow, use Node.js **20.19+** or **Bun**, **Android SDK** for Android, and **Xcode** on macOS for iOS.
 
 ## 2. Create a Lynx project (or use existing)
 
