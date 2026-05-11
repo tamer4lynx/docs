@@ -10,6 +10,16 @@ export interface TabProps {
   children: React.ReactNode;
 }
 
+type PackageManager = 'npm' | 'yarn' | 'pnpm' | 'bun';
+
+type PackageManagerCommand =
+  | 'install'
+  | Partial<Record<PackageManager, string>>;
+
+interface PackageManagerTabsProps {
+  command: PackageManagerCommand;
+}
+
 interface TabsProps {
   children?: React.ReactNode;
   className?: string;
@@ -25,6 +35,29 @@ interface NormalizedTab {
 
 export function Tab({ children }: TabProps) {
   return <>{children}</>;
+}
+
+const PACKAGE_MANAGERS: Array<{ label: string; value: PackageManager }> = [
+  { label: 'npm', value: 'npm' },
+  { label: 'Yarn', value: 'yarn' },
+  { label: 'pnpm', value: 'pnpm' },
+  { label: 'Bun', value: 'bun' },
+];
+
+const PACKAGE_MANAGER_STORAGE_KEY = 'tamer-package-manager';
+const PACKAGE_MANAGER_EVENT = 'tamer-package-manager-change';
+
+function normalizePackageManagerCommand(command: PackageManagerCommand) {
+  if (command === 'install') {
+    return {
+      npm: 'npm install',
+      yarn: 'yarn install',
+      pnpm: 'pnpm install',
+      bun: 'bun install',
+    } satisfies Record<PackageManager, string>;
+  }
+
+  return command;
 }
 
 function readQueryValue(queryKey?: string) {
@@ -58,6 +91,28 @@ function getIconSrc(label: React.ReactNode, value: TabValue): string | undefined
   if (text.includes('ios') || text.includes('swift') || text.includes('objc')) return TAB_ICON_BY_VALUE.ios;
   if (text.includes('tamer')) return TAB_ICON_BY_VALUE['tamer-app'];
   return undefined;
+}
+
+function readPackageManager() {
+  if (typeof window === 'undefined') return undefined;
+
+  const queryValue = new URLSearchParams(window.location.search).get('pm');
+  if (queryValue && PACKAGE_MANAGERS.some((manager) => manager.value === queryValue)) {
+    return queryValue as PackageManager;
+  }
+
+  const storedValue = window.localStorage.getItem(PACKAGE_MANAGER_STORAGE_KEY);
+  if (storedValue && PACKAGE_MANAGERS.some((manager) => manager.value === storedValue)) {
+    return storedValue as PackageManager;
+  }
+
+  return undefined;
+}
+
+function writePackageManager(value: PackageManager) {
+  if (typeof window === 'undefined') return;
+  window.localStorage.setItem(PACKAGE_MANAGER_STORAGE_KEY, value);
+  window.dispatchEvent(new CustomEvent(PACKAGE_MANAGER_EVENT, { detail: value }));
 }
 
 function getIconFallback(label: React.ReactNode, value: TabValue) {
@@ -156,5 +211,79 @@ export function Tabs({ children, className, defaultValue, queryKey }: TabsProps)
         {activeTab.children}
       </div>
     </section>
+  );
+}
+
+export function PackageManagerTabs({ command }: PackageManagerTabsProps) {
+  const commands = normalizePackageManagerCommand(command);
+  const availableManagers = PACKAGE_MANAGERS.filter((manager) => commands[manager.value]);
+  const firstValue = availableManagers[0]?.value;
+  const [activeValue, setActiveValue] = useState<PackageManager | undefined>(firstValue);
+
+  useEffect(() => {
+    const nextValue = readPackageManager() ?? firstValue;
+    setActiveValue((current) => {
+      if (nextValue && commands[nextValue]) return nextValue;
+      if (current && commands[current]) return current;
+      return nextValue;
+    });
+  }, [commands, firstValue]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const syncPackageManager = (event: Event) => {
+      const nextValue =
+        event instanceof CustomEvent && typeof event.detail === 'string'
+          ? event.detail
+          : readPackageManager();
+
+      if (nextValue && PACKAGE_MANAGERS.some((manager) => manager.value === nextValue)) {
+        setActiveValue(nextValue as PackageManager);
+      }
+    };
+
+    window.addEventListener(PACKAGE_MANAGER_EVENT, syncPackageManager);
+    window.addEventListener('storage', syncPackageManager);
+    return () => {
+      window.removeEventListener(PACKAGE_MANAGER_EVENT, syncPackageManager);
+      window.removeEventListener('storage', syncPackageManager);
+    };
+  }, []);
+
+  if (!availableManagers.length) return null;
+
+  const activeManager = availableManagers.find((manager) => manager.value === activeValue) ?? availableManagers[0];
+  const activeCommand = commands[activeManager.value];
+
+  if (!activeCommand) return null;
+
+  return (
+    <div className="tamer-package-tabs">
+      <div className="tamer-package-tabs__options" role="tablist" aria-label="Package manager">
+        {availableManagers.map((manager) => {
+          const active = manager.value === activeManager.value;
+
+          return (
+            <button
+              aria-selected={active}
+              className={`tamer-package-tabs__option${active ? ' is-active' : ''}`}
+              key={manager.value}
+              onClick={() => {
+                setActiveValue(manager.value);
+                writePackageManager(manager.value);
+              }}
+              role="tab"
+              type="button"
+            >
+              {manager.label}
+            </button>
+          );
+        })}
+      </div>
+      <pre className="tamer-package-tabs__code">
+        <code>{activeCommand}</code>
+      </pre>
+    </div>
   );
 }
