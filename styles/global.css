@@ -165,24 +165,20 @@
 
 .tamer-package-tabs {
   overflow: hidden;
-  margin: 1rem 0 1.35rem;
-  border: 1px solid var(--rp-c-divider);
-  border-radius: 8px;
-  background: var(--rp-code-block-bg);
 }
 
 .tamer-package-tabs__options {
   display: flex;
   flex-wrap: wrap;
   gap: 0;
-  border-bottom: 1px solid var(--rp-c-divider);
-  background: color-mix(in srgb, var(--rp-c-brand) 10%, var(--rp-c-bg-soft));
+  border-bottom: var(--rp-code-block-border);
+  background: var(--rp-code-title-bg);
 }
 
 .tamer-package-tabs__option {
   appearance: none;
   border: 0;
-  border-right: 1px solid var(--rp-c-divider);
+  border-right: var(--rp-code-block-border);
   border-radius: 0;
   background: transparent;
   color: var(--rp-c-text-2);
@@ -196,7 +192,7 @@
 
 .tamer-package-tabs__option:hover {
   color: var(--rp-c-text-1);
-  background: color-mix(in srgb, var(--rp-c-brand) 8%, transparent);
+  background: color-mix(in srgb, var(--rp-c-brand) 8%, var(--rp-code-title-bg));
 }
 
 .tamer-package-tabs__option:focus-visible {
@@ -208,22 +204,4 @@
   background: var(--rp-code-block-bg);
   color: var(--rp-c-text-1);
   box-shadow: inset 0 -2px 0 var(--rp-c-brand);
-}
-
-.tamer-package-tabs__code {
-  margin: 0;
-  padding: 1rem 1.25rem;
-  overflow-x: auto;
-  border-radius: 0;
-  background: transparent;
-  color: var(--rp-code-color);
-  font-size: 0.92rem;
-  line-height: 1.7;
-}
-
-.tamer-package-tabs__code code {
-  display: block;
-  padding: 0;
-  background: transparent;
-  color: inherit;
 }

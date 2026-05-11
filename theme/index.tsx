@@ -115,6 +115,69 @@ function writePackageManager(value: PackageManager) {
   window.dispatchEvent(new CustomEvent(PACKAGE_MANAGER_EVENT, { detail: value }));
 }
 
+function splitShellCommand(command: string) {
+  const [firstPart = '', ...restParts] = command.split(' ');
+
+  return {
+    command: firstPart,
+    args: restParts.length ? ` ${restParts.join(' ')}` : '',
+  };
+}
+
+function WrapIcon() {
+  return (
+    <>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        className="rp-code-button-group__icon rp-code-button-group__icon--wrapped"
+      >
+        <path
+          fill="#22a041"
+          d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"
+        />
+      </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        className="rp-code-button-group__icon rp-code-button-group__icon--wrap"
+      >
+        <path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z" />
+      </svg>
+    </>
+  );
+}
+
+function CopyIcon() {
+  return (
+    <>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        className="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"
+      >
+        <path fill="currentColor" d="M20 8v12H8V8zm0-2H8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2" />
+        <path fill="currentColor" d="M4 16H2V4a2 2 0 0 1 2-2h12v2H4Z" />
+      </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        className="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"
+      >
+        <path fill="#49cd37" d="m9.55 18-5.7-5.7 1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z" />
+      </svg>
+    </>
+  );
+}
+
 function getIconFallback(label: React.ReactNode, value: TabValue) {
   const text =
     typeof label === 'string'
@@ -219,6 +282,8 @@ export function PackageManagerTabs({ command }: PackageManagerTabsProps) {
   const availableManagers = PACKAGE_MANAGERS.filter((manager) => commands[manager.value]);
   const firstValue = availableManagers[0]?.value;
   const [activeValue, setActiveValue] = useState<PackageManager | undefined>(firstValue);
+  const [isWrapped, setIsWrapped] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     const nextValue = readPackageManager() ?? firstValue;
@@ -251,15 +316,27 @@ export function PackageManagerTabs({ command }: PackageManagerTabsProps) {
     };
   }, []);
 
-  if (!availableManagers.length) return null;
-
   const activeManager = availableManagers.find((manager) => manager.value === activeValue) ?? availableManagers[0];
-  const activeCommand = commands[activeManager.value];
+  const activeCommand = activeManager ? commands[activeManager.value] : undefined;
 
-  if (!activeCommand) return null;
+  useEffect(() => {
+    setIsCopied(false);
+  }, [activeCommand]);
+
+  if (!availableManagers.length || !activeManager || !activeCommand) return null;
+
+  async function copyCommand() {
+    if (!activeCommand || typeof navigator === 'undefined') return;
+
+    await navigator.clipboard.writeText(activeCommand);
+    setIsCopied(true);
+    window.setTimeout(() => setIsCopied(false), 1400);
+  }
+
+  const highlightedCommand = splitShellCommand(activeCommand);
 
   return (
-    <div className="tamer-package-tabs">
+    <div className="rp-codeblock language-bash tamer-package-tabs">
       <div className="tamer-package-tabs__options" role="tablist" aria-label="Package manager">
         {availableManagers.map((manager) => {
           const active = manager.value === activeManager.value;
@@ -281,9 +358,44 @@ export function PackageManagerTabs({ command }: PackageManagerTabsProps) {
           );
         })}
       </div>
-      <pre className="tamer-package-tabs__code">
-        <code>{activeCommand}</code>
-      </pre>
+      <div className={`rp-codeblock__content${isWrapped ? ' rp-codeblock__content--code-wrap' : ''}`}>
+        <div className="rp-codeblock__content__scroll-container rp-scrollbar rp-scrollbar--always">
+          <pre
+            className="shiki css-variables"
+            style={{
+              backgroundColor: 'var(--shiki-background)',
+              color: 'var(--shiki-foreground)',
+            }}
+            tabIndex={0}
+            data-lang="bash"
+          >
+            <code>
+              <span className="line">
+                <span style={{ color: 'var(--shiki-token-function)' }}>{highlightedCommand.command}</span>
+                <span style={{ color: 'var(--shiki-token-string)' }}>{highlightedCommand.args}</span>
+              </span>
+            </code>
+          </pre>
+        </div>
+        <div className="rp-code-button-group">
+          <button
+            className={`rp-code-button-group__button rp-code-wrap-button${isWrapped ? ' rp-code-wrap-button--wrapped' : ''}`}
+            onClick={() => setIsWrapped((current) => !current)}
+            title="Toggle code wrap"
+            type="button"
+          >
+            <WrapIcon />
+          </button>
+          <button
+            className={`rp-code-button-group__button rp-code-copy-button${isCopied ? ' rp-code-copy-button--copied' : ''}`}
+            onClick={copyCommand}
+            title="Copy code"
+            type="button"
+          >
+            <CopyIcon />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
