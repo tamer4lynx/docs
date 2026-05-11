@@ -2,7 +2,7 @@ import { PackageManagerTabs, Tabs, Tab } from '@theme';
 
 # Getting Started
 
-There are two flows for running a Lynx project against Tamer. Pick one — your selection sticks for the rest of the page.
+There are two flows for running a Lynx project against Tamer. Pick one — your selection sticks for the rest of the page. Both flows start by installing the global **`t4l`** CLI from npm.
 
 <Tabs queryKey="flow">
 <Tab label="Tamer App (prebuilt)" value="tamer-app">
@@ -13,7 +13,20 @@ The fastest path. Install the **prebuilt Tamer Dev App** on your phone or simula
 You want to iterate on Lynx UI without touching native code, or you don't have Xcode / Android SDK installed locally.
 :::
 
-## 1. Install the prebuilt app
+## 1. Install the CLI globally
+
+You still need `t4l init` and `t4l start` to configure the project and run the dev server. Install the CLI globally with your package manager:
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm i -g @tamer4lynx/cli@latest',
+    yarn: 'yarn global add @tamer4lynx/cli@latest',
+    pnpm: 'pnpm add -g @tamer4lynx/cli@latest',
+    bun: 'bun add -g @tamer4lynx/cli@latest',
+  }}
+/>
+
+## 2. Install the prebuilt app
 
 Download from the [latest release](https://github.com/tamer4lynx/tamer4lynx/releases/latest):
 
@@ -39,20 +52,17 @@ Download from the [latest release](https://github.com/tamer4lynx/tamer4lynx/rele
   </Tab>
 </Tabs>
 
-## 2. Install the CLI in your project's package manager
+## 3. Initialize your Lynx project
 
-You still need `t4l start` to run the dev server. Install the CLI globally:
+From your Lynx project root, run the interactive setup once:
 
-<PackageManagerTabs
-  command={{
-    npm: 'npm i -g @tamer4lynx/cli@latest',
-    yarn: 'yarn global add @tamer4lynx/cli@latest',
-    pnpm: 'pnpm add -g @tamer4lynx/cli@latest',
-    bun: 'bun add -g @tamer4lynx/cli@latest',
-  }}
-/>
+```bash
+t4l init
+```
 
-## 3. Run the dev server
+The wizard writes `tamer.config.json`, records your Lynx project path, and wires TypeScript ambient component types when a `tsconfig.json` is present. If the project was already initialized, keep the existing config and continue.
+
+## 4. Run the dev server
 
 From your Lynx project root:
 
@@ -246,18 +256,7 @@ Whenever you add or remove **`@tamer4lynx/*`** native packages, run **`t4l link`
 <Tabs queryKey="platform">
   <Tab label="Android" value="android">
 
-1. **Create the Lynx app**:
-
-<PackageManagerTabs
-  command={{
-    npm: 'npm create rspeedy && cd my-app && npm install',
-    yarn: 'yarn create rspeedy && cd my-app && yarn install',
-    pnpm: 'pnpm create rspeedy && cd my-app && pnpm install',
-    bun: 'bun create rspeedy && cd my-app && bun install',
-  }}
-/>
-
-2. **Install the CLI**:
+1. **Install the CLI globally**:
 
 <PackageManagerTabs
   command={{
@@ -265,6 +264,17 @@ Whenever you add or remove **`@tamer4lynx/*`** native packages, run **`t4l link`
     yarn: 'yarn global add @tamer4lynx/cli@latest',
     pnpm: 'pnpm add -g @tamer4lynx/cli@latest',
     bun: 'bun add -g @tamer4lynx/cli@latest',
+  }}
+/>
+
+2. **Create the Lynx app**:
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rspeedy && cd my-app && npm install',
+    yarn: 'yarn create rspeedy && cd my-app && yarn install',
+    pnpm: 'pnpm create rspeedy && cd my-app && pnpm install',
+    bun: 'bun create rspeedy && cd my-app && bun install',
   }}
 />
 
@@ -301,18 +311,7 @@ t4l build android -d -i
   </Tab>
   <Tab label="iOS" value="ios">
 
-1. **Create the Lynx app**:
-
-<PackageManagerTabs
-  command={{
-    npm: 'npm create rspeedy && cd my-app && npm install',
-    yarn: 'yarn create rspeedy && cd my-app && yarn install',
-    pnpm: 'pnpm create rspeedy && cd my-app && pnpm install',
-    bun: 'bun create rspeedy && cd my-app && bun install',
-  }}
-/>
-
-2. **Install the CLI**:
+1. **Install the CLI globally**:
 
 <PackageManagerTabs
   command={{
@@ -320,6 +319,17 @@ t4l build android -d -i
     yarn: 'yarn global add @tamer4lynx/cli@latest',
     pnpm: 'pnpm add -g @tamer4lynx/cli@latest',
     bun: 'bun add -g @tamer4lynx/cli@latest',
+  }}
+/>
+
+2. **Create the Lynx app**:
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rspeedy && cd my-app && npm install',
+    yarn: 'yarn create rspeedy && cd my-app && yarn install',
+    pnpm: 'pnpm create rspeedy && cd my-app && pnpm install',
+    bun: 'bun create rspeedy && cd my-app && bun install',
   }}
 />
 
