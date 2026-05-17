@@ -46,7 +46,7 @@ Do not run `node index.ts` — Node ESM does not resolve extensionless `./src/..
 
 ## `t4l init`
 
-Bootstrap or configure a Tamer project with an **Ink** interactive wizard. It detects a root or nested Lynx app (`lynx.config.*` or `@lynx-js/rspeedy`), creates a starter when none exists, normalizes nested apps into a root workspace, installs dependencies from the root, writes `tamer.config.json`, and syncs TypeScript component types. By default the iOS app name and bundle ID reuse the Android app name and package ID unless iOS customization is selected.
+Bootstrap or configure a Tamer project with an **Ink** interactive wizard. It detects a root or nested Lynx app (`lynx.config.*` or `@lynx-js/rspeedy`), creates a starter when none exists, normalizes nested apps into a root workspace, installs dependencies from the root, writes `tamer.config.json`, injects `pluginTamer()` into `lynx.config.*` when possible, and syncs TypeScript component types. By default the iOS app name and bundle ID reuse the Android app name and package ID unless iOS customization is selected.
 
 Default starter: **Rspeedy React TypeScript + Biome**. New project names are derived from the root folder name; the default native ID is `com.<project_name>` after identifier sanitization. Existing nested apps are written as `lynxProject: "<dir>"`; root apps omit `lynxProject`.
 
@@ -234,6 +234,8 @@ t4l sync android
 ## `t4l start`
 
 Start the dev server with HMR and WebSocket support (Expo-like). Prints bundle URLs, `meta.json`, QR code, and WebSocket endpoint.
+
+If the configured/default port is busy, `t4l start` tries the next port numbers until it binds successfully. The dashboard shows both the active port and a warning that the configured/default port was unavailable for this session.
 
 **Multiple bundles:** set `paths.lynxAdditionalBundles` in `tamer.config.json` to an array of extra `.lynx.bundle` filenames under the same `paths.lynxBundleRoot` as `paths.lynxBundleFile`. Each is listed under `bundles` in `meta.json` and served from the dev server alongside the primary bundle.
 

@@ -60,7 +60,7 @@ From your Lynx project root, run the interactive setup once:
 t4l init
 ```
 
-The wizard writes `tamer.config.json`, records your Lynx project path, and wires TypeScript ambient component types when a `tsconfig.json` is present. If the project was already initialized, keep the existing config and continue.
+The wizard detects or creates a Lynx app, writes `tamer.config.json`, installs the selected Tamer package stack, injects `pluginTamer()` into `lynx.config.*` when possible, and wires TypeScript ambient component types when a `tsconfig.json` is present. If the Lynx app is nested, it also configures the root as a workspace and installs from the root so dependencies are shared.
 
 ## 4. Run the dev server
 
@@ -71,6 +71,8 @@ t4l start
 ```
 
 The dashboard prints a QR. Scan it inside the prebuilt Tamer Dev App — bundles hot-reload over the dev server. Done.
+
+If the configured/default port is already in use, `t4l start` automatically tries the next port and shows that the active port differs from the configured/default port.
 
 ## When this flow runs out
 
@@ -106,7 +108,13 @@ For native builds later in this flow, use Node.js **20.19+** or **Bun**, **Andro
 
 ## 2. Create a Lynx project (or use existing)
 
-Create a new Lynx project with Rspeedy:
+For new projects, `t4l init` can create the Lynx app for you. By default it uses Rspeedy React TypeScript + Biome, derives the app name from the root folder, and uses `com.<project_name>` as the native package ID. To script that path:
+
+```bash
+t4l init --yes
+```
+
+You can still create a Lynx project yourself first. Rspeedy:
 
 <PackageManagerTabs
   command={{
@@ -127,7 +135,7 @@ Then `cd` into the project directory you just created and install dependencies. 
 - **[VueLynx](https://vue.lynxjs.org/)** — Vue 3 on Lynx via `@lynx-js/vue`. Use the VueLynx starter; the produced directory name will match its template.
 - **Other bindings** — anything that emits a Lynx bundle works. Skip the `create rspeedy` step, `cd` into your existing project, then run `t4l init`.
 
-After install, run `t4l init` from the project root. It can create a new Lynx app when one is missing, detect an existing root or nested Lynx app, install selected Tamer packages, and write `tamer.config.json`.
+After install, run `t4l init` from the project root. It can create a new Lynx app when one is missing, detect an existing root or nested Lynx app, install selected Tamer packages, inject the Tamer plugin into the Lynx config when possible, and write `tamer.config.json`.
 
 ## 3. Project layout: single folder vs monorepo
 
@@ -148,7 +156,7 @@ From the project root (where `tamer.config.json` will live):
 t4l init
 ```
 
-Or run `t4l` with no arguments for interactive setup. The wizard detects or creates the Lynx app, prompts for package selection, Android app name, package name, and SDK path. Defaults are derived from the root folder name, including `com.<project_name>` for the native package ID. By default the iOS app name and bundle ID reuse the Android values; choose the iOS customization step only when they need to differ.
+Or run `t4l` with no arguments for interactive setup. The wizard detects or creates the Lynx app, prompts for package selection, Android app name, package name, and SDK path. Text fields start blank and show the default as placeholder text; pressing Enter accepts the default. Defaults are derived from the root folder name, including `com.<project_name>` for the native package ID. The Android SDK default comes from the environment when available. By default the iOS app name and bundle ID reuse the Android values; choose the iOS customization step only when they need to differ.
 
 **TypeScript / `tsconfig.json`:** On save, `t4l init` updates the Lynx app's `tsconfig.json` when it exists (root, or under `lynxProject` if you set one): it may **flatten project references** to avoid TS6310 when building, then generates **`.tamer/tamer-components.d.ts`** and ensures **`include`** for it (see [Ambient types](/packages/tooling/tamer-ambient-types)).
 
