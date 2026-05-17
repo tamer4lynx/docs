@@ -11,4 +11,4 @@ Routing, dev tooling, host templates, Rsbuild integration, and app shell primiti
 | [tamer-plugin](/packages/core/tamer-plugin) | Rsbuild plugin merging `tamer.config` |
 | [tamer-app-shell](/packages/core/tamer-app-shell) | AppBar, TabBar, Content, navigation chrome |
 
-**`t4l add-core`** installs everything needed for a production app: host templates, plugin, navigation, router, app-shell, screen, insets, system-ui, icons, transports, and env. **`t4l add-dev`** is a superset that also adds the dev launcher (tamer-dev-client, tamer-dev-app, tamer-linking).
+**`t4l add-core`** installs everything needed for a production app: host templates, plugin, navigation, router, app-shell, screen, insets, system-ui, icons, transports, and env. **`t4l add-dev`** is a superset that also adds the dev launcher packages needed in an app (`tamer-dev-client`, `tamer-linking`).

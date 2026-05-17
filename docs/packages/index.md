@@ -1,9 +1,9 @@
 # Packages
 
-This page lists every **`@tamer4lynx/*`** package and how to install it.
+This page lists every installable **`@tamer4lynx/*`** package and how to install it.
 
 **Why use `t4l add` instead of npm?**  
-All packages are published under **`@tamer4lynx`** on npm, but the **`latest`** dist-tag does not always point at the newest semver. The CLI resolves each package to the **highest version published on the registry** and then you run **`t4l link`** to wire native code. That is the supported path.
+Packages are published under **`@tamer4lynx`** on npm, but the **`latest`** dist-tag does not always point at the newest semver. The CLI resolves each package to npm’s default installable line and then you run **`t4l link`** to wire native code. That is the supported path.
 
 | Goal | Command |
 |------|---------|
@@ -29,7 +29,6 @@ Section: [Core packages](/packages/core/)
 | [@tamer4lynx/tamer-router](/packages/core/tamer-router) | 📦 core | `t4l add tamer-router` | File-based routing, Stack/Tabs layouts, `useBackHandler` / `usePreventBack`, cross-spoke state bridge |
 | [@tamer4lynx/tamer-app-shell](/packages/core/tamer-app-shell) | 📦 core | `t4l add tamer-app-shell` | AppBar, TabBar, Content navigation chrome |
 | [@tamer4lynx/tamer-dev-client](/packages/core/tamer-dev-client) | 🛠 dev | `t4l add-dev` | Dev launcher — QR scan, discovery, recent (live reachability), native module compatibility |
-| [@tamer4lynx/tamer-dev-app](/packages/core/tamer-dev-client) | 🛠 dev | `t4l add-dev` | Standalone dev launcher app wrapping tamer-dev-client |
 
 ## UI
 

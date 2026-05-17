@@ -10,7 +10,7 @@ Behavior and API are informed by [react-native-webview](https://github.com/react
 t4l add tamer-webview
 ```
 
-The CLI resolves the **highest published semver** on npm. Then run **`t4l link`** so native projects pick up `lynx.ext.json`, CocoaPods, and Gradle. **`t4l link`** also refreshes **`.tamer/tamer-components.d.ts`** and your **`tsconfig.json` `include`** when **`syncTamerComponentTypes`** is enabled (default in **`tamer.config.json`**).
+The CLI resolves npm’s default installable version for the package. Then run **`t4l link`** so native projects pick up `lynx.ext.json`, CocoaPods, and Gradle. **`t4l link`** also refreshes **`.tamer/tamer-components.d.ts`** and your **`tsconfig.json` `include`** when **`syncTamerComponentTypes`** is enabled (default in **`tamer.config.json`**).
 
 ## Requirements
 

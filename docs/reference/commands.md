@@ -29,11 +29,11 @@ Optional overrides for those variable names live under `ios.appStoreConnect` in 
 
 | Command | Description |
 |---------|-------------|
-| `t4l` or `t4l init` | Interactive setup: creates `tamer.config.json` in the current directory |
+| `t4l` or `t4l init` | Interactive setup: detects or creates a Lynx app, installs selected Tamer packages, and writes `tamer.config.json` |
 | `t4l add …` | Add `@tamer4lynx/*` to the Lynx project — details below |
 | `t4l add-core` | Install the core stack in one command — details below |
-| `t4l add-dev` | Install dev-app, dev-client, and their dependencies — details below |
-| `t4l update` | Bump every `@tamer4lynx/*` listed in **package.json** to the **highest published semver** — details below |
+| `t4l add-dev` | Install dev-client and its dependencies — details below |
+| `t4l update` | Bump every `@tamer4lynx/*` listed in **package.json** to npm’s default installable version — details below |
 | `t4l signing [platform]` | Configure Android/iOS signing (interactive; Android can generate a keystore with `keytool`) |
 | `t4l --help` | Show help |
 | `t4l --version` | Show version |
@@ -46,9 +46,19 @@ Do not run `node index.ts` — Node ESM does not resolve extensionless `./src/..
 
 ## `t4l init`
 
-Initialize `tamer.config.json` with an **Ink** interactive wizard: step-by-step prompts with validation (Android package / iOS bundle ID), optional `$ENV` resolution for the Android SDK path, and a confirmation when reusing Android values for iOS. Writes `tamer.config.json` (including **`syncTamerComponentTypes`: true** by default). For **TypeScript**, when a `tsconfig.json` exists (project root or under `lynxProject`), it may **flatten project references** (TS6310), then generate **`.tamer/tamer-components.d.ts`** (triple-slash references to installed `@tamer4lynx/*` ambient type exports) and **ensure `include`** for that file. Broad globs such as `node_modules/@tamer4lynx/tamer-*/src/**/*.d.ts` are removed when present.
+Bootstrap or configure a Tamer project with an **Ink** interactive wizard. It detects a root or nested Lynx app (`lynx.config.*` or `@lynx-js/rspeedy`), creates a starter when none exists, normalizes nested apps into a root workspace, installs dependencies from the root, writes `tamer.config.json`, and syncs TypeScript component types. By default the iOS app name and bundle ID reuse the Android app name and package ID unless iOS customization is selected.
 
-No flags.
+Default starter: **Rspeedy React TypeScript + Biome**. New project names are derived from the root folder name; the default native ID is `com.<project_name>` after identifier sanitization. Existing nested apps are written as `lynxProject: "<dir>"`; root apps omit `lynxProject`.
+
+| Flag | Description |
+|------|-------------|
+| `--template <template>` | Starter: `rspeedy` or `vue-lynx` |
+| `--dir <path>` | Lynx app directory. Use `.` for root layout |
+| `--install <stack>` | Tamer packages: `core`, `dev`, or `none` |
+| `--pm <pm>` | Package manager: `npm`, `pnpm`, or `bun` |
+| `-y`, `--yes` | Accept defaults: Rspeedy React TypeScript + Biome, detected package manager, core packages |
+
+For **TypeScript**, when a `tsconfig.json` exists (project root or under `lynxProject`), `init` may **flatten project references** (TS6310), then generate **`.tamer/tamer-components.d.ts`** and ensure `include` for that file. Broad globs such as `node_modules/@tamer4lynx/tamer-*/src/**/*.d.ts` are removed when present.
 
 ---
 
@@ -171,7 +181,7 @@ t4l link --silent
 3. Run `t4l link` after adding dependencies to update Podfile/Gradle and native registration code.
 4. For iOS, run `pod install` in the `ios/` directory after podspec changes.
 
-**iOS `No podspec found` for a Tamer package:** Often the app depended on **`npm install …@latest`**, where **`latest`** points at an older tarball without `ios/`. Prefer **`t4l add tamer-insets`** (or the relevant package): it resolves the **highest published semver** from the registry, unlike `latest` when that tag lags. Then run **`t4l link ios`** again.
+**iOS `No podspec found` for a Tamer package:** Often the app depended on **`npm install …@latest`**, where **`latest`** points at an older tarball without `ios/`. Prefer **`t4l add tamer-insets`** (or the relevant package): it resolves the default installable npm version for the package and falls back only if `latest` is missing. Then run **`t4l link ios`** again.
 
 **Xcode reports unknown UUID in `project.pbxproj`:** This can occur after merge conflicts or if the project file was manually edited. Fix by reverting `ios/<AppName>.xcodeproj/project.pbxproj` from git and re-running `t4l bundle ios` or `t4l link ios` to regenerate resource references.
 
@@ -256,19 +266,19 @@ t4l add @tamer4lynx/tamer-auth @tamer4lynx/tamer-secure-store
 
 ## `t4l add-core`
 
-Adds the core stack: **tamer-app-shell**, **tamer-screen**, **tamer-router**, **tamer-insets**, **tamer-transports**, **tamer-system-ui**, **tamer-icons**, **tamer-env** (Rspeedy `.env` plugin). Each package is resolved to the **highest published semver** on npm (same as `t4l add` / `t4l add-dev`). No flags.
+Adds the core stack: **tamer-app-shell**, **tamer-screen**, **tamer-router**, **tamer-insets**, **tamer-transports**, **tamer-system-ui**, **tamer-icons**, **tamer-env** (Rspeedy `.env` plugin). Each package is resolved to npm’s default installable version (same as `t4l add` / `t4l add-dev`). No flags.
 
 ---
 
 ## `t4l add-dev`
 
-Adds the **dev stack**: **tamer-dev-app**, **tamer-dev-client**, and the `@tamer4lynx/*` packages they need (**app-shell**, **icons**, **insets**, **plugin**, **router**, **screen**, **system-ui**). Each is resolved to the **highest published semver** on npm (same idea as `add-core` / `t4l add`). No flags.
+Adds the **dev stack**: **tamer-dev-client**, **tamer-linking**, and the `@tamer4lynx/*` packages they need (**app-shell**, **icons**, **insets**, **plugin**, **router**, **screen**, **system-ui**). Each is resolved to npm’s default installable version (same idea as `add-core` / `t4l add`). No flags.
 
 ---
 
 ## `t4l update`
 
-Scans **`dependencies`**, **`devDependencies`**, **`peerDependencies`**, and **`optionalDependencies`** in the Lynx project’s **package.json** for **`@tamer4lynx/*`** names and re-installs each at the **highest published semver** on npm (same resolution as `t4l add`). Skips **`file:`**, **`link:`**, **`portal:`**, and **`workspace:`** specs so local / monorepo links stay unchanged. If nothing matches, add packages first with **`t4l add`** / **`add-core`** / **`add-dev`**. No flags.
+Scans **`dependencies`**, **`devDependencies`**, **`peerDependencies`**, and **`optionalDependencies`** in the Lynx project’s **package.json** for **`@tamer4lynx/*`** names and re-installs each at npm’s default installable version (same resolution as `t4l add`). Skips **`file:`**, **`link:`**, **`portal:`**, and **`workspace:`** specs so local / monorepo links stay unchanged. If nothing matches, add packages first with **`t4l add`** / **`add-core`** / **`add-dev`**. No flags.
 
 If npm reports **`ETARGET`** for **`@tamer4lynx/...@^0.0.n`**, remember that **`^` on 0.0.x** only allows the same patch line (e.g. **`^0.0.3`** is **`<0.0.4`**). A transitive dependency may still pin an older range; published **`@tamer4lynx/*`** packages use **`>=0.0.1`**-style ranges for internal deps so newer **0.0.x** releases stay compatible.
 

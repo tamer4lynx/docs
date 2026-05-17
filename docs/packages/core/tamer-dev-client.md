@@ -28,11 +28,11 @@ When you **build with debug** (`t4l build ios -d` / `t4l build android -d`), the
 
 ```bash
 t4l add tamer-dev-client
-# or the full dev stack (dev-app + dev-client + dependencies):
+# or the full dev stack (dev-client + dependencies):
 t4l add-dev
 ```
 
-The CLI resolves the **highest published semver** on npm. To add the dependency by hand, use an **explicit version** from the registry (avoid relying on **`latest`** alone). After install, run **`t4l link`** unless **`autolink`** runs it from **`postinstall`**.
+The CLI resolves npm’s default installable version for the package. To add the dependency by hand, use an **explicit version** from the registry instead of assuming **`latest`** matches the line you want. After install, run **`t4l link`** unless **`autolink`** runs it from **`postinstall`**.
 
 ## Dependencies
 
@@ -178,6 +178,6 @@ The dev client ships with Connect, Recent, and Discover pages. The layout uses `
 
 ## tamer-dev-app
 
-**tamer-dev-app** is a standalone package in the ecosystem that bundles **tamer-dev-client** for a reference dev launcher. In practice you still **build** that app (or your own app with **tamer-dev-client**) with **`t4l build … -d`** after **`t4l link`**, so the native side matches **your** linked modules—the same reason there is not yet a single prebuilt “install everywhere” HMR app on the store.
+**tamer-dev-app** is a monorepo workspace app that bundles **tamer-dev-client** for a reference dev launcher. It is not part of the installable npm package set for app projects. In practice you still **build** that app (or your own app with **tamer-dev-client**) with **`t4l build … -d`** after **`t4l link`**, so the native side matches **your** linked modules—the same reason there is not yet a single prebuilt “install everywhere” HMR app on the store.
 
 A **generalized** dev launcher (one binary for typical workflows without per-project builds) is **planned**. Until then, treat your **debug** build as the HMR shell tailored to your **`node_modules`** and autolink output.

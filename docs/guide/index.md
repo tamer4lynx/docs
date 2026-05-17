@@ -8,8 +8,8 @@
 
 If you only remember three things:
 
-1. **Create or open a Lynx project**, then run **`t4l init`** where `tamer.config.json` should live.
-2. **Add Tamer packages with the CLI** (`t4l add`, `t4l add-core`, or `t4l add-dev`), not raw `npm install …@latest`, so versions match the **highest published semver** on the registry; then **`t4l link`**.
+1. Run **`t4l init`** where `tamer.config.json` should live. It can create a Lynx app, detect root/nested apps, install selected Tamer packages, and configure workspaces.
+2. Add or update Tamer packages with the CLI (`t4l add`, `t4l add-core`, or `t4l add-dev`) when needed, not raw `npm install …@latest`, so versions match npm’s default installable line; then **`t4l link`**.
 3. Use **[Getting Started](/guide/getting-started)** for the full flow (dev server, debug builds, when to run `t4l signing`).
 
 ## Where to read next
